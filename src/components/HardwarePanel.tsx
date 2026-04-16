@@ -76,7 +76,7 @@ export default function HardwarePanel({
           <span className="hw-sep">|</span>
           <div className="hw-spec">
             <span className="hw-spec-label">CPU</span>
-            <span className="hw-spec-value">{cpuCores} cores</span>
+            <span className="hw-spec-value">{cpuCores} logical processors</span>
           </div>
           <div className="hw-actions">
             <button className="btn btn-ghost btn-sm" onClick={() => onEditingChange(true)}>
@@ -167,7 +167,7 @@ export default function HardwarePanel({
         </div>
 
         <div className="hw-field">
-          <span className="hw-field-label">CPU Cores</span>
+          <span className="hw-field-label">CPU Logical Processors</span>
           <input
             className="hw-input"
             type="number"

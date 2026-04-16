@@ -1,9 +1,12 @@
-import type { ModelFit } from '../engine/types'
+import type { ModelFit, SortKey, SortDir } from '../engine/types'
 
 interface ResultsTableProps {
   results: ModelFit[]
   selectedIndex: number | null
   onSelect: (i: number) => void
+  sortKey: SortKey
+  sortDir: SortDir
+  onSort: (key: SortKey) => void
 }
 
 function modelDisplayName(name: string): string {
@@ -18,10 +21,22 @@ const FIT_LABELS: Record<string, string> = {
   wont_run: "Won't run",
 }
 
+function SortArrow({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKey: SortKey; sortDir: SortDir }) {
+  const active = columnKey === sortKey
+  return (
+    <span className={`sort-arrow${active ? ' sort-arrow-active' : ''}`}>
+      {active ? (sortDir === 'asc' ? '\u25B2' : '\u25BC') : '\u25BC'}
+    </span>
+  )
+}
+
 export default function ResultsTable({
   results,
   selectedIndex,
   onSelect,
+  sortKey,
+  sortDir,
+  onSort,
 }: ResultsTableProps) {
   if (results.length === 0) {
     return (
@@ -36,11 +51,17 @@ export default function ResultsTable({
       <table className="results-table">
         <thead>
           <tr>
-            <th>Model</th>
+            <th className="sortable-th" onClick={() => onSort('name')}>
+              Model <SortArrow columnKey="name" sortKey={sortKey} sortDir={sortDir} />
+            </th>
             <th>Fit</th>
             <th>Quant</th>
-            <th className="col-hide-mobile">T/S</th>
-            <th className="col-hide-mobile">Score</th>
+            <th className="col-hide-mobile sortable-th" onClick={() => onSort('tps')}>
+              T/S <SortArrow columnKey="tps" sortKey={sortKey} sortDir={sortDir} />
+            </th>
+            <th className="col-hide-mobile sortable-th" onClick={() => onSort('score')}>
+              Score <SortArrow columnKey="score" sortKey={sortKey} sortDir={sortDir} />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -71,7 +92,7 @@ export default function ResultsTable({
                 {fit.estimated_tps.toFixed(1)}
               </td>
               <td className="col-hide-mobile">
-                {fit.score.toFixed(0)}
+                {fit.score.toFixed(1)}
               </td>
             </tr>
           ))}

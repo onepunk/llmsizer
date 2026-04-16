@@ -460,6 +460,21 @@ select.filter-input {
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
+.results-table th.sortable-th {
+  cursor: pointer;
+  user-select: none;
+}
+.results-table th.sortable-th:hover {
+  color: var(--text);
+}
+.sort-arrow {
+  font-size: 0.5rem;
+  margin-left: 0.25rem;
+  opacity: 0.3;
+}
+.sort-arrow-active {
+  opacity: 1;
+}
 
 .results-table td {
   padding: 0.3rem 0.5rem;

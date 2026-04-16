@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useHardware } from './hooks/useHardware'
 import { useModels } from './hooks/useModels'
-import type { FilterState } from './engine/types'
+import type { FilterState, SortKey } from './engine/types'
 import HardwarePanel from './components/HardwarePanel'
 import FilterBar from './components/FilterBar'
 import ResultsTable from './components/ResultsTable'
@@ -12,6 +12,7 @@ const DEFAULT_FILTERS: FilterState = {
   useCase: 'all',
   minFit: 'marginal',
   sort: 'score',
+  sortDir: 'desc',
 }
 
 type Theme = 'light' | 'dark'
@@ -29,6 +30,14 @@ export default function App() {
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const { results, loading, error, totalModels } = useModels(hw.system, filters)
+
+  const handleSort = useCallback((key: SortKey) => {
+    setFilters((prev) => ({
+      ...prev,
+      sort: key,
+      sortDir: prev.sort === key ? (prev.sortDir === 'desc' ? 'asc' : 'desc') : 'desc',
+    }))
+  }, [])
 
   const [themeOverride, setThemeOverride] = useState<Theme | null>(getInitialTheme)
 
@@ -134,6 +143,9 @@ export default function App() {
                 results={results}
                 selectedIndex={hw.editing ? null : selectedIndex}
                 onSelect={hw.editing ? () => {} : setSelectedIndex}
+                sortKey={filters.sort}
+                sortDir={filters.sortDir}
+                onSort={handleSort}
               />
               {!hw.editing && selectedFit && (
                 <DetailPanel

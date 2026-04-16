@@ -60,12 +60,22 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
     const minFitLevel = filters.minFit === 'all' ? 0 : FIT_ORDER[filters.minFit]
     const filtered = fits.filter((f) => FIT_ORDER[f.fit_level] >= minFitLevel)
 
-    // Filter by use case
+    // Filter by use case — map filter keywords to patterns that match verbose use_case strings
+    const useCaseKeywords: Record<string, string[]> = {
+      general: ['general'],
+      coding: ['code', 'coding'],
+      reasoning: ['reasoning'],
+      chat: ['chat'],
+      multimodal: ['multimodal'],
+      embedding: ['embedding'],
+    }
     const useCaseFiltered = filters.useCase === 'all'
       ? filtered
       : filtered.filter((f) => {
           const modelUc = f.model.use_case?.toLowerCase() ?? ''
-          return modelUc === filters.useCase || modelUc === 'general'
+          if (modelUc.startsWith('general')) return true
+          const keywords = useCaseKeywords[filters.useCase] ?? [filters.useCase]
+          return keywords.some((kw) => modelUc.includes(kw))
         })
 
     // Filter by search
@@ -80,16 +90,25 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
       : useCaseFiltered
 
     // Sort
+    const dir = filters.sortDir === 'asc' ? 1 : -1
     const sorted = [...searched]
     sorted.sort((a, b) => {
+      let cmp: number
       switch (filters.sort) {
-        case 'score': return b.score - a.score
-        case 'tps': return b.estimated_tps - a.estimated_tps
-        case 'params': return parseParamsNum(b.model.parameter_count) - parseParamsNum(a.model.parameter_count)
-        case 'memory': return a.memory_required_gb - b.memory_required_gb
-        case 'context': return b.model.context_length - a.model.context_length
-        default: return b.score - a.score
+        case 'name': {
+          const nameA = a.model.name.slice(a.model.name.lastIndexOf('/') + 1)
+          const nameB = b.model.name.slice(b.model.name.lastIndexOf('/') + 1)
+          cmp = nameA.localeCompare(nameB)
+          break
+        }
+        case 'score': cmp = a.score - b.score; break
+        case 'tps': cmp = a.estimated_tps - b.estimated_tps; break
+        case 'params': cmp = parseParamsNum(a.model.parameter_count) - parseParamsNum(b.model.parameter_count); break
+        case 'memory': cmp = a.memory_required_gb - b.memory_required_gb; break
+        case 'context': cmp = a.model.context_length - b.model.context_length; break
+        default: cmp = a.score - b.score
       }
+      return cmp * dir
     })
 
     return sorted

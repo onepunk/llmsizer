@@ -78,9 +78,13 @@ export interface QuantOption {
   fits: boolean
 }
 
+export type SortKey = 'score' | 'tps' | 'params' | 'memory' | 'context' | 'name'
+export type SortDir = 'asc' | 'desc'
+
 export interface FilterState {
   search: string
   useCase: UseCase | 'all'
   minFit: FitLevel | 'all'
-  sort: 'score' | 'tps' | 'params' | 'memory' | 'context'
+  sort: SortKey
+  sortDir: SortDir
 }

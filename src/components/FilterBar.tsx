@@ -52,20 +52,6 @@ export default function FilterBar({
         <option value="marginal">Marginal+</option>
       </select>
 
-      <select
-        className="filter-input"
-        value={filters.sort}
-        onChange={(e) =>
-          onChange({ ...filters, sort: e.target.value as FilterState['sort'] })
-        }
-      >
-        <option value="score">Sort: Score</option>
-        <option value="tps">Sort: Speed</option>
-        <option value="params">Sort: Params</option>
-        <option value="memory">Sort: Memory</option>
-        <option value="context">Sort: Context</option>
-      </select>
-
       <div className="filter-right">
         <span className="filter-count">
           {resultCount}/{totalCount}
