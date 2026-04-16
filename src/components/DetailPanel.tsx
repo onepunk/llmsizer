@@ -125,6 +125,15 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
         </div>
       </div>
 
+      {/* Memory breakdown — how we got to the required-memory number */}
+      <h4 className="detail-section-title">
+        Memory Breakdown
+        <span className="detail-section-hint">
+          &middot; context {fit.context_used.toLocaleString()}
+        </span>
+      </h4>
+      <MemoryBreakdown fit={fit} />
+
       {/* Score breakdown */}
       <h4 className="detail-section-title">Score Breakdown</h4>
       <div className="score-bars">
@@ -199,6 +208,65 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+function MemoryBreakdown({ fit }: { fit: ModelFit }) {
+  const mem = fit.memory_breakdown
+  const total = mem.total_gb || 1
+  const parts: { label: string; gb: number; className: string; tooltip: string }[] = [
+    {
+      label: 'Weights',
+      gb: mem.model_weight_gb,
+      className: 'mem-bar-weights',
+      tooltip: `Model weights at ${fit.best_quant}: params \u00D7 bytes-per-param.`,
+    },
+    {
+      label: 'KV cache',
+      gb: mem.kv_cache_gb,
+      className: 'mem-bar-kv',
+      tooltip: `KV cache for a context of ${fit.context_used.toLocaleString()} tokens. Scales linearly with context.`,
+    },
+    {
+      label: 'Overhead',
+      gb: mem.overhead_gb,
+      className: 'mem-bar-overhead',
+      tooltip: 'Runtime overhead (activations, graph buffers, etc.) — approximated at 0.5 GB.',
+    },
+  ]
+
+  return (
+    <div className="mem-breakdown">
+      <div className="mem-bar-stack" role="img" aria-label="Memory breakdown">
+        {parts.map((p) => (
+          <div
+            key={p.label}
+            className={`mem-bar-seg ${p.className}`}
+            style={{ width: `${(p.gb / total) * 100}%` }}
+            title={`${p.label}: ${p.gb.toFixed(2)} GB`}
+          />
+        ))}
+      </div>
+      <dl className="mem-bar-legend">
+        {parts.map((p) => (
+          <div key={p.label} className="mem-bar-legend-row">
+            <dt>
+              <span className={`mem-swatch ${p.className}`} />
+              {p.label}
+              <span className="score-bar-help-wrap">
+                <span className="score-bar-help">?</span>
+                <span className="score-bar-tooltip">{p.tooltip}</span>
+              </span>
+            </dt>
+            <dd>{p.gb.toFixed(2)} GB</dd>
+          </div>
+        ))}
+        <div className="mem-bar-legend-row mem-bar-legend-total">
+          <dt>Total</dt>
+          <dd>{mem.total_gb.toFixed(2)} GB</dd>
+        </div>
+      </dl>
     </div>
   )
 }

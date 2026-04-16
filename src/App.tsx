@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useHardware } from './hooks/useHardware'
 import { useModels } from './hooks/useModels'
 import type { FilterState, SortKey } from './engine/types'
@@ -6,14 +6,19 @@ import HardwarePanel from './components/HardwarePanel'
 import FilterBar from './components/FilterBar'
 import ResultsTable from './components/ResultsTable'
 import DetailPanel from './components/DetailPanel'
+import ComparePanel from './components/ComparePanel'
+import { readUrlState, writeUrl, currentShareUrl } from './url'
 
 const DEFAULT_FILTERS: FilterState = {
   search: '',
   useCase: 'all',
   minFit: 'marginal',
+  context: 8192,
   sort: 'score',
   sortDir: 'desc',
 }
+
+const COMPARE_LIMIT = 3
 
 type Theme = 'light' | 'dark'
 
@@ -25,9 +30,19 @@ function getInitialTheme(): Theme | null {
   return null
 }
 
+function getInitialFilters(): FilterState {
+  const { filters } = readUrlState()
+  return { ...DEFAULT_FILTERS, ...filters }
+}
+
+function getInitialCompare(): string[] {
+  return readUrlState().compare.slice(0, COMPARE_LIMIT)
+}
+
 export default function App() {
   const hw = useHardware()
-  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+  const [filters, setFilters] = useState<FilterState>(getInitialFilters)
+  const [compare, setCompare] = useState<string[]>(getInitialCompare)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const { results, loading, error, totalModels } = useModels(hw.system, filters)
 
@@ -41,7 +56,6 @@ export default function App() {
 
   const [themeOverride, setThemeOverride] = useState<Theme | null>(getInitialTheme)
 
-  // Apply data-theme attribute to root element
   useEffect(() => {
     const root = document.documentElement
     if (themeOverride) {
@@ -55,7 +69,6 @@ export default function App() {
     setThemeOverride((prev) => {
       let next: Theme
       if (prev === null) {
-        // Currently following system preference; toggle to opposite
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
         next = prefersDark ? 'light' : 'dark'
       } else {
@@ -66,13 +79,96 @@ export default function App() {
     })
   }, [])
 
-  // Determine the effective theme for the toggle icon
   const effectiveTheme: Theme = themeOverride ??
     (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches
       ? 'light'
       : 'dark')
 
   const selectedFit = selectedIndex !== null ? results[selectedIndex] ?? null : null
+
+  // Compare selections resolved against current results. A compared model may
+  // not appear in the filtered results (e.g. fit filter hides it), so we keep
+  // the name list as the source of truth and fall through model lookup.
+  const compareFits = useMemo(() => {
+    if (compare.length === 0) return []
+    const byName = new Map(results.map((r) => [r.model.name, r]))
+    return compare
+      .map((name) => byName.get(name))
+      .filter((f): f is NonNullable<typeof f> => f != null)
+  }, [compare, results])
+
+  const compareSet = useMemo(() => new Set(compare), [compare])
+
+  const toggleCompare = useCallback((modelName: string) => {
+    setCompare((prev) => {
+      if (prev.includes(modelName)) return prev.filter((n) => n !== modelName)
+      if (prev.length >= COMPARE_LIMIT) return prev
+      return [...prev, modelName]
+    })
+  }, [])
+
+  const clearCompare = useCallback(() => setCompare([]), [])
+
+  // Single URL write pipeline — hardware + filters + compare converge here.
+  useEffect(() => {
+    if (!hw.ready) return
+    writeUrl({
+      hw: {
+        gpuName: hw.gpuName,
+        vramGb: hw.vramGb,
+        ramGb: hw.ramGb,
+        cpuCores: hw.cpuCores,
+        unified: hw.unified,
+      },
+      filters,
+      compare,
+      defaults: DEFAULT_FILTERS,
+    })
+  }, [hw.ready, hw.gpuName, hw.vramGb, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+
+  // On reset, drop the query string entirely.
+  const previousReadyRef = useRef(hw.ready)
+  useEffect(() => {
+    if (previousReadyRef.current && !hw.ready) {
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+    previousReadyRef.current = hw.ready
+  }, [hw.ready])
+
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'error'>('idle')
+  const shareTimer = useRef<number | null>(null)
+
+  const handleShare = useCallback(async () => {
+    const url = currentShareUrl({
+      hw: {
+        gpuName: hw.gpuName,
+        vramGb: hw.vramGb,
+        ramGb: hw.ramGb,
+        cpuCores: hw.cpuCores,
+        unified: hw.unified,
+      },
+      filters,
+      compare,
+      defaults: DEFAULT_FILTERS,
+    })
+    try {
+      await navigator.clipboard.writeText(url)
+      setShareStatus('copied')
+    } catch {
+      setShareStatus('error')
+    }
+    if (shareTimer.current) window.clearTimeout(shareTimer.current)
+    shareTimer.current = window.setTimeout(() => setShareStatus('idle'), 2000)
+  }, [hw.gpuName, hw.vramGb, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+
+  useEffect(() => () => {
+    if (shareTimer.current) window.clearTimeout(shareTimer.current)
+  }, [])
+
+  const shareLabel =
+    shareStatus === 'copied' ? 'copied!' :
+    shareStatus === 'error' ? 'copy failed' :
+    'share'
 
   return (
     <div className="app">
@@ -127,9 +223,19 @@ export default function App() {
             onChange={setFilters}
             resultCount={results.length}
             totalCount={totalModels}
+            onShare={handleShare}
+            shareLabel={shareLabel}
           />
 
           {error && <div className="error-banner">{error}</div>}
+
+          {compareFits.length > 0 && (
+            <ComparePanel
+              fits={compareFits}
+              onRemove={toggleCompare}
+              onClear={clearCompare}
+            />
+          )}
 
           {loading ? (
             <div className="loading">Loading model database...</div>
@@ -147,6 +253,9 @@ export default function App() {
                 sortKey={filters.sort}
                 sortDir={filters.sortDir}
                 onSort={handleSort}
+                compareSet={compareSet}
+                onToggleCompare={toggleCompare}
+                compareLimit={COMPARE_LIMIT}
               />
               {!hw.editing && selectedFit && (
                 <DetailPanel

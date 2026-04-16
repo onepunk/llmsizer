@@ -110,4 +110,35 @@ describe('analyzeModelFit', () => {
     expect(result.run_mode).toBe('unified')
     expect(result.fit_level).toBe('perfect')
   })
+
+  it('exposes memory breakdown and context_used for the UI', () => {
+    const result = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general', 4096)
+
+    expect(result.context_used).toBe(4096)
+    const mem = result.memory_breakdown
+    expect(mem.model_weight_gb).toBeGreaterThan(0)
+    expect(mem.kv_cache_gb).toBeGreaterThan(0)
+    expect(mem.overhead_gb).toBe(0.5)
+    expect(mem.total_gb).toBeCloseTo(
+      mem.model_weight_gb + mem.kv_cache_gb + mem.overhead_gb,
+      4,
+    )
+    expect(result.memory_required_gb).toBeCloseTo(mem.total_gb, 4)
+  })
+
+  it('larger context increases KV cache and required memory', () => {
+    const small = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general', 4096)
+    const large = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general', 32768)
+
+    expect(large.memory_breakdown.kv_cache_gb).toBeGreaterThan(
+      small.memory_breakdown.kv_cache_gb,
+    )
+    expect(large.memory_required_gb).toBeGreaterThan(small.memory_required_gb)
+  })
+
+  it('context is capped at the model context_length', () => {
+    // LLAMA_8B.context_length is 131072. Ask for 1M.
+    const result = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general', 1_000_000)
+    expect(result.context_used).toBe(131072)
+  })
 })

@@ -66,6 +66,8 @@ export interface ModelFit {
   best_quant: string
   memory_required_gb: number
   memory_available_gb: number
+  memory_breakdown: MemoryEstimate
+  context_used: number
   estimated_tps: number
   score: number
   scores: { quality: number; speed: number; fit: number; context: number }
@@ -86,6 +88,7 @@ export interface FilterState {
   search: string
   useCase: UseCase | 'all'
   minFit: FitLevel | 'all'
+  context: number
   sort: SortKey
   sortDir: SortDir
 }
