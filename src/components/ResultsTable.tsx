@@ -54,10 +54,12 @@ const CAPABILITY_ICON: Record<string, { icon: string; label: string }> = {
   function_calling: { icon: '\u{1F527}', label: 'function calling' },
 }
 
-function capabilityBadges(caps: string[]): { icon: string; label: string }[] {
+function capabilityBadges(caps: string[] | null | undefined): { icon: string; label: string }[] {
+  if (!caps) return []
   const seen = new Set<string>()
   const out: { icon: string; label: string }[] = []
   for (const cap of caps) {
+    if (typeof cap !== 'string') continue
     const key = cap.toLowerCase().replace(/\s+/g, '_')
     const match = CAPABILITY_ICON[key]
     if (match && !seen.has(match.label)) {

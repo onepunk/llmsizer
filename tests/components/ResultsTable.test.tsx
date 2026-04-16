@@ -144,4 +144,25 @@ describe('ResultsTable', () => {
     )
     expect(screen.queryByText('general')).toBeNull()
   })
+
+  it('renders without crashing when capabilities is null (scraper omits field)', () => {
+    const fits = [makeFit({}, { capabilities: null })]
+    expect(() =>
+      render(
+        <ResultsTable
+          results={fits}
+          selectedIndex={null}
+          onSelect={() => {}}
+          sortKey="score"
+          sortDir="desc"
+          onSort={() => {}}
+          compareSet={new Set()}
+          onToggleCompare={() => {}}
+          compareLimit={3}
+        />,
+      ),
+    ).not.toThrow()
+    // Row still renders the model name.
+    expect(screen.getByText('Llama-3.1-8B')).toBeTruthy()
+  })
 })

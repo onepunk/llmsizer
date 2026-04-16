@@ -28,7 +28,7 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
     ? (fit.memory_required_gb / fit.memory_available_gb) * 100
     : 0
 
-  const capabilities = m.capabilities.length > 0 ? m.capabilities : null
+  const capabilities = m.capabilities && m.capabilities.length > 0 ? m.capabilities : null
   const ggufSources = m.gguf_sources && m.gguf_sources.length > 0 ? m.gguf_sources : null
 
   return (

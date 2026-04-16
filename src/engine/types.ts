@@ -25,7 +25,7 @@ export interface LlmModel {
   active_experts: number | null
   active_parameters: number | null
   release_date: string | null
-  capabilities: string[]
+  capabilities: string[] | null
   num_attention_heads: number | null
   num_key_value_heads: number | null
   num_hidden_layers: number | null
