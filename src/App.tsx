@@ -106,6 +106,7 @@ export default function App() {
           gpuName={hw.gpuName}
           vramGb={hw.vramGb}
           ramGb={hw.ramGb}
+          ramUserSet={hw.ramUserSet}
           cpuCores={hw.cpuCores}
           unified={hw.unified}
           gpuDetected={hw.gpuDetected}

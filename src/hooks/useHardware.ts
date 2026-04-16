@@ -46,6 +46,12 @@ function syncUrlParams(
   window.history.replaceState(null, '', url)
 }
 
+// navigator.deviceMemory caps at 8 GB per spec and is rounded to powers of 2,
+// so we don't trust it. RAM starts unset (0) — the header dropdown renders a
+// placeholder option until the user picks a size. ram_gb=0 also means the
+// fit engine only counts VRAM, so models that would only fit via cpu_offload
+// show as "won't run" until the user confirms they have the RAM.
+
 export function useHardware() {
   const urlInit = useMemo(() => readUrlParams(), [])
   const hasUrlParams = urlInit.gpu !== null || urlInit.vram !== null || urlInit.ram !== null
@@ -54,7 +60,15 @@ export function useHardware() {
   const [ready, setReady] = useState(hasUrlParams)
   const [gpuName, setGpuName] = useState(urlInit.gpu ?? '')
   const [vramGb, setVramGb] = useState(urlInit.vram ?? 0)
-  const [ramGb, setRamGb] = useState(urlInit.ram ?? 16)
+  const [ramGb, setRamGbState] = useState(urlInit.ram ?? 0)
+  // True once the user has explicitly chosen a RAM value (header dropdown,
+  // manual-edit form, or URL param). Drives the placeholder option + hint
+  // styling on the RAM dropdown until then.
+  const [ramUserSet, setRamUserSet] = useState(urlInit.ram !== null)
+  const setRamGb = useCallback((gb: number) => {
+    setRamGbState(gb)
+    setRamUserSet(true)
+  }, [])
   const [cpuCores, setCpuCores] = useState(urlInit.cores ?? 4)
   const [unified, setUnified] = useState(urlInit.unified ?? false)
   const [gpuDetected, setGpuDetected] = useState(false)
@@ -82,7 +96,9 @@ export function useHardware() {
 
     if (detection.gpu_parsed) setGpuName(detection.gpu_parsed)
     setVramGb(specs.vram_gb)
-    setRamGb(specs.ram_gb || 16)
+    // navigator.deviceMemory is capped at 8 GB and rounded, so we ignore it
+    // for display. Keep the current ramGb (URL or default) and let the user
+    // confirm/change via the header dropdown.
     setCpuCores(specs.cpu_cores)
     setUnified(specs.unified_memory)
     setGpuDetected(specs.gpu_detected)
@@ -103,7 +119,8 @@ export function useHardware() {
     setEditing(false)
     setGpuName('')
     setVramGb(0)
-    setRamGb(16)
+    setRamGbState(0)
+    setRamUserSet(false)
     setCpuCores(4)
     setUnified(false)
     setGpuDetected(false)
@@ -143,6 +160,7 @@ export function useHardware() {
     gpuName,
     vramGb,
     ramGb,
+    ramUserSet,
     cpuCores,
     unified,
     gpuDetected,

@@ -6,10 +6,24 @@ function clamp(value: number, min: number, max: number): number {
   return isFinite(value) ? Math.max(min, Math.min(max, value)) : min
 }
 
+// Ladder of plausible total-RAM values: small consumer sizes up through
+// server/workstation DIMM configurations. Stops at 4 TB.
+const RAM_OPTIONS = [
+  1, 2, 4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 384, 512,
+  768, 1024, 1536, 2048, 3072, 4096,
+] as const
+
+function formatRam(gb: number): string {
+  if (gb < 1024) return `${gb}GB`
+  const tb = gb / 1024
+  return Number.isInteger(tb) ? `${tb}TB` : `${tb.toFixed(1)}TB`
+}
+
 interface HardwarePanelProps {
   gpuName: string
   vramGb: number
   ramGb: number
+  ramUserSet: boolean
   cpuCores: number
   unified: boolean
   gpuDetected: boolean
@@ -26,6 +40,7 @@ export default function HardwarePanel({
   gpuName,
   vramGb,
   ramGb,
+  ramUserSet,
   cpuCores,
   unified,
   gpuDetected,
@@ -70,7 +85,23 @@ export default function HardwarePanel({
           <span className="hw-sep">|</span>
           <div className="hw-spec">
             <span className="hw-spec-label">RAM</span>
-            <span className="hw-spec-value">{ramGb}GB</span>
+            <select
+              className={`hw-ram-select${ramUserSet ? '' : ' hw-ram-select-hint'}`}
+              value={ramUserSet && RAM_OPTIONS.includes(ramGb as typeof RAM_OPTIONS[number]) ? ramGb : ''}
+              onChange={(e) => onRamChange(Number(e.target.value))}
+              title={ramUserSet ? 'System RAM' : 'Set your system RAM — we can\u2019t detect this reliably'}
+            >
+              {!ramUserSet && (
+                <option value="" disabled>
+                  set RAM…
+                </option>
+              )}
+              {RAM_OPTIONS.map((gb) => (
+                <option key={gb} value={gb}>
+                  {formatRam(gb)}
+                </option>
+              ))}
+            </select>
             {unified && <span className="hw-badge">unified</span>}
           </div>
           <span className="hw-sep">|</span>

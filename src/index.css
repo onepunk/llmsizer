@@ -233,6 +233,32 @@ body {
   user-select: none;
 }
 
+.hw-ram-select {
+  background: transparent;
+  color: var(--text);
+  border: none;
+  border-bottom: 1px solid transparent;
+  font: inherit;
+  font-family: var(--font-mono);
+  padding: 0 0.15rem;
+  margin: -1px 0;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.hw-ram-select:hover,
+.hw-ram-select:focus {
+  border-bottom-color: var(--text-muted);
+}
+.hw-ram-select-hint {
+  border-bottom: 1px dashed var(--text-muted);
+  color: var(--text-muted);
+}
+.hw-ram-select-hint:hover {
+  color: var(--text);
+  border-bottom-style: solid;
+}
+
 .hw-actions {
   margin-left: auto;
   display: flex;
