@@ -1,6 +1,6 @@
 # llmsizer
 
-Inspired by [llmfit](https://github.com/AlexsJones/llmfit) — find which LLMs actually fit on your hardware. Try it at [llmsizer.com](https://llmsizer.com).
+Derived from [llmfit](https://github.com/AlexsJones/llmfit) — find which LLMs actually fit on your hardware. Try it at [llmsizer.com](https://llmsizer.com).
 
 ![llmsizer screenshot](.github/screenshot.png)
 
@@ -58,4 +58,6 @@ python3 scripts/fix_quantized_entries.py
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
+
+The scrapers in `scripts/` are derived from [llmfit](https://github.com/AlexsJones/llmfit) (MIT, © 2026 Alex Jones); the upstream notice is reproduced in [NOTICE](NOTICE).

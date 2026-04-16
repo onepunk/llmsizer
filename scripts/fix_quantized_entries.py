@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Derived from llmfit (https://github.com/AlexsJones/llmfit),
+# MIT Licensed, Copyright (c) 2026 Alex Jones. See NOTICE for full text.
+# Modifications Copyright (c) 2026 onepunk, MIT Licensed.
 """
 fix_quantized_entries.py
 

@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Derived from llmfit (https://github.com/AlexsJones/llmfit),
+# MIT Licensed, Copyright (c) 2026 Alex Jones. See NOTICE for full text.
+# Modifications Copyright (c) 2026 onepunk, MIT Licensed.
 """
 Scraper for popular LLM models from Hugging Face.
 Fetches model metadata and computes RAM/VRAM requirements from parameter counts.
