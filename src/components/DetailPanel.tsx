@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type { ModelFit } from '../engine/types'
 
 interface DetailPanelProps {
@@ -31,8 +32,48 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
   const capabilities = m.capabilities && m.capabilities.length > 0 ? m.capabilities : null
   const ggufSources = m.gguf_sources && m.gguf_sources.length > 0 ? m.gguf_sources : null
 
+  // On mobile the panel renders as a bottom sheet with a backdrop. The
+  // class on <body> drives the backdrop (::before) + body scroll lock in
+  // CSS so we don't need a separate portal component.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mq = window.matchMedia('(max-width: 640px)')
+    const apply = () => {
+      document.body.classList.toggle('detail-open', mq.matches)
+    }
+    apply()
+    mq.addEventListener('change', apply)
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKey)
+
+    // Close when the user taps outside the panel (the backdrop). We
+    // attach on the next tick so the click that opened the panel
+    // doesn't bubble up and immediately close it.
+    const onBackdropClick = (e: MouseEvent) => {
+      if (!mq.matches) return
+      const target = e.target as HTMLElement | null
+      if (target && !target.closest('.detail-panel')) {
+        onClose()
+      }
+    }
+    const attachTimer = window.setTimeout(() => {
+      document.addEventListener('click', onBackdropClick)
+    }, 0)
+
+    return () => {
+      document.body.classList.remove('detail-open')
+      mq.removeEventListener('change', apply)
+      document.removeEventListener('keydown', onKey)
+      window.clearTimeout(attachTimer)
+      document.removeEventListener('click', onBackdropClick)
+    }
+  }, [onClose])
+
   return (
-    <div className="detail-panel">
+    <div className="detail-panel" role="dialog" aria-modal="true">
       <div className="detail-header">
         <div>
           <h3 className="detail-title">{modelDisplayName(m.name)}</h3>

@@ -1199,13 +1199,28 @@ select.filter-input {
     width: 18px;
     height: 18px;
   }
+  .results-table-wrap {
+    /* Long model names (no whitespace) used to push the table past the
+       viewport and scroll horizontally. We wrap instead. */
+    overflow-x: hidden;
+  }
+  .results-table {
+    table-layout: fixed;
+    width: 100%;
+  }
   .results-table th,
   .results-table td {
     padding: 0.4rem 0.4rem;
+    white-space: normal;
   }
   .results-table th:first-child,
   .results-table td:first-child {
     padding-left: 0.2rem;
+  }
+  .model-name,
+  .model-provider {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   /* Compare panel: single column + a sticky-ish backdrop so the cards
@@ -1214,23 +1229,67 @@ select.filter-input {
     grid-template-columns: 1fr;
   }
 
-  /* Detail panel becomes full-width card; anchor it to the viewport edge
-     with a prominent close and tighter grid. */
+  /* Detail panel becomes a fixed bottom sheet with a backdrop so tapping
+     a row (even at the bottom of a long list) pulls the card into view. */
   .detail-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
     width: 100%;
-    min-width: unset;
-    position: static;
-    max-height: unset;
-    margin-top: 0.75rem;
-    padding: 0.75rem;
+    min-width: 0;
+    max-height: 85vh;
+    max-height: 85dvh;
+    margin: 0;
+    padding: 0.85rem 0.85rem calc(1rem + env(safe-area-inset-bottom));
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+    overflow-y: auto;
+    z-index: 50;
+    animation: detail-sheet-in 160ms ease-out;
+  }
+  /* Backdrop — relies on a ::before on the app root that the DetailPanel
+     activates by adding `.detail-open` on body (set in DetailPanel mount
+     effect). See tsx. */
+  body.detail-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 40;
+    animation: detail-backdrop-in 160ms ease-out;
+  }
+  body.detail-open {
+    overflow: hidden;
   }
   .detail-grid {
     grid-template-columns: 1fr 1fr;
     gap: 0.65rem 0.75rem;
   }
+  .detail-header {
+    position: sticky;
+    top: -0.85rem;
+    margin: -0.85rem -0.85rem 0.6rem;
+    padding: 0.85rem 0.85rem 0.6rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 1;
+  }
   .detail-header .btn-icon {
-    font-size: 1.25rem;
-    padding: 0.25rem 0.55rem;
+    font-size: 1.5rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  @keyframes detail-sheet-in {
+    from { transform: translateY(12%); opacity: 0.6; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  @keyframes detail-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   /* Scan prompt: stack actions vertically for easier tapping on first run. */
