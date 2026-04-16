@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+dist
+docs
+scripts
+tests
+docker-compose*.yml
+Dockerfile
+.env
+*.local
+*.tsbuildinfo

@@ -1,0 +1,113 @@
+import { describe, it, expect } from 'vitest'
+import { analyzeModelFit } from '../../src/engine/fit'
+import type { LlmModel, SystemSpecs } from '../../src/engine/types'
+
+const LLAMA_8B: LlmModel = {
+  name: 'meta-llama/Llama-3.1-8B-Instruct',
+  provider: 'meta-llama',
+  parameter_count: '8B',
+  parameters_raw: 8_000_000_000,
+  min_ram_gb: 6,
+  recommended_ram_gb: 10,
+  min_vram_gb: 6,
+  quantization: 'Q4_K_M',
+  format: 'gguf',
+  context_length: 131072,
+  use_case: 'General',
+  is_moe: false,
+  num_experts: null,
+  active_experts: null,
+  active_parameters: null,
+  release_date: '2024-07-23',
+  capabilities: [],
+  num_attention_heads: 32,
+  num_key_value_heads: 8,
+  num_hidden_layers: 32,
+  head_dim: 128,
+  license: 'llama3.1',
+}
+
+const RTX_3090_SYSTEM: SystemSpecs = {
+  gpu_name: 'NVIDIA GeForce RTX 3090',
+  gpu_detected: true,
+  vram_gb: 24,
+  ram_gb: 64,
+  cpu_cores: 16,
+  bandwidth_gbps: 936,
+  unified_memory: false,
+}
+
+const CPU_ONLY_SYSTEM: SystemSpecs = {
+  gpu_name: null,
+  gpu_detected: false,
+  vram_gb: 0,
+  ram_gb: 32,
+  cpu_cores: 8,
+  bandwidth_gbps: 0,
+  unified_memory: false,
+}
+
+describe('analyzeModelFit', () => {
+  it('8B on RTX 3090: gpu, perfect, Q8_0, tps > 50', () => {
+    const result = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general')
+
+    expect(result.run_mode).toBe('gpu')
+    expect(result.fit_level).toBe('perfect')
+    expect(result.best_quant).toBe('Q8_0')
+    expect(result.estimated_tps).toBeGreaterThan(50)
+  })
+
+  it('8B on CPU-only (32GB): cpu_only, marginal, tps > 0 and < 20', () => {
+    const result = analyzeModelFit(LLAMA_8B, CPU_ONLY_SYSTEM, 'general')
+
+    expect(result.run_mode).toBe('cpu_only')
+    expect(result.fit_level).toBe('marginal')
+    expect(result.estimated_tps).toBeGreaterThan(0)
+    expect(result.estimated_tps).toBeLessThan(20)
+  })
+
+  it('8B on tiny system (2GB RAM, no GPU): wont_run', () => {
+    const tinySystem: SystemSpecs = {
+      gpu_name: null,
+      gpu_detected: false,
+      vram_gb: 0,
+      ram_gb: 2,
+      cpu_cores: 4,
+      bandwidth_gbps: 0,
+      unified_memory: false,
+    }
+    const result = analyzeModelFit(LLAMA_8B, tinySystem, 'general')
+
+    expect(result.fit_level).toBe('wont_run')
+    expect(result.score).toBe(0)
+  })
+
+  it('viable_quants populated with > 0 entries, all fitting on RTX 3090', () => {
+    const result = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general')
+
+    expect(result.viable_quants.length).toBeGreaterThan(0)
+    const fittingQuants = result.viable_quants.filter((q) => q.fits)
+    expect(fittingQuants.length).toBeGreaterThan(0)
+
+    // All quants for 8B should fit in 24GB VRAM
+    for (const q of result.viable_quants) {
+      expect(q.fits).toBe(true)
+    }
+  })
+
+  it('unified memory (Apple M2 Pro, 32GB): unified, perfect', () => {
+    const m2ProSystem: SystemSpecs = {
+      gpu_name: 'Apple M2 Pro',
+      gpu_detected: true,
+      vram_gb: 0,
+      ram_gb: 32,
+      cpu_cores: 12,
+      bandwidth_gbps: 200,
+      unified_memory: true,
+    }
+    const result = analyzeModelFit(LLAMA_8B, m2ProSystem, 'general')
+
+    expect(result.run_mode).toBe('unified')
+    expect(result.fit_level).toBe('perfect')
+  })
+})
