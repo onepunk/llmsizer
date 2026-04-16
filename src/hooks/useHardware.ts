@@ -1,50 +1,10 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import type { SystemSpecs, GpuSpec } from '../engine/types'
 import { detectHardware, buildSystemSpecs } from '../detection/detect'
 import { lookupGpu } from '../detection/parse-renderer'
+import { readUrlState } from '../url'
 
 type Phase = 'detected' | 'manual'
-
-function safeNum(params: URLSearchParams, key: string, min: number, max: number): number | null {
-  if (!params.has(key)) return null
-  const n = Number(params.get(key))
-  return isFinite(n) ? Math.max(min, Math.min(max, n)) : null
-}
-
-function readUrlParams(): {
-  gpu: string | null
-  vram: number | null
-  ram: number | null
-  cores: number | null
-  unified: boolean | null
-} {
-  const params = new URLSearchParams(window.location.search)
-  const gpu = params.get('gpu')
-  const vram = safeNum(params, 'vram', 0, 1024)
-  const ram = safeNum(params, 'ram', 1, 8192)
-  const cores = safeNum(params, 'cores', 1, 512)
-  const unifiedRaw = params.get('unified')
-  const unified = unifiedRaw !== null ? unifiedRaw === '1' : null
-  return { gpu, vram, ram, cores, unified }
-}
-
-function syncUrlParams(
-  gpuName: string,
-  vramGb: number,
-  ramGb: number,
-  cpuCores: number,
-  unified: boolean,
-) {
-  const params = new URLSearchParams()
-  if (gpuName) params.set('gpu', gpuName)
-  if (vramGb > 0) params.set('vram', String(vramGb))
-  if (ramGb > 0) params.set('ram', String(ramGb))
-  if (cpuCores > 0) params.set('cores', String(cpuCores))
-  if (unified) params.set('unified', '1')
-  const qs = params.toString()
-  const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname
-  window.history.replaceState(null, '', url)
-}
 
 // navigator.deviceMemory caps at 8 GB per spec and is rounded to powers of 2,
 // so we don't trust it. RAM starts unset (0) — the header dropdown renders a
@@ -53,10 +13,10 @@ function syncUrlParams(
 // show as "won't run" until the user confirms they have the RAM.
 
 export function useHardware() {
-  const urlInit = useMemo(() => readUrlParams(), [])
+  const urlInit = useMemo(() => readUrlState().hw, [])
   const hasUrlParams = urlInit.gpu !== null || urlInit.vram !== null || urlInit.ram !== null
 
-  const [phase, setPhase] = useState<Phase>(hasUrlParams ? 'manual' : 'manual')
+  const [phase, setPhase] = useState<Phase>('manual')
   const [ready, setReady] = useState(hasUrlParams)
   const [gpuName, setGpuName] = useState(urlInit.gpu ?? '')
   const [vramGb, setVramGb] = useState(urlInit.vram ?? 0)
@@ -73,12 +33,6 @@ export function useHardware() {
   const [unified, setUnified] = useState(urlInit.unified ?? false)
   const [gpuDetected, setGpuDetected] = useState(false)
   const [bandwidth, setBandwidth] = useState(0)
-
-  // URL sync on state changes (only after ready)
-  useEffect(() => {
-    if (!ready) return
-    syncUrlParams(gpuName, vramGb, ramGb, cpuCores, unified)
-  }, [ready, gpuName, vramGb, ramGb, cpuCores, unified])
 
   const system = useMemo<SystemSpecs>(() => ({
     gpu_name: gpuName || null,
@@ -126,7 +80,6 @@ export function useHardware() {
     setGpuDetected(false)
     setBandwidth(0)
     setPhase('manual')
-    window.history.replaceState(null, '', window.location.pathname)
   }, [])
 
   const updateGpu = useCallback((name: string, spec: GpuSpec | null) => {

@@ -21,7 +21,7 @@ import {
   compositeScore,
 } from './score'
 
-const DEFAULT_CONTEXT = 8192
+export const DEFAULT_CONTEXT = 8192
 
 function parseParamsB(model: LlmModel): number {
   if (model.parameters_raw != null) {
@@ -81,9 +81,10 @@ export function analyzeModelFit(
   model: LlmModel,
   system: SystemSpecs,
   useCase: string,
+  requestedContext: number = DEFAULT_CONTEXT,
 ): ModelFit {
   const paramsB = parseParamsB(model)
-  const context = Math.min(model.context_length, DEFAULT_CONTEXT)
+  const context = Math.min(model.context_length, Math.max(512, requestedContext))
   const meta = extractModelMeta(model)
   const preQuantized = model.weight_gb != null
 
@@ -197,6 +198,8 @@ export function analyzeModelFit(
     best_quant: bestQuant,
     memory_required_gb: requiredGb,
     memory_available_gb: availableGb,
+    memory_breakdown: memEstimate,
+    context_used: context,
     estimated_tps: tps,
     score,
     scores,

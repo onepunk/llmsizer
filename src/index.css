@@ -76,6 +76,9 @@ body {
   margin: 0 auto;
   padding: 1rem 1rem;
   min-height: 100vh;
+  /* Prefer dynamic viewport height on browsers that support it so the iOS
+     Safari URL bar doesn't clip our content. */
+  min-height: 100dvh;
 }
 
 /* ============================================================
@@ -523,6 +526,8 @@ select.filter-input {
   display: flex;
   align-items: baseline;
   gap: 0.35rem;
+  flex-wrap: wrap;
+  row-gap: 0.15rem;
 }
 
 .model-name {
@@ -537,6 +542,27 @@ select.filter-input {
 .model-provider::before {
   content: '/';
   margin-right: 0.15rem;
+}
+
+.model-tag {
+  font-size: 0.5625rem;
+  padding: 0.05rem 0.3rem;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.model-tag-usecase {
+  color: var(--text-muted);
+}
+.model-tag-cap {
+  border: none;
+  padding: 0;
+  font-size: 0.75rem;
+  cursor: help;
 }
 
 /* Fit dots */
@@ -861,63 +887,442 @@ select.filter-input {
 }
 
 /* ============================================================
-   Responsive
+   Context filter, share button
+   ============================================================ */
+.filter-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+.filter-context-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.filter-context-select {
+  padding: 0.25rem 1.2rem 0.25rem 0.4rem;
+}
+.filter-share {
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   Detail section hints (inline clarifying text)
+   ============================================================ */
+.detail-section-hint {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: 0.35rem;
+}
+
+/* ============================================================
+   Memory breakdown bar
+   ============================================================ */
+.mem-breakdown {
+  margin-bottom: 0.75rem;
+}
+.mem-bar-stack {
+  display: flex;
+  width: 100%;
+  height: 10px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+.mem-bar-seg {
+  height: 100%;
+  transition: width 0.2s ease;
+  min-width: 2px;
+}
+.mem-bar-weights { background: var(--good); }
+.mem-bar-kv { background: var(--marginal); }
+.mem-bar-overhead { background: var(--text-muted); }
+
+.mem-bar-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.6875rem;
+}
+.mem-bar-legend-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+}
+.mem-bar-legend-row dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-muted);
+}
+.mem-bar-legend-row dd {
+  font-variant-numeric: tabular-nums;
+}
+.mem-bar-legend-total {
+  border-top: 1px dashed var(--border);
+  margin-top: 0.15rem;
+  padding-top: 0.2rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.mem-bar-legend-total dt {
+  color: var(--text);
+}
+.mem-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Compare checkbox column + compare panel
+   ============================================================ */
+.col-compare {
+  width: 1.5rem;
+  text-align: center;
+  padding-right: 0 !important;
+}
+.compare-checkbox {
+  cursor: pointer;
+  accent-color: var(--good);
+}
+.compare-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.compare-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem 0.75rem;
+  margin-bottom: 0.75rem;
+  background: var(--surface);
+}
+.compare-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.compare-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+.compare-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.625rem;
+  background: var(--bg);
+}
+.compare-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+.compare-card-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  word-break: break-word;
+}
+.compare-card-provider {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+.compare-card-stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.6rem;
+  font-size: 0.6875rem;
+}
+.compare-card-stats dt {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.5625rem;
+  letter-spacing: 0.05em;
+  align-self: center;
+}
+.compare-card-stats dd {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Responsive — tablet (narrow detail panel)
+   ============================================================ */
+@media (max-width: 900px) {
+  .detail-panel {
+    width: 280px;
+    min-width: 260px;
+  }
+}
+
+/* ============================================================
+   Responsive — mobile
    ============================================================ */
 @media (max-width: 640px) {
+  .app {
+    padding: 0.75rem 0.75rem calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  /* Header: grid so logo + actions share the top row and the tagline sits
+     on its own line below. */
+  .app-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'logo . actions'
+      'tag  tag tag';
+    align-items: center;
+    column-gap: 0.35rem;
+    row-gap: 0.1rem;
+    padding-bottom: 0.5rem;
+  }
+  .app-logo {
+    grid-area: logo;
+  }
+  .app-tagline {
+    grid-area: tag;
+    font-size: 0.75rem;
+  }
+  .header-actions {
+    grid-area: actions;
+    margin-left: 0;
+  }
+
+  /* Hardware bar: grid layout, hide the vertical separators that look
+     like orphaned rows once we stack. */
+  .hardware-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  .hw-sep {
+    display: none;
+  }
+  .hw-spec {
+    min-width: 0;
+    gap: 0.35rem;
+  }
+  .hw-spec-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .hw-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    margin-left: 0;
+    gap: 0.5rem;
+  }
+  /* Bigger tap targets than the desktop .btn-sm default. */
+  .hardware-bar .btn-sm {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  /* Filter bar: pack into rows — search full-width, then two 2-col rows
+     for the small controls, then the action/count row. */
+  .filter-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .filter-search {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .filter-input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.5rem 0.55rem;
+    font-size: 0.8125rem;
+  }
+  select.filter-input {
+    padding-right: 1.6rem;
+  }
+  .filter-context {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .filter-right {
+    grid-column: 1 / -1;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .filter-count {
+    font-size: 0.75rem;
+  }
+  .filter-share {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.75rem;
+  }
+  .fit-legend {
+    display: none;
+  }
+
+  /* Results: stack detail below table; shrink the compare checkbox
+     column so the model name cell keeps its breathing room. */
   .results-layout {
     flex-direction: column;
   }
-
-  .detail-panel {
+  .col-compare {
+    width: 1.75rem;
+  }
+  .compare-checkbox {
+    width: 18px;
+    height: 18px;
+  }
+  .results-table-wrap {
+    /* Long model names (no whitespace) used to push the table past the
+       viewport and scroll horizontally. We wrap instead. */
+    overflow-x: hidden;
+  }
+  .results-table {
+    table-layout: fixed;
     width: 100%;
-    min-width: unset;
-    position: static;
-    max-height: unset;
+  }
+  .results-table th,
+  .results-table td {
+    padding: 0.4rem 0.4rem;
+    white-space: normal;
+  }
+  .results-table th:first-child,
+  .results-table td:first-child {
+    padding-left: 0.2rem;
+  }
+  .model-name,
+  .model-provider {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Compare panel: single column + a sticky-ish backdrop so the cards
+     don't get lost at the top of a scroll. */
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Detail panel becomes a fixed bottom sheet with a backdrop so tapping
+     a row (even at the bottom of a long list) pulls the card into view. */
+  .detail-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    min-width: 0;
+    max-height: 85vh;
+    max-height: 85dvh;
+    margin: 0;
+    padding: 0.85rem 0.85rem calc(1rem + env(safe-area-inset-bottom));
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+    overflow-y: auto;
+    z-index: 50;
+    animation: detail-sheet-in 160ms ease-out;
+  }
+  /* Backdrop — relies on a ::before on the app root that the DetailPanel
+     activates by adding `.detail-open` on body (set in DetailPanel mount
+     effect). See tsx. */
+  body.detail-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 40;
+    animation: detail-backdrop-in 160ms ease-out;
+  }
+  body.detail-open {
+    overflow: hidden;
+  }
+  .detail-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem 0.75rem;
+  }
+  .detail-header {
+    position: sticky;
+    top: -0.85rem;
+    margin: -0.85rem -0.85rem 0.6rem;
+    padding: 0.85rem 0.85rem 0.6rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 1;
+  }
+  .detail-header .btn-icon {
+    font-size: 1.5rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  @keyframes detail-sheet-in {
+    from { transform: translateY(12%); opacity: 0.6; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+  @keyframes detail-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Scan prompt: stack actions vertically for easier tapping on first run. */
+  .scan-prompt {
+    padding: 2.5rem 1rem;
+  }
+  .scan-prompt-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 280px;
+  }
+  .scan-prompt-actions .btn {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8125rem;
   }
 
   .col-hide-mobile {
     display: none;
   }
+}
 
-  .filter-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .filter-input {
-    width: 100%;
-  }
-
-  .filter-right {
-    margin-left: 0;
-    flex-wrap: wrap;
-  }
-
-  .fit-legend {
-    display: none;
-  }
-
+/* ============================================================
+   Responsive — very narrow
+   ============================================================ */
+@media (max-width: 380px) {
   .hardware-bar {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
   }
-
-  .hw-actions {
-    margin-left: 0;
+  .hardware-bar .hw-actions {
+    grid-column: 1;
   }
-
-  .app-header {
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .header-actions {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-  }
-
-  .app-header {
-    position: relative;
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 }

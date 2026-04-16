@@ -54,7 +54,7 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
     const useCase = filters.useCase === 'all' ? 'general' : filters.useCase
 
     // Analyze all models
-    const fits = models.map((m) => analyzeModelFit(m, system, useCase))
+    const fits = models.map((m) => analyzeModelFit(m, system, useCase, filters.context))
 
     // Filter by minFit
     const minFitLevel = filters.minFit === 'all' ? 0 : FIT_ORDER[filters.minFit]

@@ -25,7 +25,7 @@ export interface LlmModel {
   active_experts: number | null
   active_parameters: number | null
   release_date: string | null
-  capabilities: string[]
+  capabilities: string[] | null
   num_attention_heads: number | null
   num_key_value_heads: number | null
   num_hidden_layers: number | null
@@ -66,6 +66,8 @@ export interface ModelFit {
   best_quant: string
   memory_required_gb: number
   memory_available_gb: number
+  memory_breakdown: MemoryEstimate
+  context_used: number
   estimated_tps: number
   score: number
   scores: { quality: number; speed: number; fit: number; context: number }
@@ -86,6 +88,7 @@ export interface FilterState {
   search: string
   useCase: UseCase | 'all'
   minFit: FitLevel | 'all'
+  context: number
   sort: SortKey
   sortDir: SortDir
 }

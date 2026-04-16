@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type { ModelFit } from '../engine/types'
 
 interface DetailPanelProps {
@@ -28,11 +29,51 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
     ? (fit.memory_required_gb / fit.memory_available_gb) * 100
     : 0
 
-  const capabilities = m.capabilities.length > 0 ? m.capabilities : null
+  const capabilities = m.capabilities && m.capabilities.length > 0 ? m.capabilities : null
   const ggufSources = m.gguf_sources && m.gguf_sources.length > 0 ? m.gguf_sources : null
 
+  // On mobile the panel renders as a bottom sheet with a backdrop. The
+  // class on <body> drives the backdrop (::before) + body scroll lock in
+  // CSS so we don't need a separate portal component.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mq = window.matchMedia('(max-width: 640px)')
+    const apply = () => {
+      document.body.classList.toggle('detail-open', mq.matches)
+    }
+    apply()
+    mq.addEventListener('change', apply)
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKey)
+
+    // Close when the user taps outside the panel (the backdrop). We
+    // attach on the next tick so the click that opened the panel
+    // doesn't bubble up and immediately close it.
+    const onBackdropClick = (e: MouseEvent) => {
+      if (!mq.matches) return
+      const target = e.target as HTMLElement | null
+      if (target && !target.closest('.detail-panel')) {
+        onClose()
+      }
+    }
+    const attachTimer = window.setTimeout(() => {
+      document.addEventListener('click', onBackdropClick)
+    }, 0)
+
+    return () => {
+      document.body.classList.remove('detail-open')
+      mq.removeEventListener('change', apply)
+      document.removeEventListener('keydown', onKey)
+      window.clearTimeout(attachTimer)
+      document.removeEventListener('click', onBackdropClick)
+    }
+  }, [onClose])
+
   return (
-    <div className="detail-panel">
+    <div className="detail-panel" role="dialog" aria-modal="true">
       <div className="detail-header">
         <div>
           <h3 className="detail-title">{modelDisplayName(m.name)}</h3>
@@ -125,6 +166,15 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
         </div>
       </div>
 
+      {/* Memory breakdown — how we got to the required-memory number */}
+      <h4 className="detail-section-title">
+        Memory Breakdown
+        <span className="detail-section-hint">
+          &middot; context {fit.context_used.toLocaleString()}
+        </span>
+      </h4>
+      <MemoryBreakdown fit={fit} />
+
       {/* Score breakdown */}
       <h4 className="detail-section-title">Score Breakdown</h4>
       <div className="score-bars">
@@ -199,6 +249,65 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+function MemoryBreakdown({ fit }: { fit: ModelFit }) {
+  const mem = fit.memory_breakdown
+  const total = mem.total_gb || 1
+  const parts: { label: string; gb: number; className: string; tooltip: string }[] = [
+    {
+      label: 'Weights',
+      gb: mem.model_weight_gb,
+      className: 'mem-bar-weights',
+      tooltip: `Model weights at ${fit.best_quant}: params \u00D7 bytes-per-param.`,
+    },
+    {
+      label: 'KV cache',
+      gb: mem.kv_cache_gb,
+      className: 'mem-bar-kv',
+      tooltip: `KV cache for a context of ${fit.context_used.toLocaleString()} tokens. Scales linearly with context.`,
+    },
+    {
+      label: 'Overhead',
+      gb: mem.overhead_gb,
+      className: 'mem-bar-overhead',
+      tooltip: 'Runtime overhead (activations, graph buffers, etc.) — approximated at 0.5 GB.',
+    },
+  ]
+
+  return (
+    <div className="mem-breakdown">
+      <div className="mem-bar-stack" role="img" aria-label="Memory breakdown">
+        {parts.map((p) => (
+          <div
+            key={p.label}
+            className={`mem-bar-seg ${p.className}`}
+            style={{ width: `${(p.gb / total) * 100}%` }}
+            title={`${p.label}: ${p.gb.toFixed(2)} GB`}
+          />
+        ))}
+      </div>
+      <dl className="mem-bar-legend">
+        {parts.map((p) => (
+          <div key={p.label} className="mem-bar-legend-row">
+            <dt>
+              <span className={`mem-swatch ${p.className}`} />
+              {p.label}
+              <span className="score-bar-help-wrap">
+                <span className="score-bar-help">?</span>
+                <span className="score-bar-tooltip">{p.tooltip}</span>
+              </span>
+            </dt>
+            <dd>{p.gb.toFixed(2)} GB</dd>
+          </div>
+        ))}
+        <div className="mem-bar-legend-row mem-bar-legend-total">
+          <dt>Total</dt>
+          <dd>{mem.total_gb.toFixed(2)} GB</dd>
+        </div>
+      </dl>
     </div>
   )
 }
