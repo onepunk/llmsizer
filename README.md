@@ -6,7 +6,7 @@ Derived from [llmfit](https://github.com/AlexsJones/llmfit) — find which LLMs 
 
 ## What it does
 
-- **Detects your GPU** via WebGL — no install required
+- **Detects your GPU** via WebGL 
 - **Estimates memory** for each model across quantization levels (Q2_K through F16)
 - **Predicts speed** (tokens/sec) based on your GPU's memory bandwidth
 - **Scores and ranks** 5,000+ models by quality, speed, fit, and context length
@@ -14,7 +14,7 @@ Derived from [llmfit](https://github.com/AlexsJones/llmfit) — find which LLMs 
 
 ## Tech
 
-Static React SPA — everything runs in your browser. No backend, no data collection.
+Static React SPA — everything runs in your browser. No backend required.
 
 Built with TypeScript, Vite, and a model database auto-updated weekly from HuggingFace.
 
