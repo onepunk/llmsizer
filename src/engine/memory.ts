@@ -29,11 +29,14 @@ export function estimateKvCache(
 
 export function estimateMemory(
   paramsB: number,
-  quant: Quantization,
+  quant: Quantization | string,
   context: number,
   meta: ModelMeta,
+  weightGbOverride?: number | null,
 ): MemoryEstimate {
-  const model_weight_gb = paramsB * quantBpp(quant)
+  const model_weight_gb = weightGbOverride != null
+    ? weightGbOverride
+    : paramsB * quantBpp(quant)
   const kv_cache_gb = estimateKvCache(context, meta, paramsB)
   const overhead_gb = 0.5
   const total_gb = model_weight_gb + kv_cache_gb + overhead_gb

@@ -32,6 +32,17 @@ const QUANT_PENALTIES: Record<string, number> = {
   Q4_K_M: -5,
   Q3_K_M: -8,
   Q2_K: -12,
+  'AWQ-4bit': -5,
+  'AWQ-8bit': 0,
+  'GPTQ-Int4': -5,
+  'GPTQ-Int8': 0,
+  'GPTQ-Int2': -12,
+  'MLX-4bit': -5,
+  'MLX-8bit': 0,
+  'MLX-6bit': -1,
+  'MLX-3bit': -8,
+  'BNB-4bit': -5,
+  'BNB-8bit': 0,
 }
 
 export function qualityScore(

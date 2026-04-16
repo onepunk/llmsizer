@@ -19,6 +19,17 @@ const BPP_MAP: Record<string, number> = {
   Q4_K_M: 0.58,
   Q3_K_M: 0.48,
   Q2_K: 0.37,
+  'AWQ-4bit': 0.60,
+  'AWQ-8bit': 1.10,
+  'GPTQ-Int4': 0.60,
+  'GPTQ-Int8': 1.10,
+  'GPTQ-Int2': 0.35,
+  'MLX-4bit': 0.55,
+  'MLX-8bit': 1.05,
+  'MLX-6bit': 0.80,
+  'MLX-3bit': 0.45,
+  'BNB-4bit': 0.60,
+  'BNB-8bit': 1.05,
 }
 
 const BYTES_PER_PARAM_MAP: Record<string, number> = {
@@ -30,6 +41,17 @@ const BYTES_PER_PARAM_MAP: Record<string, number> = {
   Q4_K_M: 0.5,
   Q3_K_M: 0.375,
   Q2_K: 0.25,
+  'AWQ-4bit': 0.5,
+  'AWQ-8bit': 1.0,
+  'GPTQ-Int4': 0.5,
+  'GPTQ-Int8': 1.0,
+  'GPTQ-Int2': 0.25,
+  'MLX-4bit': 0.5,
+  'MLX-8bit': 1.0,
+  'MLX-6bit': 0.75,
+  'MLX-3bit': 0.375,
+  'BNB-4bit': 0.5,
+  'BNB-8bit': 1.0,
 }
 
 const SPEED_MULTIPLIER_MAP: Record<string, number> = {
@@ -41,6 +63,17 @@ const SPEED_MULTIPLIER_MAP: Record<string, number> = {
   Q4_K_M: 1.15,
   Q3_K_M: 1.25,
   Q2_K: 1.35,
+  'AWQ-4bit': 1.15,
+  'AWQ-8bit': 0.8,
+  'GPTQ-Int4': 1.15,
+  'GPTQ-Int8': 0.8,
+  'GPTQ-Int2': 1.3,
+  'MLX-4bit': 1.15,
+  'MLX-8bit': 0.8,
+  'MLX-6bit': 0.95,
+  'MLX-3bit': 1.25,
+  'BNB-4bit': 1.10,
+  'BNB-8bit': 0.8,
 }
 
 export function quantBpp(quant: Quantization | string): number {

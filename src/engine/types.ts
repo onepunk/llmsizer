@@ -33,6 +33,7 @@ export interface LlmModel {
   license: string | null
   architecture?: string | null
   gguf_sources?: GgufSource[]
+  weight_gb?: number | null
 }
 
 export interface GpuSpec {
@@ -62,7 +63,7 @@ export interface ModelFit {
   model: LlmModel
   fit_level: FitLevel
   run_mode: RunMode
-  best_quant: Quantization
+  best_quant: string
   memory_required_gb: number
   memory_available_gb: number
   estimated_tps: number
@@ -72,7 +73,7 @@ export interface ModelFit {
 }
 
 export interface QuantOption {
-  quant: Quantization
+  quant: string
   memory_required_gb: number
   estimated_tps: number
   fits: boolean

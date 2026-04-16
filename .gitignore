@@ -3,3 +3,6 @@ node_modules/
 dist/
 *.local
 *.tsbuildinfo
+.playwright-mcp/
+docs/
+scripts/__pycache__/

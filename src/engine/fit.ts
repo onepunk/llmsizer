@@ -4,7 +4,6 @@ import type {
   ModelFit,
   FitLevel,
   RunMode,
-  Quantization,
   QuantOption,
   UseCase,
 } from './types'
@@ -83,16 +82,12 @@ export function analyzeModelFit(
   system: SystemSpecs,
   useCase: string,
 ): ModelFit {
-  // 1. Parse paramsB
   const paramsB = parseParamsB(model)
-
-  // 2. Cap context
   const context = Math.min(model.context_length, DEFAULT_CONTEXT)
-
-  // 3. Extract model meta
   const meta = extractModelMeta(model)
+  const preQuantized = model.weight_gb != null
 
-  // 4. Determine run mode and available memory
+  // Determine run mode and available memory
   let runMode: RunMode
   let availableGb: number
 
@@ -100,32 +95,30 @@ export function analyzeModelFit(
     runMode = 'unified'
     availableGb = system.ram_gb
   } else if (system.vram_gb > 0) {
-    // Try GPU first
-    const gpuQuant = bestQuantForBudget(paramsB, system.vram_gb, context, meta)
-    if (gpuQuant != null) {
+    const gpuMem = estimateMemory(
+      paramsB,
+      model.quantization,
+      context,
+      meta,
+      preQuantized ? model.weight_gb : null,
+    ).total_gb
+    const gpuFits = preQuantized
+      ? gpuMem <= system.vram_gb
+      : bestQuantForBudget(paramsB, system.vram_gb, context, meta) != null
+
+    if (gpuFits) {
       runMode = 'gpu'
       availableGb = system.vram_gb
     } else {
-      // Try CPU offload
-      const offloadQuant = bestQuantForBudget(
-        paramsB,
-        system.vram_gb + system.ram_gb,
-        context,
-        meta,
-      )
-      if (offloadQuant != null) {
+      const offloadFits = preQuantized
+        ? gpuMem <= system.vram_gb + system.ram_gb
+        : bestQuantForBudget(paramsB, system.vram_gb + system.ram_gb, context, meta) != null
+      if (offloadFits) {
         runMode = 'cpu_offload'
         availableGb = system.vram_gb + system.ram_gb
       } else {
-        // Try CPU only
-        const cpuQuant = bestQuantForBudget(paramsB, system.ram_gb, context, meta)
-        if (cpuQuant != null) {
-          runMode = 'cpu_only'
-          availableGb = system.ram_gb
-        } else {
-          runMode = 'cpu_only'
-          availableGb = system.ram_gb
-        }
+        runMode = 'cpu_only'
+        availableGb = system.ram_gb
       }
     }
   } else {
@@ -133,15 +126,20 @@ export function analyzeModelFit(
     availableGb = system.ram_gb
   }
 
-  // 5. Best quantization
-  const bestQuant: Quantization =
-    bestQuantForBudget(paramsB, availableGb, context, meta) ?? 'Q4_K_M'
+  // Best quantization: native for pre-quantized, GGUF-best-fit otherwise
+  const bestQuant: string = preQuantized
+    ? model.quantization
+    : bestQuantForBudget(paramsB, availableGb, context, meta) ?? 'Q4_K_M'
 
-  // 6. Memory estimate
-  const memEstimate = estimateMemory(paramsB, bestQuant, context, meta)
+  const memEstimate = estimateMemory(
+    paramsB,
+    bestQuant,
+    context,
+    meta,
+    preQuantized ? model.weight_gb : null,
+  )
   const requiredGb = memEstimate.total_gb
 
-  // 7. Speed
   const tps = estimateTps({
     paramsB,
     quant: bestQuant,
@@ -150,7 +148,6 @@ export function analyzeModelFit(
     cpuCores: system.cpu_cores,
   })
 
-  // 8. Fit classification
   const fitLevel = classifyFitLevel(
     requiredGb,
     availableGb,
@@ -158,7 +155,6 @@ export function analyzeModelFit(
     model.recommended_ram_gb,
   )
 
-  // 9. Scoring
   const uc = normalizeUseCase(useCase)
   const scores = {
     quality: qualityScore(paramsB, model.name, bestQuant, uc),
@@ -168,24 +164,31 @@ export function analyzeModelFit(
   }
   const score = fitLevel === 'wont_run' ? 0 : compositeScore(scores, uc)
 
-  // 10. Viable quants
-  const viable_quants: QuantOption[] = []
-  for (const quant of GGUF_QUANT_HIERARCHY) {
-    const qMem = estimateMemory(paramsB, quant, context, meta)
-    const qTps = estimateTps({
-      paramsB,
-      quant,
-      bandwidthGbps: runMode === 'cpu_only' ? 0 : system.bandwidth_gbps,
-      runMode,
-      cpuCores: system.cpu_cores,
-    })
-    viable_quants.push({
-      quant,
-      memory_required_gb: qMem.total_gb,
-      estimated_tps: qTps,
-      fits: qMem.total_gb <= availableGb,
-    })
-  }
+  // Viable quants: for pre-quantized repos, show only the native quant
+  // since you can't re-quantize someone else's packed weights.
+  const viable_quants: QuantOption[] = preQuantized
+    ? [{
+        quant: bestQuant,
+        memory_required_gb: requiredGb,
+        estimated_tps: tps,
+        fits: requiredGb <= availableGb,
+      }]
+    : GGUF_QUANT_HIERARCHY.map((quant) => {
+        const qMem = estimateMemory(paramsB, quant, context, meta)
+        const qTps = estimateTps({
+          paramsB,
+          quant,
+          bandwidthGbps: runMode === 'cpu_only' ? 0 : system.bandwidth_gbps,
+          runMode,
+          cpuCores: system.cpu_cores,
+        })
+        return {
+          quant,
+          memory_required_gb: qMem.total_gb,
+          estimated_tps: qTps,
+          fits: qMem.total_gb <= availableGb,
+        }
+      })
 
   return {
     model,
