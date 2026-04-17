@@ -1326,3 +1326,26 @@ select.filter-input {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   Multi-GPU edit rows
+   ============================================================ */
+.hw-gpu-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.hw-field-grow { flex: 1 1 220px; min-width: 180px; }
+.hw-input-narrow { width: 80px; }
+
+.hw-gpu-remove {
+  padding: 0.25rem 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.hw-gpu-add {
+  margin-top: 0.25rem;
+}

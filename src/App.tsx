@@ -200,10 +200,10 @@ export default function App() {
       </header>
 
       {hw.ready && (
-        /* Task 5: HardwarePanel becomes multi-GPU-aware; these gpus[0] fallbacks go away. */
         <HardwarePanel
-          gpuName={hw.gpus[0]?.name ?? ''}
-          vramGb={hw.gpus[0]?.vram_gb ?? 0}
+          gpus={hw.gpus}
+          interconnect={hw.interconnect}
+          parallelism={hw.parallelism}
           ramGb={hw.ramGb}
           ramUserSet={hw.ramUserSet}
           cpuCores={hw.cpuCores}
@@ -211,13 +211,12 @@ export default function App() {
           gpuDetected={hw.gpuDetected}
           editing={hw.editing}
           onEditingChange={hw.setEditing}
-          onGpuChange={(name, spec) => {
-            if (hw.gpus.length === 0) hw.addGpu(name, spec)
-            else hw.selectGpu(0, name, spec)
-          }}
-          onVramChange={(gb) => {
-            if (hw.gpus.length > 0) hw.updateGpuAt(0, { vram_gb: gb })
-          }}
+          onAddGpu={hw.addGpu}
+          onRemoveGpu={hw.removeGpu}
+          onUpdateGpuAt={hw.updateGpuAt}
+          onSelectGpu={hw.selectGpu}
+          onInterconnectChange={hw.setInterconnect}
+          onParallelismChange={hw.setParallelism}
           onRamChange={hw.setRamGb}
           onCpuCoresChange={hw.setCpuCores}
           onRescan={hw.scan}
