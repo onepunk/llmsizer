@@ -1,5 +1,11 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
-import type { SystemSpecs, GpuSpec } from '../engine/types'
+import type {
+  SystemSpecs,
+  GpuSpec,
+  GpuEntry,
+  Interconnect,
+  ParallelismMode,
+} from '../engine/types'
 import { detectHardware, buildSystemSpecs } from '../detection/detect'
 import { lookupGpu } from '../detection/parse-renderer'
 import { readUrlState } from '../url'
@@ -33,16 +39,24 @@ export function useHardware() {
   const [unified, setUnified] = useState(urlInit.unified ?? false)
   const [gpuDetected, setGpuDetected] = useState(false)
   const [bandwidth, setBandwidth] = useState(0)
+  const [interconnect, setInterconnect] = useState<Interconnect>('none')
+  const [parallelism, setParallelism] = useState<ParallelismMode>('auto')
 
-  const system = useMemo<SystemSpecs>(() => ({
-    gpu_name: gpuName || null,
-    gpu_detected: gpuDetected,
-    vram_gb: unified ? 0 : vramGb,
-    ram_gb: ramGb,
-    cpu_cores: cpuCores,
-    bandwidth_gbps: bandwidth,
-    unified_memory: unified,
-  }), [gpuName, gpuDetected, vramGb, ramGb, cpuCores, unified, bandwidth])
+  const system = useMemo<SystemSpecs>(() => {
+    const gpus: GpuEntry[] = !unified && vramGb > 0 && bandwidth > 0
+      ? [{ name: gpuName || 'Unknown GPU', vram_gb: vramGb, bandwidth_gbps: bandwidth, count: 1 }]
+      : []
+    return {
+      gpu_name: gpuName || null,
+      gpu_detected: gpuDetected,
+      gpus,
+      interconnect,
+      parallelism,
+      ram_gb: ramGb,
+      cpu_cores: cpuCores,
+      unified_memory: unified,
+    }
+  }, [gpuName, gpuDetected, vramGb, ramGb, cpuCores, unified, bandwidth, interconnect, parallelism])
 
   const scan = useCallback(() => {
     const detection = detectHardware()
@@ -117,6 +131,8 @@ export function useHardware() {
     cpuCores,
     unified,
     gpuDetected,
+    interconnect,
+    parallelism,
     scan,
     enterManual,
     reset,
@@ -125,5 +141,7 @@ export function useHardware() {
     setRamGb,
     setCpuCores,
     setUnified,
+    setInterconnect,
+    setParallelism,
   }
 }

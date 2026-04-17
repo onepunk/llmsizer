@@ -42,13 +42,24 @@ export interface GpuSpec {
   unified?: boolean
 }
 
+export type Interconnect = 'nvlink' | 'pcie5' | 'pcie4' | 'pcie3' | 'none'
+export type ParallelismMode = 'auto' | 'layer_split' | 'tensor_parallel'
+
+export interface GpuEntry {
+  name: string
+  vram_gb: number
+  bandwidth_gbps: number
+  count: number
+}
+
 export interface SystemSpecs {
   gpu_name: string | null
   gpu_detected: boolean
-  vram_gb: number
+  gpus: GpuEntry[]              // [] means CPU-only; flatten count via expandGpus
+  interconnect: Interconnect
+  parallelism: ParallelismMode
   ram_gb: number
   cpu_cores: number
-  bandwidth_gbps: number
   unified_memory: boolean
 }
 
@@ -72,6 +83,8 @@ export interface ModelFit {
   score: number
   scores: { quality: number; speed: number; fit: number; context: number }
   viable_quants: QuantOption[]
+  resolved_parallelism: ParallelismMode
+  gpu_count: number
 }
 
 export interface QuantOption {
@@ -91,14 +104,4 @@ export interface FilterState {
   context: number
   sort: SortKey
   sortDir: SortDir
-}
-
-export type Interconnect = 'nvlink' | 'pcie5' | 'pcie4' | 'pcie3' | 'none'
-export type ParallelismMode = 'auto' | 'layer_split' | 'tensor_parallel'
-
-export interface GpuEntry {
-  name: string
-  vram_gb: number
-  bandwidth_gbps: number
-  count: number
 }

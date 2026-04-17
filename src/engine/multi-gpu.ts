@@ -17,7 +17,7 @@ export function expandGpus(gpus: GpuEntry[]): GpuEntry[] {
 export function isHomogeneous(gpus: GpuEntry[]): boolean {
   const expanded = expandGpus(gpus)
   if (expanded.length <= 1) return true
-  const first = expanded[0]
+  const first = expanded[0]!
   return expanded.every(
     (g) => g.vram_gb === first.vram_gb && g.bandwidth_gbps === first.bandwidth_gbps,
   )

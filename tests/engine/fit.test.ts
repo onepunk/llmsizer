@@ -30,20 +30,22 @@ const LLAMA_8B: LlmModel = {
 const RTX_3090_SYSTEM: SystemSpecs = {
   gpu_name: 'NVIDIA GeForce RTX 3090',
   gpu_detected: true,
-  vram_gb: 24,
+  gpus: [{ name: 'RTX 3090', vram_gb: 24, bandwidth_gbps: 936, count: 1 }],
+  interconnect: 'none',
+  parallelism: 'auto',
   ram_gb: 64,
   cpu_cores: 16,
-  bandwidth_gbps: 936,
   unified_memory: false,
 }
 
 const CPU_ONLY_SYSTEM: SystemSpecs = {
   gpu_name: null,
   gpu_detected: false,
-  vram_gb: 0,
+  gpus: [],
+  interconnect: 'none',
+  parallelism: 'auto',
   ram_gb: 32,
   cpu_cores: 8,
-  bandwidth_gbps: 0,
   unified_memory: false,
 }
 
@@ -70,10 +72,11 @@ describe('analyzeModelFit', () => {
     const tinySystem: SystemSpecs = {
       gpu_name: null,
       gpu_detected: false,
-      vram_gb: 0,
+      gpus: [],
+      interconnect: 'none',
+      parallelism: 'auto',
       ram_gb: 2,
       cpu_cores: 4,
-      bandwidth_gbps: 0,
       unified_memory: false,
     }
     const result = analyzeModelFit(LLAMA_8B, tinySystem, 'general')
@@ -99,10 +102,11 @@ describe('analyzeModelFit', () => {
     const m2ProSystem: SystemSpecs = {
       gpu_name: 'Apple M2 Pro',
       gpu_detected: true,
-      vram_gb: 0,
+      gpus: [],
+      interconnect: 'none',
+      parallelism: 'auto',
       ram_gb: 32,
       cpu_cores: 12,
-      bandwidth_gbps: 200,
       unified_memory: true,
     }
     const result = analyzeModelFit(LLAMA_8B, m2ProSystem, 'general')
@@ -140,5 +144,46 @@ describe('analyzeModelFit', () => {
     // LLAMA_8B.context_length is 131072. Ask for 1M.
     const result = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general', 1_000_000)
     expect(result.context_used).toBe(131072)
+  })
+
+  it('2x RTX 3090 (homogeneous, nvlink): aggregates VRAM, applies TP multiplier', () => {
+    const dual3090: SystemSpecs = {
+      gpu_name: 'NVIDIA GeForce RTX 3090',
+      gpu_detected: true,
+      gpus: [{ name: 'RTX 3090', vram_gb: 24, bandwidth_gbps: 936, count: 2 }],
+      interconnect: 'nvlink',
+      parallelism: 'auto',
+      ram_gb: 64,
+      cpu_cores: 16,
+      unified_memory: false,
+    }
+    const single = analyzeModelFit(LLAMA_8B, RTX_3090_SYSTEM, 'general')
+    const dual = analyzeModelFit(LLAMA_8B, dual3090, 'general')
+
+    expect(dual.memory_available_gb).toBeGreaterThan(single.memory_available_gb * 1.8)
+    expect(dual.estimated_tps).toBeGreaterThan(single.estimated_tps * 1.4)
+    expect(dual.resolved_parallelism).toBe('tensor_parallel')
+    expect(dual.gpu_count).toBe(2)
+  })
+
+  it('mixed 3090 + 3060 (heterogeneous): falls back to layer_split, lower TPS than homogeneous', () => {
+    const mixed: SystemSpecs = {
+      gpu_name: 'Mixed',
+      gpu_detected: true,
+      gpus: [
+        { name: 'RTX 3090', vram_gb: 24, bandwidth_gbps: 936, count: 1 },
+        { name: 'RTX 3060', vram_gb: 12, bandwidth_gbps: 360, count: 1 },
+      ],
+      interconnect: 'nvlink',
+      parallelism: 'auto',
+      ram_gb: 64,
+      cpu_cores: 16,
+      unified_memory: false,
+    }
+    const result = analyzeModelFit(LLAMA_8B, mixed, 'general')
+    expect(result.resolved_parallelism).toBe('layer_split')
+    expect(result.gpu_count).toBe(2)
+    // 10% heterogeneity overhead on raw 36GB = ~32.4GB effective
+    expect(result.memory_available_gb).toBeCloseTo(32.4, 0)
   })
 })

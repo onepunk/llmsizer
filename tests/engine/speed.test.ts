@@ -67,4 +67,10 @@ describe('estimateTps', () => {
     // Should use CPU path: (70/7)*1.15*1.1 = 12.65
     expect(result).toBeCloseTo(12.65, 2)
   })
+
+  it('applies tpMultiplier to GPU-mode TPS', () => {
+    const base = estimateTps({ paramsB: 8, quant: 'Q4_K_M', bandwidthGbps: 936, runMode: 'gpu', cpuCores: 16 })
+    const boosted = estimateTps({ paramsB: 8, quant: 'Q4_K_M', bandwidthGbps: 936, runMode: 'gpu', cpuCores: 16, tpMultiplier: 1.6 })
+    expect(boosted).toBeCloseTo(base * 1.6, 2)
+  })
 })

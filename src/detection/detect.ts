@@ -1,4 +1,4 @@
-import type { GpuSpec, SystemSpecs } from '../engine/types'
+import type { GpuSpec } from '../engine/types'
 import { parseRendererString, lookupGpu } from './parse-renderer'
 
 export interface HardwareDetection {
@@ -54,13 +54,28 @@ export interface DetectionOverrides {
 }
 
 /**
- * Builds a SystemSpecs object from a HardwareDetection result and optional user overrides.
+ * Flat detection result used by the hardware UI state. The UI still stores
+ * scalar vram/bandwidth because it's single-GPU for now; the multi-GPU shape
+ * is assembled inside useHardware when building SystemSpecs.
+ */
+export interface DetectedSystem {
+  gpu_name: string | null
+  gpu_detected: boolean
+  vram_gb: number
+  ram_gb: number
+  cpu_cores: number
+  bandwidth_gbps: number
+  unified_memory: boolean
+}
+
+/**
+ * Builds a DetectedSystem from a HardwareDetection result and optional user overrides.
  * device_memory (GB) is used as the RAM estimate when available.
  */
 export function buildSystemSpecs(
   detection: HardwareDetection,
   overrides: DetectionOverrides = {}
-): SystemSpecs {
+): DetectedSystem {
   const spec = detection.gpu_spec
   const unified = overrides.unified_memory ?? spec?.unified ?? false
 

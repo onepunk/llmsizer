@@ -20,6 +20,14 @@ import {
   contextScore,
   compositeScore,
 } from './score'
+import {
+  effectiveVramGb,
+  effectiveBandwidthGbps,
+  tensorParallelMultiplier,
+  autoParallelism,
+  expandGpus,
+  isHomogeneous,
+} from './multi-gpu'
 
 export const DEFAULT_CONTEXT = 8192
 
@@ -88,6 +96,21 @@ export function analyzeModelFit(
   const meta = extractModelMeta(model)
   const preQuantized = model.weight_gb != null
 
+  // Derived multi-GPU values
+  const expanded = expandGpus(system.gpus)
+  const gpuCount = expanded.length
+  const totalVramGb = effectiveVramGb(system.gpus)
+  const homogeneous = isHomogeneous(system.gpus)
+  const resolvedParallelism =
+    system.parallelism === 'auto'
+      ? autoParallelism(gpuCount, system.interconnect, homogeneous)
+      : system.parallelism
+  const tpMult =
+    resolvedParallelism === 'tensor_parallel'
+      ? tensorParallelMultiplier(gpuCount, system.interconnect, homogeneous)
+      : 1.0
+  const effectiveBw = effectiveBandwidthGbps(system.gpus)
+
   // Determine run mode and available memory
   let runMode: RunMode
   let availableGb: number
@@ -95,7 +118,7 @@ export function analyzeModelFit(
   if (system.unified_memory) {
     runMode = 'unified'
     availableGb = system.ram_gb
-  } else if (system.vram_gb > 0) {
+  } else if (totalVramGb > 0) {
     const gpuMem = estimateMemory(
       paramsB,
       model.quantization,
@@ -104,19 +127,19 @@ export function analyzeModelFit(
       preQuantized ? model.weight_gb : null,
     ).total_gb
     const gpuFits = preQuantized
-      ? gpuMem <= system.vram_gb
-      : bestQuantForBudget(paramsB, system.vram_gb, context, meta) != null
+      ? gpuMem <= totalVramGb
+      : bestQuantForBudget(paramsB, totalVramGb, context, meta) != null
 
     if (gpuFits) {
       runMode = 'gpu'
-      availableGb = system.vram_gb
+      availableGb = totalVramGb
     } else {
       const offloadFits = preQuantized
-        ? gpuMem <= system.vram_gb + system.ram_gb
-        : bestQuantForBudget(paramsB, system.vram_gb + system.ram_gb, context, meta) != null
+        ? gpuMem <= totalVramGb + system.ram_gb
+        : bestQuantForBudget(paramsB, totalVramGb + system.ram_gb, context, meta) != null
       if (offloadFits) {
         runMode = 'cpu_offload'
-        availableGb = system.vram_gb + system.ram_gb
+        availableGb = totalVramGb + system.ram_gb
       } else {
         runMode = 'cpu_only'
         availableGb = system.ram_gb
@@ -144,7 +167,8 @@ export function analyzeModelFit(
   const tps = estimateTps({
     paramsB,
     quant: bestQuant,
-    bandwidthGbps: runMode === 'cpu_only' ? 0 : system.bandwidth_gbps,
+    bandwidthGbps: runMode === 'cpu_only' ? 0 : effectiveBw,
+    tpMultiplier: runMode === 'gpu' || runMode === 'unified' ? tpMult : 1.0,
     runMode,
     cpuCores: system.cpu_cores,
   })
@@ -179,7 +203,8 @@ export function analyzeModelFit(
         const qTps = estimateTps({
           paramsB,
           quant,
-          bandwidthGbps: runMode === 'cpu_only' ? 0 : system.bandwidth_gbps,
+          bandwidthGbps: runMode === 'cpu_only' ? 0 : effectiveBw,
+          tpMultiplier: runMode === 'gpu' || runMode === 'unified' ? tpMult : 1.0,
           runMode,
           cpuCores: system.cpu_cores,
         })
@@ -204,5 +229,7 @@ export function analyzeModelFit(
     score,
     scores,
     viable_quants,
+    resolved_parallelism: resolvedParallelism,
+    gpu_count: gpuCount,
   }
 }

@@ -16,10 +16,11 @@ export interface SpeedParams {
   bandwidthGbps: number
   runMode: RunMode
   cpuCores: number
+  tpMultiplier?: number
 }
 
 export function estimateTps(params: SpeedParams): number {
-  const { paramsB, quant, bandwidthGbps, runMode, cpuCores } = params
+  const { paramsB, quant, bandwidthGbps, runMode, cpuCores, tpMultiplier = 1.0 } = params
   if (paramsB <= 0) return 0
 
   if (runMode === 'cpu_only' || bandwidthGbps === 0) {
@@ -30,5 +31,5 @@ export function estimateTps(params: SpeedParams): number {
 
   const modelSizeGb = paramsB * quantBytesPerParam(quant)
   const rawTps = (bandwidthGbps / modelSizeGb) * 0.55
-  return rawTps * RUN_MODE_FACTOR[runMode]
+  return rawTps * RUN_MODE_FACTOR[runMode] * tpMultiplier
 }
