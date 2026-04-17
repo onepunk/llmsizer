@@ -1,4 +1,8 @@
 import type { FilterState, GpuEntry, Interconnect, ParallelismMode } from './engine/types'
+import { lookupGpu } from './detection/parse-renderer'
+
+const INTERCONNECTS: Interconnect[] = ['nvlink', 'pcie5', 'pcie4', 'pcie3', 'none']
+const PARALLELISMS: ParallelismMode[] = ['auto', 'layer_split', 'tensor_parallel']
 
 export interface HardwareUrlState {
   gpus: GpuEntry[]
@@ -21,14 +25,60 @@ function clampNum(raw: string | null, min: number, max: number): number | null {
   return Number.isFinite(n) ? Math.max(min, Math.min(max, n)) : null
 }
 
+function parseGpusParam(raw: string | null, vramLegacy: number | null): GpuEntry[] {
+  if (!raw) return []
+
+  // Legacy: single name + separate vram param, no colon in the value
+  if (!raw.includes(',') && !raw.includes(':') && vramLegacy !== null) {
+    const spec = lookupGpu(raw)
+    return [{
+      name: raw,
+      vram_gb: vramLegacy,
+      bandwidth_gbps: spec?.bandwidth_gbps ?? 0,
+      count: 1,
+    }]
+  }
+
+  return raw.split(',').map((chunk) => chunk.trim()).filter(Boolean).map((chunk) => {
+    const colonIdx = chunk.lastIndexOf(':')
+    let name = chunk
+    let count = 1
+    if (colonIdx > 0) {
+      const tail = chunk.slice(colonIdx + 1)
+      const parsed = Number(tail)
+      if (Number.isFinite(parsed) && parsed > 0) {
+        name = chunk.slice(0, colonIdx)
+        count = Math.min(8, Math.max(1, Math.floor(parsed)))
+      }
+    }
+    const spec = lookupGpu(name)
+    return {
+      name,
+      vram_gb: spec?.vram_gb ?? 0,
+      bandwidth_gbps: spec?.bandwidth_gbps ?? 0,
+      count,
+    }
+  })
+}
+
+function parseInterconnect(raw: string | null): Interconnect | null {
+  if (raw === null) return null
+  return (INTERCONNECTS as string[]).includes(raw) ? (raw as Interconnect) : null
+}
+
+function parseParallelism(raw: string | null): ParallelismMode | null {
+  if (raw === null) return null
+  return (PARALLELISMS as string[]).includes(raw) ? (raw as ParallelismMode) : null
+}
+
 export function readUrlState(search: string = window.location.search): AppUrlState {
   const params = new URLSearchParams(search)
 
-  // Temporary stub — Task 4 implements the real multi-GPU parsing.
+  const vramLegacy = clampNum(params.get('vram'), 0, 1024)
   const hw: HardwareUrlState = {
-    gpus: [],
-    interconnect: null,
-    parallelism: null,
+    gpus: parseGpusParam(params.get('gpu'), vramLegacy),
+    interconnect: parseInterconnect(params.get('ic')),
+    parallelism: parseParallelism(params.get('par')),
     ram: clampNum(params.get('ram'), 1, 8192),
     cores: clampNum(params.get('cores'), 1, 512),
     unified: params.has('unified') ? params.get('unified') === '1' : null,
@@ -72,9 +122,14 @@ export function buildUrlSearch(input: WriteUrlInput): string {
   const params = new URLSearchParams()
   const { hw, filters, compare, defaults } = input
 
-  // Task 4 adds gpus[], interconnect, parallelism encoding. For now these
-  // inputs are accepted but ignored so callers can migrate ahead.
-  // Only ram/cores/unified round-trip through the URL today.
+  if (hw.gpus.length > 0) {
+    const encoded = hw.gpus
+      .map((g) => (g.count > 1 ? `${g.name}:${g.count}` : g.name))
+      .join(',')
+    params.set('gpu', encoded)
+  }
+  if (hw.interconnect !== 'none') params.set('ic', hw.interconnect)
+  if (hw.parallelism !== 'auto') params.set('par', hw.parallelism)
   if (hw.ramGb > 0) params.set('ram', String(hw.ramGb))
   if (hw.cpuCores > 0) params.set('cores', String(hw.cpuCores))
   if (hw.unified) params.set('unified', '1')
