@@ -12,7 +12,7 @@ import { readUrlState, writeUrl, currentShareUrl } from './url'
 const DEFAULT_FILTERS: FilterState = {
   search: '',
   useCase: 'all',
-  minFit: 'marginal',
+  minFit: 'all',
   context: 8192,
   sort: 'score',
   sortDir: 'desc',

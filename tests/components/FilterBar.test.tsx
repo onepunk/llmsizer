@@ -6,7 +6,7 @@ import type { FilterState } from '../../src/engine/types'
 const BASE_FILTERS: FilterState = {
   search: '',
   useCase: 'all',
-  minFit: 'marginal',
+  minFit: 'all',
   context: 8192,
   sort: 'score',
   sortDir: 'desc',

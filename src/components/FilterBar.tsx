@@ -60,7 +60,7 @@ export default function FilterBar({
           onChange({ ...filters, minFit: e.target.value as FilterState['minFit'] })
         }
       >
-        <option value="all">All Fit Levels</option>
+        <option value="all">Any fit</option>
         <option value="perfect">Perfect</option>
         <option value="good">Good+</option>
         <option value="marginal">Marginal+</option>

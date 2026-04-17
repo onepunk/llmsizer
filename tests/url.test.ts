@@ -5,7 +5,7 @@ import type { FilterState } from '../src/engine/types'
 const DEFAULTS: FilterState = {
   search: '',
   useCase: 'all',
-  minFit: 'marginal',
+  minFit: 'all',
   context: 8192,
   sort: 'score',
   sortDir: 'desc',
@@ -259,7 +259,7 @@ describe('multi-GPU URL state', () => {
 
 describe('multi-GPU URL writing', () => {
   const DEFAULTS: FilterState = {
-    search: '', useCase: 'all', minFit: 'marginal', context: 8192,
+    search: '', useCase: 'all', minFit: 'all', context: 8192,
     sort: 'score', sortDir: 'desc',
   }
 
