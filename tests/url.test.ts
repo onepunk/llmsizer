@@ -13,12 +13,12 @@ const DEFAULTS: FilterState = {
 
 describe('readUrlState', () => {
   it('reads hardware, filter, and compare params', () => {
+    // TODO(Task 4): restore gpu/vram params once multi-GPU URL format lands.
     const state = readUrlState(
-      '?gpu=RTX%204090&vram=24&ram=64&cores=16&unified=0&ctx=16384&uc=coding&fit=perfect&cmp=a/b,c/d',
+      '?ram=64&cores=16&unified=0&ctx=16384&uc=coding&fit=perfect&cmp=a/b,c/d',
     )
 
-    expect(state.hw.gpu).toBe('RTX 4090')
-    expect(state.hw.vram).toBe(24)
+    expect(state.hw.gpus).toEqual([])
     expect(state.hw.ram).toBe(64)
     expect(state.hw.cores).toBe(16)
     expect(state.hw.unified).toBe(false)
@@ -30,17 +30,16 @@ describe('readUrlState', () => {
 
   it('returns nulls / empties when no params are set', () => {
     const state = readUrlState('')
-    expect(state.hw.gpu).toBeNull()
-    expect(state.hw.vram).toBeNull()
+    expect(state.hw.gpus).toEqual([])
+    expect(state.hw.interconnect).toBeNull()
+    expect(state.hw.parallelism).toBeNull()
     expect(state.hw.unified).toBeNull()
     expect(state.filters).toEqual({})
     expect(state.compare).toEqual([])
   })
 
   it('clamps out-of-range numeric params', () => {
-    const state = readUrlState('?vram=9999&ram=-5&cores=0')
-    // vram max is 1024
-    expect(state.hw.vram).toBe(1024)
+    const state = readUrlState('?ram=-5&cores=0')
     // ram min is 1
     expect(state.hw.ram).toBe(1)
     // cores min is 1
@@ -48,18 +47,20 @@ describe('readUrlState', () => {
   })
 
   it('rejects non-numeric values (NaN) gracefully', () => {
-    const state = readUrlState('?vram=abc&ctx=zzz')
-    expect(state.hw.vram).toBeNull()
+    const state = readUrlState('?ram=abc&ctx=zzz')
+    expect(state.hw.ram).toBeNull()
     expect(state.filters.context).toBeUndefined()
   })
 })
 
 describe('buildUrlSearch', () => {
   it('omits filter keys equal to defaults, includes hardware', () => {
+    // TODO(Task 4): assert gpu/vram params once multi-GPU URL format lands.
     const qs = buildUrlSearch({
       hw: {
-        gpuName: 'RTX 4090',
-        vramGb: 24,
+        gpus: [{ name: 'RTX 4090', vram_gb: 24, bandwidth_gbps: 1008, count: 1 }],
+        interconnect: 'none',
+        parallelism: 'auto',
         ramGb: 64,
         cpuCores: 16,
         unified: false,
@@ -70,8 +71,6 @@ describe('buildUrlSearch', () => {
     })
 
     const params = new URLSearchParams(qs)
-    expect(params.get('gpu')).toBe('RTX 4090')
-    expect(params.get('vram')).toBe('24')
     expect(params.get('ram')).toBe('64')
     expect(params.get('cores')).toBe('16')
     expect(params.has('unified')).toBe(false)
@@ -84,8 +83,9 @@ describe('buildUrlSearch', () => {
   it('includes non-default filters and compare selection', () => {
     const qs = buildUrlSearch({
       hw: {
-        gpuName: '',
-        vramGb: 0,
+        gpus: [],
+        interconnect: 'none',
+        parallelism: 'auto',
         ramGb: 32,
         cpuCores: 8,
         unified: true,
@@ -107,16 +107,16 @@ describe('buildUrlSearch', () => {
     expect(params.get('fit')).toBe('perfect')
     expect(params.get('q')).toBe('llama')
     expect(params.get('unified')).toBe('1')
-    expect(params.has('gpu')).toBe(false)
-    expect(params.has('vram')).toBe(false)
     expect(params.get('cmp')).toBe('meta/Llama-3.1-8B,qwen/Qwen2.5-7B')
   })
 
   it('round-trips a state through build + read', () => {
+    // TODO(Task 4): extend to cover gpus[] round-trip once URL format lands.
     const qs = buildUrlSearch({
       hw: {
-        gpuName: 'Apple M2 Max',
-        vramGb: 0,
+        gpus: [],
+        interconnect: 'none',
+        parallelism: 'auto',
         ramGb: 96,
         cpuCores: 12,
         unified: true,
@@ -133,7 +133,6 @@ describe('buildUrlSearch', () => {
     })
 
     const state = readUrlState('?' + qs)
-    expect(state.hw.gpu).toBe('Apple M2 Max')
     expect(state.hw.ram).toBe(96)
     expect(state.hw.unified).toBe(true)
     expect(state.filters.context).toBe(16384)

@@ -1,8 +1,9 @@
-import type { FilterState } from './engine/types'
+import type { FilterState, GpuEntry, Interconnect, ParallelismMode } from './engine/types'
 
 export interface HardwareUrlState {
-  gpu: string | null
-  vram: number | null
+  gpus: GpuEntry[]
+  interconnect: Interconnect | null
+  parallelism: ParallelismMode | null
   ram: number | null
   cores: number | null
   unified: boolean | null
@@ -23,9 +24,11 @@ function clampNum(raw: string | null, min: number, max: number): number | null {
 export function readUrlState(search: string = window.location.search): AppUrlState {
   const params = new URLSearchParams(search)
 
+  // Temporary stub — Task 4 implements the real multi-GPU parsing.
   const hw: HardwareUrlState = {
-    gpu: params.get('gpu'),
-    vram: clampNum(params.get('vram'), 0, 1024),
+    gpus: [],
+    interconnect: null,
+    parallelism: null,
     ram: clampNum(params.get('ram'), 1, 8192),
     cores: clampNum(params.get('cores'), 1, 512),
     unified: params.has('unified') ? params.get('unified') === '1' : null,
@@ -53,8 +56,9 @@ export function readUrlState(search: string = window.location.search): AppUrlSta
 
 export interface WriteUrlInput {
   hw: {
-    gpuName: string
-    vramGb: number
+    gpus: GpuEntry[]
+    interconnect: Interconnect
+    parallelism: ParallelismMode
     ramGb: number
     cpuCores: number
     unified: boolean
@@ -68,8 +72,8 @@ export function buildUrlSearch(input: WriteUrlInput): string {
   const params = new URLSearchParams()
   const { hw, filters, compare, defaults } = input
 
-  if (hw.gpuName) params.set('gpu', hw.gpuName)
-  if (hw.vramGb > 0) params.set('vram', String(hw.vramGb))
+  // Temporary stub — Task 4 implements the real multi-GPU encoding.
+  // For now, only ram/cores/unified round-trip through the URL.
   if (hw.ramGb > 0) params.set('ram', String(hw.ramGb))
   if (hw.cpuCores > 0) params.set('cores', String(hw.cpuCores))
   if (hw.unified) params.set('unified', '1')

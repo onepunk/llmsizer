@@ -114,8 +114,9 @@ export default function App() {
     if (!hw.ready) return
     writeUrl({
       hw: {
-        gpuName: hw.gpuName,
-        vramGb: hw.vramGb,
+        gpus: hw.gpus,
+        interconnect: hw.interconnect,
+        parallelism: hw.parallelism,
         ramGb: hw.ramGb,
         cpuCores: hw.cpuCores,
         unified: hw.unified,
@@ -124,7 +125,7 @@ export default function App() {
       compare,
       defaults: DEFAULT_FILTERS,
     })
-  }, [hw.ready, hw.gpuName, hw.vramGb, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
 
   // On reset, drop the query string entirely.
   const previousReadyRef = useRef(hw.ready)
@@ -141,8 +142,9 @@ export default function App() {
   const handleShare = useCallback(async () => {
     const url = currentShareUrl({
       hw: {
-        gpuName: hw.gpuName,
-        vramGb: hw.vramGb,
+        gpus: hw.gpus,
+        interconnect: hw.interconnect,
+        parallelism: hw.parallelism,
         ramGb: hw.ramGb,
         cpuCores: hw.cpuCores,
         unified: hw.unified,
@@ -159,7 +161,7 @@ export default function App() {
     }
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
     shareTimer.current = window.setTimeout(() => setShareStatus('idle'), 2000)
-  }, [hw.gpuName, hw.vramGb, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
 
   useEffect(() => () => {
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
@@ -199,8 +201,8 @@ export default function App() {
 
       {hw.ready && (
         <HardwarePanel
-          gpuName={hw.gpuName}
-          vramGb={hw.vramGb}
+          gpuName={hw.gpus[0]?.name ?? ''}
+          vramGb={hw.gpus[0]?.vram_gb ?? 0}
           ramGb={hw.ramGb}
           ramUserSet={hw.ramUserSet}
           cpuCores={hw.cpuCores}
@@ -208,8 +210,13 @@ export default function App() {
           gpuDetected={hw.gpuDetected}
           editing={hw.editing}
           onEditingChange={hw.setEditing}
-          onGpuChange={hw.updateGpu}
-          onVramChange={hw.setVramGb}
+          onGpuChange={(name, spec) => {
+            if (hw.gpus.length === 0) hw.addGpu(name, spec)
+            else hw.updateGpuName(0, name, spec)
+          }}
+          onVramChange={(gb) => {
+            if (hw.gpus.length > 0) hw.updateGpuAt(0, { vram_gb: gb })
+          }}
           onRamChange={hw.setRamGb}
           onCpuCoresChange={hw.setCpuCores}
           onRescan={hw.scan}

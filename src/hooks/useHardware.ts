@@ -18,59 +18,94 @@ type Phase = 'detected' | 'manual'
 // fit engine only counts VRAM, so models that would only fit via cpu_offload
 // show as "won't run" until the user confirms they have the RAM.
 
+function makeEntry(name: string, spec: GpuSpec | null, count = 1): GpuEntry {
+  return {
+    name,
+    vram_gb: spec?.vram_gb ?? 0,
+    bandwidth_gbps: spec?.bandwidth_gbps ?? 0,
+    count,
+  }
+}
+
 export function useHardware() {
   const urlInit = useMemo(() => readUrlState().hw, [])
-  const hasUrlParams = urlInit.gpu !== null || urlInit.vram !== null || urlInit.ram !== null
+  const hasUrlParams =
+    urlInit.gpus.length > 0 || urlInit.ram !== null || urlInit.unified === true
 
   const [phase, setPhase] = useState<Phase>('manual')
   const [ready, setReady] = useState(hasUrlParams)
-  const [gpuName, setGpuName] = useState(urlInit.gpu ?? '')
-  const [vramGb, setVramGb] = useState(urlInit.vram ?? 0)
+  const [gpus, setGpus] = useState<GpuEntry[]>(urlInit.gpus)
+  const [interconnect, setInterconnect] = useState<Interconnect>(urlInit.interconnect ?? 'none')
+  const [parallelism, setParallelism] = useState<ParallelismMode>(urlInit.parallelism ?? 'auto')
   const [ramGb, setRamGbState] = useState(urlInit.ram ?? 0)
   // True once the user has explicitly chosen a RAM value (header dropdown,
   // manual-edit form, or URL param). Drives the placeholder option + hint
   // styling on the RAM dropdown until then.
   const [ramUserSet, setRamUserSet] = useState(urlInit.ram !== null)
+  const [cpuCores, setCpuCores] = useState(urlInit.cores ?? 4)
+  const [unified, setUnified] = useState(urlInit.unified ?? false)
+  const [gpuDetected, setGpuDetected] = useState(false)
+
   const setRamGb = useCallback((gb: number) => {
     setRamGbState(gb)
     setRamUserSet(true)
   }, [])
-  const [cpuCores, setCpuCores] = useState(urlInit.cores ?? 4)
-  const [unified, setUnified] = useState(urlInit.unified ?? false)
-  const [gpuDetected, setGpuDetected] = useState(false)
-  const [bandwidth, setBandwidth] = useState(0)
-  const [interconnect, setInterconnect] = useState<Interconnect>('none')
-  const [parallelism, setParallelism] = useState<ParallelismMode>('auto')
 
-  const system = useMemo<SystemSpecs>(() => {
-    const gpus: GpuEntry[] = !unified && vramGb > 0 && bandwidth > 0
-      ? [{ name: gpuName || 'Unknown GPU', vram_gb: vramGb, bandwidth_gbps: bandwidth, count: 1 }]
-      : []
-    return {
-      gpu_name: gpuName || null,
+  const addGpu = useCallback((name: string, spec: GpuSpec | null) => {
+    setGpus((prev) => [...prev, makeEntry(name, spec, 1)])
+  }, [])
+
+  const removeGpu = useCallback((index: number) => {
+    setGpus((prev) => prev.filter((_, i) => i !== index))
+  }, [])
+
+  const updateGpuAt = useCallback((index: number, patch: Partial<GpuEntry>) => {
+    setGpus((prev) => prev.map((g, i) => (i === index ? { ...g, ...patch } : g)))
+  }, [])
+
+  const updateGpuName = useCallback((index: number, name: string, spec: GpuSpec | null) => {
+    setGpus((prev) =>
+      prev.map((g, i) =>
+        i === index
+          ? {
+              ...g,
+              name,
+              vram_gb: spec?.vram_gb ?? g.vram_gb,
+              bandwidth_gbps: spec?.bandwidth_gbps ?? g.bandwidth_gbps,
+            }
+          : g,
+      ),
+    )
+  }, [])
+
+  const system = useMemo<SystemSpecs>(
+    () => ({
+      gpu_name: gpus[0]?.name ?? null,
       gpu_detected: gpuDetected,
-      gpus,
+      gpus: unified ? [] : gpus,
       interconnect,
       parallelism,
       ram_gb: ramGb,
       cpu_cores: cpuCores,
       unified_memory: unified,
-    }
-  }, [gpuName, gpuDetected, vramGb, ramGb, cpuCores, unified, bandwidth, interconnect, parallelism])
+    }),
+    [gpus, gpuDetected, ramGb, cpuCores, unified, interconnect, parallelism],
+  )
 
   const scan = useCallback(() => {
     const detection = detectHardware()
     const specs = buildSystemSpecs(detection)
 
-    if (detection.gpu_parsed) setGpuName(detection.gpu_parsed)
-    setVramGb(specs.vram_gb)
+    if (detection.gpu_parsed) {
+      // Replace current list with the detected single GPU. User can add more.
+      setGpus([makeEntry(detection.gpu_parsed, detection.gpu_spec, 1)])
+    }
     // navigator.deviceMemory is capped at 8 GB and rounded, so we ignore it
     // for display. Keep the current ramGb (URL or default) and let the user
     // confirm/change via the header dropdown.
     setCpuCores(specs.cpu_cores)
     setUnified(specs.unified_memory)
     setGpuDetected(specs.gpu_detected)
-    setBandwidth(specs.bandwidth_gbps)
     setPhase('detected')
     setReady(true)
   }, [])
@@ -85,37 +120,33 @@ export function useHardware() {
   const reset = useCallback(() => {
     setReady(false)
     setEditing(false)
-    setGpuName('')
-    setVramGb(0)
+    setGpus([])
+    setInterconnect('none')
+    setParallelism('auto')
     setRamGbState(0)
     setRamUserSet(false)
     setCpuCores(4)
     setUnified(false)
     setGpuDetected(false)
-    setBandwidth(0)
     setPhase('manual')
   }, [])
 
-  const updateGpu = useCallback((name: string, spec: GpuSpec | null) => {
-    setGpuName(name)
-    if (spec) {
-      if (spec.vram_gb != null) setVramGb(spec.vram_gb)
-      setUnified(spec.unified ?? false)
-      setBandwidth(spec.bandwidth_gbps)
+  // Restore GPU specs from URL on mount (lookup bandwidth by name)
+  useEffect(() => {
+    if (hasUrlParams && urlInit.gpus.length > 0) {
+      setGpus(
+        urlInit.gpus.map((g) => {
+          const spec = lookupGpu(g.name)
+          return {
+            ...g,
+            vram_gb: g.vram_gb || (spec?.vram_gb ?? 0),
+            bandwidth_gbps: g.bandwidth_gbps || (spec?.bandwidth_gbps ?? 0),
+          }
+        }),
+      )
       setGpuDetected(true)
     }
-  }, [])
-
-  // Restore GPU spec from URL on mount
-  useEffect(() => {
-    if (hasUrlParams && urlInit.gpu) {
-      const spec = lookupGpu(urlInit.gpu)
-      if (spec) {
-        setBandwidth(spec.bandwidth_gbps)
-        setGpuDetected(true)
-      }
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {
@@ -124,24 +155,25 @@ export function useHardware() {
     editing,
     setEditing,
     system,
-    gpuName,
-    vramGb,
+    gpus,
+    interconnect,
+    parallelism,
     ramGb,
     ramUserSet,
     cpuCores,
     unified,
     gpuDetected,
-    interconnect,
-    parallelism,
     scan,
     enterManual,
     reset,
-    updateGpu,
-    setVramGb,
+    addGpu,
+    removeGpu,
+    updateGpuAt,
+    updateGpuName,
+    setInterconnect,
+    setParallelism,
     setRamGb,
     setCpuCores,
     setUnified,
-    setInterconnect,
-    setParallelism,
   }
 }
