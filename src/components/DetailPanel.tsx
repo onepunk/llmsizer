@@ -160,6 +160,16 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
           <span className="detail-label">Mem Usage</span>
           <span className="detail-value">{pct(memPct)}</span>
         </div>
+        {fit.gpu_count > 1 && (
+          <div className="detail-item">
+            <span className="detail-label">Parallelism</span>
+            <span className="detail-value">
+              {fit.resolved_parallelism === 'tensor_parallel' ? 'Tensor parallel' : 'Layer split'}
+              {' \u00B7 '}
+              {fit.gpu_count}&times; GPUs
+            </span>
+          </div>
+        )}
         <div className="detail-item">
           <span className="detail-label">Est. Speed</span>
           <span className="detail-value">{fit.estimated_tps.toFixed(1)} t/s</span>
