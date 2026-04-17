@@ -12,6 +12,24 @@ Derived from [llmfit](https://github.com/AlexsJones/llmfit) — find which LLMs 
 - **Scores and ranks** 5,000+ models by quality, speed, fit, and context length
 - **Shows what fits** — perfect, good, marginal, or won't run
 
+## Multi-GPU
+
+llmsizer models multi-GPU systems the way llama.cpp / vLLM actually run them:
+
+- **Layer-split** (default for mixed hardware or slow interconnects): model weights
+  are partitioned across GPUs proportional to VRAM. Tokens flow through layers
+  serially, so TPS ≈ single-GPU-of-equivalent-bandwidth, with ~2% overhead for
+  inter-GPU transfers.
+- **Tensor-parallel** (auto-enabled on homogeneous GPUs with NVLink or PCIe 5.0):
+  compute parallelizes across GPUs with empirical speedups of 1.6× (2 GPUs) up
+  to 2.8× (4 GPUs) on NVLink.
+
+Add more GPUs in the hardware editor. Pick your interconnect (NVLink, PCIe 5/4/3,
+or none) and let "auto" parallelism pick the right strategy, or override.
+
+**URL format:** `?gpu=<name>[:count][,<name>[:count]]&ic=<link>&par=<mode>`, e.g.
+`?gpu=RTX%203090:2&ic=nvlink&par=auto`.
+
 ## Tech
 
 Static React SPA — everything runs in your browser. No backend required.
