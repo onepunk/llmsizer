@@ -150,7 +150,7 @@ describe('analyzeModelFit', () => {
     const dual3090: SystemSpecs = {
       gpu_name: 'NVIDIA GeForce RTX 3090',
       gpu_detected: true,
-      gpus: [{ name: 'RTX 3090', vram_gb: 24, bandwidth_gbps: 936, count: 2 }],
+      gpus: [{ name: 'RTX 3090', vram_gb: 24, bandwidth_gbps: 936, count: 2, nvlink: true }],
       interconnect: 'nvlink',
       parallelism: 'auto',
       ram_gb: 64,
@@ -164,6 +164,25 @@ describe('analyzeModelFit', () => {
     expect(dual.estimated_tps).toBeGreaterThan(single.estimated_tps * 1.4)
     expect(dual.resolved_parallelism).toBe('tensor_parallel')
     expect(dual.gpu_count).toBe(2)
+  })
+
+  it('2x RTX 4090 with ic=nvlink: no NVLink on RTX 4090 → degrades to layer_split (no TP bonus)', () => {
+    const dual4090: SystemSpecs = {
+      gpu_name: 'NVIDIA GeForce RTX 4090',
+      gpu_detected: true,
+      // nvlink: false — RTX 4090 has no NVLink
+      gpus: [{ name: 'RTX 4090', vram_gb: 24, bandwidth_gbps: 1010, count: 2, nvlink: false }],
+      interconnect: 'nvlink',
+      parallelism: 'auto',
+      ram_gb: 64,
+      cpu_cores: 16,
+      unified_memory: false,
+    }
+    const result = analyzeModelFit(LLAMA_8B, dual4090, 'general')
+    // User asked for nvlink but the hardware can't deliver — engine downgrades
+    // to pcie4, which auto-resolves to layer_split (no TP speedup).
+    expect(result.resolved_parallelism).toBe('layer_split')
+    expect(result.gpu_count).toBe(2)
   })
 
   it('mixed 3090 + 3060 (heterogeneous): falls back to layer_split, lower TPS than homogeneous', () => {

@@ -209,8 +209,6 @@ export default function App() {
           cpuCores={hw.cpuCores}
           unified={hw.unified}
           gpuDetected={hw.gpuDetected}
-          editing={hw.editing}
-          onEditingChange={hw.setEditing}
           onAddGpu={hw.addGpu}
           onRemoveGpu={hw.removeGpu}
           onUpdateGpuAt={hw.updateGpuAt}
@@ -219,7 +217,6 @@ export default function App() {
           onParallelismChange={hw.setParallelism}
           onRamChange={hw.setRamGb}
           onCpuCoresChange={hw.setCpuCores}
-          onUnifiedChange={hw.setUnified}
           onRescan={hw.scan}
         />
       )}
@@ -248,16 +245,11 @@ export default function App() {
           {loading ? (
             <div className="loading">Loading model database...</div>
           ) : (
-            <div className={`results-layout${hw.editing ? ' results-disabled' : ''}`}>
-              {hw.editing && (
-                <div className="results-editing-overlay">
-                  Enter your hardware specs above to see which models fit.
-                </div>
-              )}
+            <div className="results-layout">
               <ResultsTable
                 results={results}
-                selectedIndex={hw.editing ? null : selectedIndex}
-                onSelect={hw.editing ? () => {} : setSelectedIndex}
+                selectedIndex={selectedIndex}
+                onSelect={setSelectedIndex}
                 sortKey={filters.sort}
                 sortDir={filters.sortDir}
                 onSort={handleSort}
@@ -265,7 +257,7 @@ export default function App() {
                 onToggleCompare={toggleCompare}
                 compareLimit={COMPARE_LIMIT}
               />
-              {!hw.editing && selectedFit && (
+              {selectedFit && (
                 <DetailPanel
                   fit={selectedFit}
                   onClose={() => setSelectedIndex(null)}

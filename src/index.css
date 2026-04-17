@@ -200,12 +200,6 @@ body {
 /* ============================================================
    Hardware panel
    ============================================================ */
-.hardware-panel {
-  border-bottom: 1px solid var(--border);
-  padding: 0.5rem 0;
-  margin-bottom: 0.75rem;
-}
-
 .hardware-bar {
   display: flex;
   align-items: center;
@@ -278,14 +272,114 @@ body {
 }
 
 /* Hardware edit form */
-.hardware-edit {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
+.hardware-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.hw-row-2up {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+.hw-row-2up > .hw-field {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.hw-system-row {
+  display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.hw-system-row > .hw-field {
+  flex: 0 0 auto;
+}
+
+.hw-row-spacer {
+  flex: 1 1 auto;
+}
+
+.hw-gpu-view-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.hw-gpu-view-row > .hw-field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hw-gpu-summary {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text);
+  line-height: 1.4;
+  padding: 0.3rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hw-gpu-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hw-add-gpu {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.hw-add-gpu:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+  border-style: solid;
+}
+
+/* Fix native <select> rendering in dark mode: force the element and its
+   option popup to use the current theme's background and text. Without
+   color-scheme on the element, some browsers render the popup with the
+   system's default (often light) palette even when the page is dark. */
+select.hw-input,
+select.hw-ram-select {
+  color-scheme: light dark;
+}
+
+.hw-input-hint {
+  color: var(--text-muted);
+  border-style: dashed;
+}
+
+.hw-combo-caret {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  pointer-events: none;
+}
+
+.hw-input-combo {
+  padding-right: 1.5rem;
 }
 
 .hw-field {
@@ -1354,11 +1448,14 @@ select.filter-input {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
   cursor: pointer;
+  user-select: none;
 }
 
 .hw-unified-toggle input {
   margin: 0;
+  cursor: pointer;
 }

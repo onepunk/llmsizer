@@ -149,12 +149,14 @@ describe('buildUrlSearch', () => {
       vram_gb: 24,
       bandwidth_gbps: 936,
       count: 2,
+      nvlink: true,
     })
     expect(state.hw.gpus[1]).toEqual({
       name: 'RTX 4080',
       vram_gb: 16,
       bandwidth_gbps: 717,
       count: 1,
+      nvlink: false,
     })
     expect(state.hw.interconnect).toBe('nvlink')
     expect(state.hw.parallelism).toBe('tensor_parallel')
@@ -190,12 +192,14 @@ describe('multi-GPU URL state', () => {
       vram_gb: 24,
       bandwidth_gbps: 936,
       count: 2,
+      nvlink: true,
     })
     expect(state.hw.gpus[1]).toEqual({
       name: 'RTX 4080',
       vram_gb: 16,
       bandwidth_gbps: 717,
       count: 1,
+      nvlink: false,
     })
     expect(state.hw.interconnect).toBe('pcie4')
   })

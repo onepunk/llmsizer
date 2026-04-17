@@ -24,6 +24,7 @@ function makeEntry(name: string, spec: GpuSpec | null, count = 1): GpuEntry {
     vram_gb: spec?.vram_gb ?? 0,
     bandwidth_gbps: spec?.bandwidth_gbps ?? 0,
     count,
+    nvlink: spec?.nvlink === true,
   }
 }
 
@@ -53,6 +54,10 @@ export function useHardware() {
 
   const addGpu = useCallback((name: string, spec: GpuSpec | null) => {
     setGpus((prev) => [...prev, makeEntry(name, spec, 1)])
+    // If user adds a discrete GPU, the system is no longer pure-unified.
+    if (spec?.unified === false || (spec && spec.vram_gb != null && spec.vram_gb > 0)) {
+      setUnified(false)
+    }
   }, [])
 
   const removeGpu = useCallback((index: number) => {
@@ -72,10 +77,18 @@ export function useHardware() {
               name,
               vram_gb: spec?.vram_gb ?? g.vram_gb,
               bandwidth_gbps: spec?.bandwidth_gbps ?? g.bandwidth_gbps,
+              nvlink: spec?.nvlink === true,
             }
           : g,
       ),
     )
+    // Swap unified-memory status automatically from the catalog so the user
+    // never has to understand the term. Integrated/Apple silicon sets it on;
+    // any discrete GPU sets it off.
+    if (spec?.unified === true) setUnified(true)
+    else if (spec?.unified === false || (spec && spec.vram_gb != null && spec.vram_gb > 0)) {
+      setUnified(false)
+    }
   }, [])
 
   const system = useMemo<SystemSpecs>(
@@ -141,6 +154,7 @@ export function useHardware() {
             ...g,
             vram_gb: g.vram_gb || (spec?.vram_gb ?? 0),
             bandwidth_gbps: g.bandwidth_gbps || (spec?.bandwidth_gbps ?? 0),
+            nvlink: spec?.nvlink === true,
           }
         }),
       )

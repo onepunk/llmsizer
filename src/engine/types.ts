@@ -40,6 +40,12 @@ export interface GpuSpec {
   vram_gb: number | null
   bandwidth_gbps: number
   unified?: boolean
+  // Whether this card physically supports NVLink peer-to-peer interconnect.
+  // Inferred from product lineage in scripts/generate-gpu-specs.ts. Consumer
+  // cards since the RTX 3090 Ti have dropped NVLink; datacenter/workstation
+  // cards (A100/H100/H200/B100/B200, A-series workstation A4500+, Quadro
+  // GV/RTX 5000+, Titan V/RTX, plus the RTX 3090 and RTX 2080 Ti) still carry it.
+  nvlink?: boolean
 }
 
 export type Interconnect = 'nvlink' | 'pcie5' | 'pcie4' | 'pcie3' | 'none'
@@ -50,6 +56,7 @@ export interface GpuEntry {
   vram_gb: number
   bandwidth_gbps: number
   count: number
+  nvlink?: boolean
 }
 
 export interface SystemSpecs {

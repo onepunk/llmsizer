@@ -31,6 +31,39 @@ interface GpuRecord {
   name: string
   vram_gb: number
   bandwidth_gbps: number
+  nvlink?: boolean
+}
+
+// NVLink capability is not in the upstream RightNow-GPU-Database, so we infer
+// it from the product name. Rules derive from NVIDIA's public product specs:
+// only datacenter/workstation Volta+ SKUs and a narrow set of consumer flagships
+// (RTX 3090, RTX 2080 Ti, Titan V/RTX) carry NVLink. Mobile/Max-Q variants are
+// always excluded — the bridges and PCB traces don't exist on laptops.
+const NVLINK_EXACT = new Set<string>([
+  'TITAN V', 'TITAN V CEO Edition', 'TITAN RTX',
+  'GeForce RTX 3090', 'GeForce RTX 2080 Ti',
+  'Quadro GP100', 'Quadro GV100',
+  'A100X',
+])
+
+const NVLINK_PREFIXES: RegExp[] = [
+  /^Tesla (V100|P100)\b/,
+  /^A100\b/, /^A800\b/, /^A40\b/,
+  /^H100\b/, /^H200\b/, /^H800\b/,
+  /^B100\b/, /^B200\b/, /^B300\b/,
+  /^L40\b/, /^L40S\b/, /^L40G\b/,
+  /^GRID A100[AB]?$/,
+  /^DRIVE A100/,
+  /^Quadro RTX (5000|6000|8000)\b/,
+  /^RTX A(4500|5000|5500|6000)\b/,
+]
+
+const NVLINK_EXCLUDE = /Mobile|Max-Q|Laptop|Refresh|X2/i
+
+function inferNvlink(name: string): boolean {
+  if (NVLINK_EXCLUDE.test(name)) return false
+  if (NVLINK_EXACT.has(name)) return true
+  return NVLINK_PREFIXES.some((r) => r.test(name))
 }
 
 function load(): DbEntry[] {
@@ -52,10 +85,12 @@ function filter(entries: DbEntry[]): DbEntry[] {
 }
 
 function toRecord(e: DbEntry): GpuRecord {
+  const nvlink = e.vendor === 'nvidia' && inferNvlink(e.name)
   return {
     name: e.name,
     vram_gb: e.memorySize as number,
     bandwidth_gbps: Math.round(e.memoryBandwidth as number),
+    ...(nvlink ? { nvlink: true } : {}),
   }
 }
 
@@ -79,7 +114,8 @@ function byVendor(entries: DbEntry[], vendor: string): GpuRecord[] {
 
 function formatEntry(r: GpuRecord): string {
   const safeName = r.name.replace(/'/g, "\\'")
-  return `  '${safeName}': { vram_gb: ${r.vram_gb}, bandwidth_gbps: ${r.bandwidth_gbps} },`
+  const nvlinkStr = r.nvlink ? ', nvlink: true' : ''
+  return `  '${safeName}': { vram_gb: ${r.vram_gb}, bandwidth_gbps: ${r.bandwidth_gbps}${nvlinkStr} },`
 }
 
 function generate(entries: DbEntry[]): string {

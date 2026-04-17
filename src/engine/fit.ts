@@ -25,8 +25,9 @@ import {
   effectiveBandwidthGbps,
   tensorParallelMultiplier,
   autoParallelism,
-  expandGpus,
+  usableGpuCount,
   isHomogeneous,
+  resolveInterconnect,
 } from './multi-gpu'
 
 export const DEFAULT_CONTEXT = 8192
@@ -97,17 +98,19 @@ export function analyzeModelFit(
   const preQuantized = model.weight_gb != null
 
   // Derived multi-GPU values
-  const expanded = expandGpus(system.gpus)
-  const gpuCount = expanded.length
+  const gpuCount = usableGpuCount(system.gpus)
   const totalVramGb = effectiveVramGb(system.gpus)
   const homogeneous = isHomogeneous(system.gpus)
+  // Degrade requested interconnect if the hardware can't actually do it —
+  // e.g. 2× RTX 4090 with ic=nvlink is physically impossible, so treat as pcie4.
+  const resolvedInterconnect = resolveInterconnect(system.gpus, system.interconnect)
   const resolvedParallelism =
     system.parallelism === 'auto'
-      ? autoParallelism(gpuCount, system.interconnect, homogeneous)
+      ? autoParallelism(gpuCount, resolvedInterconnect, homogeneous)
       : system.parallelism
   const tpMult =
     resolvedParallelism === 'tensor_parallel'
-      ? tensorParallelMultiplier(gpuCount, system.interconnect, homogeneous)
+      ? tensorParallelMultiplier(gpuCount, resolvedInterconnect, homogeneous)
       : 1.0
   const effectiveBw = effectiveBandwidthGbps(system.gpus)
 

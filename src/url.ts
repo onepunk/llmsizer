@@ -36,6 +36,7 @@ function parseGpusParam(raw: string | null, vramLegacy: number | null): GpuEntry
       vram_gb: vramLegacy,
       bandwidth_gbps: spec?.bandwidth_gbps ?? 0,
       count: 1,
+      nvlink: spec?.nvlink === true,
     }]
   }
 
@@ -60,6 +61,7 @@ function parseGpusParam(raw: string | null, vramLegacy: number | null): GpuEntry
       vram_gb: spec?.vram_gb ?? 0,
       bandwidth_gbps: spec?.bandwidth_gbps ?? 0,
       count,
+      nvlink: spec?.nvlink === true,
     }
   })
 }
