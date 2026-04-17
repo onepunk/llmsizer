@@ -92,3 +92,13 @@ export interface FilterState {
   sort: SortKey
   sortDir: SortDir
 }
+
+export type Interconnect = 'nvlink' | 'pcie5' | 'pcie4' | 'pcie3' | 'none'
+export type ParallelismMode = 'auto' | 'layer_split' | 'tensor_parallel'
+
+export interface GpuEntry {
+  name: string
+  vram_gb: number
+  bandwidth_gbps: number
+  count: number
+}
