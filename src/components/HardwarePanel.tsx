@@ -38,6 +38,7 @@ interface HardwarePanelProps {
   onParallelismChange: (p: ParallelismMode) => void
   onRamChange: (gb: number) => void
   onCpuCoresChange: (cores: number) => void
+  onUnifiedChange: (unified: boolean) => void
   onRescan: () => void
 }
 
@@ -85,6 +86,7 @@ export default function HardwarePanel({
   onParallelismChange,
   onRamChange,
   onCpuCoresChange,
+  onUnifiedChange,
   onRescan,
 }: HardwarePanelProps) {
   const allGpus = useMemo(() => getAllGpuNames(), [])
@@ -179,6 +181,17 @@ export default function HardwarePanel({
       </div>
 
       <div className="hardware-edit">
+        <div className="hw-field">
+          <label className="hw-unified-toggle">
+            <input
+              type="checkbox"
+              checked={unified}
+              onChange={(e) => onUnifiedChange(e.target.checked)}
+            />
+            <span>Unified memory (Apple Silicon, integrated GPUs)</span>
+          </label>
+        </div>
+
         {!unified && gpus.map((gpu, index) => (
           <div className="hw-gpu-row" key={index}>
             <div className="hw-field hw-field-grow">

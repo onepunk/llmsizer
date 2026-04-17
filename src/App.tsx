@@ -219,6 +219,7 @@ export default function App() {
           onParallelismChange={hw.setParallelism}
           onRamChange={hw.setRamGb}
           onCpuCoresChange={hw.setCpuCores}
+          onUnifiedChange={hw.setUnified}
           onRescan={hw.scan}
         />
       )}

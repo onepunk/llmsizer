@@ -1349,3 +1349,16 @@ select.filter-input {
 .hw-gpu-add {
   margin-top: 0.25rem;
 }
+
+.hw-unified-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.hw-unified-toggle input {
+  margin: 0;
+}
