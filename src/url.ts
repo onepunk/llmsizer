@@ -72,8 +72,9 @@ export function buildUrlSearch(input: WriteUrlInput): string {
   const params = new URLSearchParams()
   const { hw, filters, compare, defaults } = input
 
-  // Temporary stub — Task 4 implements the real multi-GPU encoding.
-  // For now, only ram/cores/unified round-trip through the URL.
+  // Task 4 adds gpus[], interconnect, parallelism encoding. For now these
+  // inputs are accepted but ignored so callers can migrate ahead.
+  // Only ram/cores/unified round-trip through the URL today.
   if (hw.ramGb > 0) params.set('ram', String(hw.ramGb))
   if (hw.cpuCores > 0) params.set('cores', String(hw.cpuCores))
   if (hw.unified) params.set('unified', '1')

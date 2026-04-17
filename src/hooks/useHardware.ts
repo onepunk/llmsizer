@@ -63,7 +63,7 @@ export function useHardware() {
     setGpus((prev) => prev.map((g, i) => (i === index ? { ...g, ...patch } : g)))
   }, [])
 
-  const updateGpuName = useCallback((index: number, name: string, spec: GpuSpec | null) => {
+  const selectGpu = useCallback((index: number, name: string, spec: GpuSpec | null) => {
     setGpus((prev) =>
       prev.map((g, i) =>
         i === index
@@ -169,7 +169,7 @@ export function useHardware() {
     addGpu,
     removeGpu,
     updateGpuAt,
-    updateGpuName,
+    selectGpu,
     setInterconnect,
     setParallelism,
     setRamGb,
