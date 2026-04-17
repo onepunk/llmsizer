@@ -13,3 +13,6 @@ scripts/__pycache__/
 !.dev.vars.example
 .env*
 !.env.example
+
+# Git worktrees
+.worktrees/
