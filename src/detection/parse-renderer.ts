@@ -49,10 +49,23 @@ export function isIntegratedGpu(parsedName: string): boolean {
   return IGPU_PATTERNS.some(pattern => lower.includes(pattern.toLowerCase()))
 }
 
+// Minimum input length for reverse substring matching.
+// Shorter inputs (e.g. "x", "RTX") would spuriously match many catalog keys,
+// so we refuse to do reverse-substring lookup below this length.
+const REVERSE_MATCH_MIN_LEN = 4
+
 /**
  * Case-insensitive lookup against ALL_GPU_SPECS (discrete + Apple Silicon).
  * Also checks for integrated GPUs and returns a shared-memory spec.
- * Tries exact match first, then longest substring match.
+ *
+ * Matching order (first hit wins):
+ * 1. Exact match (case-insensitive)
+ * 2. Forward substring: key appears inside input — longest key wins
+ *    (more specific keys beat less specific ones, e.g. "RTX 3090 Ti" > "RTX 3090")
+ * 3. Reverse substring: input appears inside key — shortest key wins
+ *    (most conservative interpretation, e.g. "RTX 3090" -> "GeForce RTX 3090",
+ *    not "GeForce RTX 3090 Ti"). Requires input length >= REVERSE_MATCH_MIN_LEN.
+ *    Alphabetical tie-break for determinism.
  */
 export function lookupGpu(parsedName: string): GpuSpec | null {
   const lower = parsedName.toLowerCase()
@@ -69,20 +82,44 @@ export function lookupGpu(parsedName: string): GpuSpec | null {
     }
   }
 
-  // Try longest substring match: find GPU name keys that appear in the parsed name
-  let bestKey: string | null = null
-  let bestLen = 0
+  // Pass 1: forward substring match (input contains key). Longest wins.
+  let forwardKey: string | null = null
+  let forwardLen = 0
 
   for (const key of Object.keys(ALL_GPU_SPECS)) {
     const keyLower = key.toLowerCase()
-    if (lower.includes(keyLower) && key.length > bestLen) {
-      bestKey = key
-      bestLen = key.length
+    if (lower.includes(keyLower) && key.length > forwardLen) {
+      forwardKey = key
+      forwardLen = key.length
     }
   }
 
-  if (bestKey !== null) {
-    return ALL_GPU_SPECS[bestKey] ?? null
+  if (forwardKey !== null) {
+    return ALL_GPU_SPECS[forwardKey] ?? null
+  }
+
+  // Pass 2: reverse substring match (key contains input). Shortest wins.
+  // Guarded by minimum input length to avoid spurious matches on very short inputs.
+  if (lower.length >= REVERSE_MATCH_MIN_LEN) {
+    let reverseKey: string | null = null
+    let reverseLen = Infinity
+
+    for (const key of Object.keys(ALL_GPU_SPECS)) {
+      const keyLower = key.toLowerCase()
+      if (keyLower.includes(lower)) {
+        if (
+          key.length < reverseLen ||
+          (key.length === reverseLen && reverseKey !== null && key < reverseKey)
+        ) {
+          reverseKey = key
+          reverseLen = key.length
+        }
+      }
+    }
+
+    if (reverseKey !== null) {
+      return ALL_GPU_SPECS[reverseKey] ?? null
+    }
   }
 
   return null

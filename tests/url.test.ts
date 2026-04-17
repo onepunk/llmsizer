@@ -115,11 +115,15 @@ describe('buildUrlSearch', () => {
   })
 
   it('round-trips a state through build + read', () => {
+    // Uses short "RTX 3090" / "RTX 4080" names — both resolve unambiguously
+    // via lookupGpu's reverse-substring match (shortest key wins), so vram_gb
+    // and bandwidth_gbps survive the round trip. We assert them strictly
+    // to catch any regression in lookupGpu or in the URL parser.
     const qs = buildUrlSearch({
       hw: {
         gpus: [
           { name: 'RTX 3090', vram_gb: 24, bandwidth_gbps: 936, count: 2 },
-          { name: 'RTX 3060', vram_gb: 12, bandwidth_gbps: 360, count: 1 },
+          { name: 'RTX 4080', vram_gb: 16, bandwidth_gbps: 717, count: 1 },
         ],
         interconnect: 'nvlink',
         parallelism: 'tensor_parallel',
@@ -140,8 +144,18 @@ describe('buildUrlSearch', () => {
 
     const state = readUrlState('?' + qs)
     expect(state.hw.gpus).toHaveLength(2)
-    expect(state.hw.gpus[0]).toMatchObject({ name: 'RTX 3090', count: 2 })
-    expect(state.hw.gpus[1]).toMatchObject({ name: 'RTX 3060', count: 1 })
+    expect(state.hw.gpus[0]).toEqual({
+      name: 'RTX 3090',
+      vram_gb: 24,
+      bandwidth_gbps: 936,
+      count: 2,
+    })
+    expect(state.hw.gpus[1]).toEqual({
+      name: 'RTX 4080',
+      vram_gb: 16,
+      bandwidth_gbps: 717,
+      count: 1,
+    })
     expect(state.hw.interconnect).toBe('nvlink')
     expect(state.hw.parallelism).toBe('tensor_parallel')
     expect(state.hw.ram).toBe(96)
@@ -160,21 +174,63 @@ describe('multi-GPU URL state', () => {
     expect(state.hw.gpus).toHaveLength(1)
     expect(state.hw.gpus[0].name).toBe('RTX 3090')
     expect(state.hw.gpus[0].count).toBe(2)
+    // vram_gb/bandwidth_gbps are reconstituted from the catalog via lookupGpu's
+    // reverse-substring match ("RTX 3090" -> "GeForce RTX 3090").
+    expect(state.hw.gpus[0].vram_gb).toBe(24)
+    expect(state.hw.gpus[0].bandwidth_gbps).toBe(936)
     expect(state.hw.interconnect).toBe('nvlink')
     expect(state.hw.parallelism).toBe('auto')
   })
 
-  it('parses multiple GPUs: RTX%203090:2,RTX%203060:1', () => {
-    const state = readUrlState('?gpu=RTX%203090:2,RTX%203060:1&ic=pcie4')
+  it('parses multiple GPUs: RTX%203090:2,RTX%204080:1', () => {
+    const state = readUrlState('?gpu=RTX%203090:2,RTX%204080:1&ic=pcie4')
     expect(state.hw.gpus).toHaveLength(2)
-    expect(state.hw.gpus[0]).toMatchObject({ name: 'RTX 3090', count: 2 })
-    expect(state.hw.gpus[1]).toMatchObject({ name: 'RTX 3060', count: 1 })
+    expect(state.hw.gpus[0]).toEqual({
+      name: 'RTX 3090',
+      vram_gb: 24,
+      bandwidth_gbps: 936,
+      count: 2,
+    })
+    expect(state.hw.gpus[1]).toEqual({
+      name: 'RTX 4080',
+      vram_gb: 16,
+      bandwidth_gbps: 717,
+      count: 1,
+    })
     expect(state.hw.interconnect).toBe('pcie4')
   })
 
   it('defaults count to 1 when colon omitted', () => {
     const state = readUrlState('?gpu=RTX%203090')
     expect(state.hw.gpus).toHaveLength(1)
+    expect(state.hw.gpus[0].count).toBe(1)
+  })
+
+  it('strips malformed count suffix (gpu=name:) and falls back to count=1', () => {
+    const state = readUrlState('?gpu=RTX%203090:')
+    expect(state.hw.gpus).toHaveLength(1)
+    expect(state.hw.gpus[0].name).toBe('RTX 3090')
+    expect(state.hw.gpus[0].count).toBe(1)
+  })
+
+  it('strips malformed count suffix (gpu=name:0)', () => {
+    const state = readUrlState('?gpu=RTX%203090:0')
+    expect(state.hw.gpus).toHaveLength(1)
+    expect(state.hw.gpus[0].name).toBe('RTX 3090')
+    expect(state.hw.gpus[0].count).toBe(1)
+  })
+
+  it('strips malformed count suffix (gpu=name:-3)', () => {
+    const state = readUrlState('?gpu=RTX%203090:-3')
+    expect(state.hw.gpus).toHaveLength(1)
+    expect(state.hw.gpus[0].name).toBe('RTX 3090')
+    expect(state.hw.gpus[0].count).toBe(1)
+  })
+
+  it('strips malformed count suffix (gpu=name:abc)', () => {
+    const state = readUrlState('?gpu=RTX%203090:abc')
+    expect(state.hw.gpus).toHaveLength(1)
+    expect(state.hw.gpus[0].name).toBe('RTX 3090')
     expect(state.hw.gpus[0].count).toBe(1)
   })
 
@@ -221,6 +277,9 @@ describe('multi-GPU URL writing', () => {
     expect(qs).not.toContain('gpu=RTX+3090%3A1')
   })
 
+  // Using URLSearchParams.get() (not decodeURIComponent) because
+  // URLSearchParams.toString() form-encodes space as '+', and
+  // decodeURIComponent doesn't convert '+' to space.
   it('writes multiple GPUs with counts', () => {
     const qs = buildUrlSearch({
       hw: {
@@ -236,8 +295,6 @@ describe('multi-GPU URL writing', () => {
       compare: [],
       defaults: DEFAULTS,
     })
-    // Use URLSearchParams (which decodes '+' as space) to check the logical
-    // gpu param value; the raw qs uses form-encoding where space is '+'.
     const params = new URLSearchParams(qs)
     expect(params.get('gpu')).toBe('RTX 3090:2,RTX 3060')
     expect(params.get('ic')).toBe('nvlink')

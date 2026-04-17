@@ -44,10 +44,13 @@ function parseGpusParam(raw: string | null, vramLegacy: number | null): GpuEntry
     let name = chunk
     let count = 1
     if (colonIdx > 0) {
+      // Always strip the suffix when a colon is present. If the tail is a
+      // valid positive integer, use it as the count; otherwise silently fall
+      // back to count=1 rather than leaving "name:garbage" as the name.
       const tail = chunk.slice(colonIdx + 1)
+      name = chunk.slice(0, colonIdx)
       const parsed = Number(tail)
       if (Number.isFinite(parsed) && parsed > 0) {
-        name = chunk.slice(0, colonIdx)
         count = Math.min(8, Math.max(1, Math.floor(parsed)))
       }
     }
