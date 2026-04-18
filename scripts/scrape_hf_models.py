@@ -1111,7 +1111,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-12-06",
         },
         {
             "name": "mistralai/Mistral-Small-24B-Instruct-2501",
@@ -1121,7 +1121,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 32768,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "mistral",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2025-01-30",
         },
         {
             "name": "Qwen/Qwen2.5-14B-Instruct",
@@ -1172,7 +1172,7 @@ def main():
             "use_case": "Multimodal, vision and text",
             "capabilities": ["vision", "tool_use"],
             "pipeline_tag": "image-text-to-text", "architecture": "gemma3",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2025-03-12",
         },
         {
             "name": "deepseek-ai/DeepSeek-V3",
@@ -1194,7 +1194,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "RAG, tool use, agents",
             "pipeline_tag": "text-generation", "architecture": "cohere",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-03-11",
         },
         {
             "name": "bigcode/starcoder2-15b",
@@ -1247,7 +1247,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 8192,
             "use_case": "Lightweight, edge deployment",
             "pipeline_tag": "text-generation", "architecture": "gemma2",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-07-31",
         },
         {
             "name": "meta-llama/CodeLlama-7b-Instruct-hf",
@@ -1257,7 +1257,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 16384,
             "use_case": "Code generation and completion",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2023-08-24",
         },
         {
             "name": "meta-llama/CodeLlama-13b-Instruct-hf",
@@ -1267,7 +1267,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 16384,
             "use_case": "Code generation and completion",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2023-08-24",
         },
         {
             "name": "meta-llama/CodeLlama-34b-Instruct-hf",
@@ -1277,7 +1277,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 16384,
             "use_case": "Code generation and completion",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2023-08-24",
         },
         {
             "name": "meta-llama/Llama-3.2-11B-Vision-Instruct",
@@ -1287,7 +1287,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "Multimodal, vision and text",
             "pipeline_tag": "image-text-to-text", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-09-25",
         },
         {
             "name": "mistralai/Ministral-8B-Instruct-2410",
@@ -1297,7 +1297,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 32768,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "mistral",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-10-16",
         },
         {
             "name": "mistralai/Mistral-Nemo-Instruct-2407",
@@ -1307,7 +1307,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "mistral",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-07-18",
         },
         {
             "name": "microsoft/Phi-3.5-mini-instruct",
