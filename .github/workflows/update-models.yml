@@ -16,12 +16,29 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
+      - name: Pre-scrape diagnostics
+        # Surfaces any surprises (missing file, LFS pointer, permissions)
+        # BEFORE the scraper runs, so if models.json is wrong we know
+        # immediately rather than crashing ten minutes later.
+        run: |
+          echo "== workspace =="
+          pwd
+          echo "== public/models.json =="
+          ls -la public/models.json || echo "MISSING"
+          wc -c public/models.json || true
+          head -c 200 public/models.json || true
+          echo
+          echo "== is it valid JSON? =="
+          python3 -c "import json; d=json.load(open('public/models.json')); print('OK', len(d), 'models')"
       - name: Scrape models from HuggingFace
         # The scraper writes JSON to data/hf_models.json (upstream convention),
         # not stdout — stdout carries progress logs. Copy it into the location
         # the web app actually reads from.
         run: |
           python3 scripts/scrape_hf_models.py --discover -n 800
+          echo "== data/hf_models.json =="
+          ls -la data/hf_models.json
+          wc -c data/hf_models.json
           cp data/hf_models.json public/models.json.tmp
       - name: Check for changes
         id: diff
