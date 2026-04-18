@@ -316,22 +316,38 @@ MOE_ACTIVE_PARAMS = {
 
 
 def fetch_model_info(repo_id: str) -> dict | None:
-    """Fetch model info from HuggingFace API."""
+    """Fetch model info from HuggingFace API. Retries on 429 / 5xx / network
+    errors with exponential backoff so a single throttle doesn't push a model
+    into the fallback path."""
     url = f"{HF_API}/{repo_id}"
-    req = urllib.request.Request(url, headers=_auth_headers())
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        if e.code == 401 and not _hf_token:
-            print(f"  ⚠ HTTP 401 for {repo_id} — model is gated, set HF_TOKEN to access",
-                  file=sys.stderr)
-        else:
-            print(f"  ⚠ HTTP {e.code} for {repo_id} — skipping", file=sys.stderr)
-        return None
-    except Exception as e:
-        print(f"  ⚠ Error fetching {repo_id}: {e}", file=sys.stderr)
-        return None
+    delays = [1.0, 3.0, 10.0]
+    for attempt in range(len(delays) + 1):
+        req = urllib.request.Request(url, headers=_auth_headers())
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            transient = e.code == 429 or 500 <= e.code < 600
+            if transient and attempt < len(delays):
+                print(f"  … HTTP {e.code} for {repo_id}, retrying in {delays[attempt]}s",
+                      file=sys.stderr)
+                time.sleep(delays[attempt])
+                continue
+            if e.code == 401 and not _hf_token:
+                print(f"  ⚠ HTTP 401 for {repo_id} — model is gated, set HF_TOKEN to access",
+                      file=sys.stderr)
+            else:
+                print(f"  ⚠ HTTP {e.code} for {repo_id} — skipping", file=sys.stderr)
+            return None
+        except Exception as e:
+            if attempt < len(delays):
+                print(f"  … {type(e).__name__} for {repo_id}, retrying in {delays[attempt]}s",
+                      file=sys.stderr)
+                time.sleep(delays[attempt])
+                continue
+            print(f"  ⚠ Error fetching {repo_id}: {e}", file=sys.stderr)
+            return None
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -993,7 +1009,8 @@ def discover_trending_models(limit: int = 30, min_downloads: int = 10000) -> lis
             f"direction=-1&"
             f"limit={fetch_limit}&"
             f"expand[]=safetensors&"
-            f"expand[]=config"
+            f"expand[]=config&"
+            f"expand[]=createdAt"
         )
         req = urllib.request.Request(url, headers=_auth_headers())
         try:
@@ -1110,7 +1127,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-12-06",
         },
         {
             "name": "mistralai/Mistral-Small-24B-Instruct-2501",
@@ -1120,7 +1137,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 32768,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "mistral",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2025-01-30",
         },
         {
             "name": "Qwen/Qwen2.5-14B-Instruct",
@@ -1171,7 +1188,7 @@ def main():
             "use_case": "Multimodal, vision and text",
             "capabilities": ["vision", "tool_use"],
             "pipeline_tag": "image-text-to-text", "architecture": "gemma3",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2025-03-12",
         },
         {
             "name": "deepseek-ai/DeepSeek-V3",
@@ -1193,7 +1210,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "RAG, tool use, agents",
             "pipeline_tag": "text-generation", "architecture": "cohere",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-03-11",
         },
         {
             "name": "bigcode/starcoder2-15b",
@@ -1246,7 +1263,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 8192,
             "use_case": "Lightweight, edge deployment",
             "pipeline_tag": "text-generation", "architecture": "gemma2",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-07-31",
         },
         {
             "name": "meta-llama/CodeLlama-7b-Instruct-hf",
@@ -1256,7 +1273,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 16384,
             "use_case": "Code generation and completion",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2023-08-24",
         },
         {
             "name": "meta-llama/CodeLlama-13b-Instruct-hf",
@@ -1266,7 +1283,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 16384,
             "use_case": "Code generation and completion",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2023-08-24",
         },
         {
             "name": "meta-llama/CodeLlama-34b-Instruct-hf",
@@ -1276,7 +1293,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 16384,
             "use_case": "Code generation and completion",
             "pipeline_tag": "text-generation", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2023-08-24",
         },
         {
             "name": "meta-llama/Llama-3.2-11B-Vision-Instruct",
@@ -1286,7 +1303,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "Multimodal, vision and text",
             "pipeline_tag": "image-text-to-text", "architecture": "llama",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-09-25",
         },
         {
             "name": "mistralai/Ministral-8B-Instruct-2410",
@@ -1296,7 +1313,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 32768,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "mistral",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-10-16",
         },
         {
             "name": "mistralai/Mistral-Nemo-Instruct-2407",
@@ -1306,7 +1323,7 @@ def main():
             "quantization": "Q4_K_M", "context_length": 131072,
             "use_case": "Instruction following, chat",
             "pipeline_tag": "text-generation", "architecture": "mistral",
-            "hf_downloads": 0, "hf_likes": 0, "release_date": None,
+            "hf_downloads": 0, "hf_likes": 0, "release_date": "2024-07-18",
         },
         {
             "name": "microsoft/Phi-3.5-mini-instruct",

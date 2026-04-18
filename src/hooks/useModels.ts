@@ -106,6 +106,16 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
         case 'params': cmp = parseParamsNum(a.model.parameter_count) - parseParamsNum(b.model.parameter_count); break
         case 'memory': cmp = a.memory_required_gb - b.memory_required_gb; break
         case 'context': cmp = a.model.context_length - b.model.context_length; break
+        case 'release_date': {
+          // Missing dates sort to the bottom regardless of direction
+          const dateA = a.model.release_date
+          const dateB = b.model.release_date
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          cmp = dateA.localeCompare(dateB)
+          break
+        }
         default: cmp = a.score - b.score
       }
       return cmp * dir

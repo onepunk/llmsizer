@@ -112,6 +112,9 @@ export default function ResultsTable({
             <th className="col-hide-mobile sortable-th" onClick={() => onSort('tps')}>
               T/S <SortArrow columnKey="tps" sortKey={sortKey} sortDir={sortDir} />
             </th>
+            <th className="col-hide-mobile sortable-th" onClick={() => onSort('release_date')}>
+              Released <SortArrow columnKey="release_date" sortKey={sortKey} sortDir={sortDir} />
+            </th>
             <th className="col-hide-mobile sortable-th" onClick={() => onSort('score')}>
               Score <SortArrow columnKey="score" sortKey={sortKey} sortDir={sortDir} />
             </th>
@@ -178,6 +181,9 @@ export default function ResultsTable({
                 <td>{fit.best_quant}</td>
                 <td className="col-hide-mobile">
                   {fit.estimated_tps.toFixed(1)}
+                </td>
+                <td className="col-hide-mobile">
+                  {fit.model.release_date ?? '\u2014'}
                 </td>
                 <td className="col-hide-mobile">
                   {fit.score.toFixed(1)}
