@@ -316,22 +316,38 @@ MOE_ACTIVE_PARAMS = {
 
 
 def fetch_model_info(repo_id: str) -> dict | None:
-    """Fetch model info from HuggingFace API."""
+    """Fetch model info from HuggingFace API. Retries on 429 / 5xx / network
+    errors with exponential backoff so a single throttle doesn't push a model
+    into the fallback path."""
     url = f"{HF_API}/{repo_id}"
-    req = urllib.request.Request(url, headers=_auth_headers())
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        if e.code == 401 and not _hf_token:
-            print(f"  ⚠ HTTP 401 for {repo_id} — model is gated, set HF_TOKEN to access",
-                  file=sys.stderr)
-        else:
-            print(f"  ⚠ HTTP {e.code} for {repo_id} — skipping", file=sys.stderr)
-        return None
-    except Exception as e:
-        print(f"  ⚠ Error fetching {repo_id}: {e}", file=sys.stderr)
-        return None
+    delays = [1.0, 3.0, 10.0]
+    for attempt in range(len(delays) + 1):
+        req = urllib.request.Request(url, headers=_auth_headers())
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            transient = e.code == 429 or 500 <= e.code < 600
+            if transient and attempt < len(delays):
+                print(f"  … HTTP {e.code} for {repo_id}, retrying in {delays[attempt]}s",
+                      file=sys.stderr)
+                time.sleep(delays[attempt])
+                continue
+            if e.code == 401 and not _hf_token:
+                print(f"  ⚠ HTTP 401 for {repo_id} — model is gated, set HF_TOKEN to access",
+                      file=sys.stderr)
+            else:
+                print(f"  ⚠ HTTP {e.code} for {repo_id} — skipping", file=sys.stderr)
+            return None
+        except Exception as e:
+            if attempt < len(delays):
+                print(f"  … {type(e).__name__} for {repo_id}, retrying in {delays[attempt]}s",
+                      file=sys.stderr)
+                time.sleep(delays[attempt])
+                continue
+            print(f"  ⚠ Error fetching {repo_id}: {e}", file=sys.stderr)
+            return None
+    return None
 
 
 # ---------------------------------------------------------------------------

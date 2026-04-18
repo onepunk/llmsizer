@@ -33,7 +33,12 @@ jobs:
       - name: Scrape models from HuggingFace
         # The scraper writes JSON to data/hf_models.json (upstream convention),
         # not stdout — stdout carries progress logs. Copy it into the location
-        # the web app actually reads from.
+        # the web app actually reads from. HF_TOKEN is optional: when set,
+        # the scraper uses authenticated requests (~5x higher rate limits and
+        # access to gated model metadata); when unset, it falls back to
+        # unauthenticated calls and relies on the retry-with-backoff logic.
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python3 scripts/scrape_hf_models.py --discover -n 800
           echo "== data/hf_models.json =="
