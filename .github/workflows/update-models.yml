@@ -43,6 +43,15 @@ jobs:
       - name: Check for changes
         id: diff
         run: |
+          echo "== inline diagnostics (public/models.json) =="
+          ls -la public/models.json public/models.json.tmp 2>&1 || true
+          echo "--- first 200 bytes of public/models.json ---"
+          head -c 200 public/models.json 2>&1 || true
+          echo
+          echo "--- first 200 bytes of public/models.json.tmp ---"
+          head -c 200 public/models.json.tmp 2>&1 || true
+          echo
+          echo "== end diagnostics =="
           OLD_COUNT=$(python3 -c "import json; print(len(json.load(open('public/models.json'))))")
           NEW_COUNT=$(python3 -c "import json; print(len(json.load(open('public/models.json.tmp'))))")
           if [ "$NEW_COUNT" -lt $(( OLD_COUNT / 2 )) ]; then
