@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Scrape models from HuggingFace
-        run: python3 scripts/scrape_hf_models.py --discover -n 100 > public/models.json.tmp
+        run: python3 scripts/scrape_hf_models.py --discover -n 800 > public/models.json.tmp
       - name: Check for changes
         id: diff
         run: |

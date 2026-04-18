@@ -101,7 +101,7 @@ export interface QuantOption {
   fits: boolean
 }
 
-export type SortKey = 'score' | 'tps' | 'params' | 'memory' | 'context' | 'name'
+export type SortKey = 'score' | 'tps' | 'params' | 'memory' | 'context' | 'name' | 'release_date'
 export type SortDir = 'asc' | 'desc'
 
 export interface FilterState {
