@@ -710,12 +710,12 @@
   {
     "name": "lmstudio-community/gemma-3-270m-it-qat-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "68M",
-    "parameters_raw": 68151936,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "455M",
+    "parameters_raw": 454545454,
+    "min_ram_gb": 0.8,
+    "recommended_ram_gb": 1.0,
+    "min_vram_gb": 0.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "General purpose",
@@ -725,7 +725,8 @@
     "hf_downloads": 40621,
     "hf_likes": 0,
     "release_date": "2025-08-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 0.25
   },
   {
     "name": "agentlans/flan-t5-small-simplifier",
@@ -776,12 +777,12 @@
   {
     "name": "lmstudio-community/gemma-3-270m-it-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "123M",
-    "parameters_raw": 122628736,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "438M",
+    "parameters_raw": 438095238,
+    "min_ram_gb": 1.1,
+    "recommended_ram_gb": 1.4,
+    "min_vram_gb": 1.0,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "General purpose",
@@ -791,7 +792,8 @@
     "hf_downloads": 32579,
     "hf_likes": 0,
     "release_date": "2025-08-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 0.46
   },
   {
     "name": "peft-internal-testing/opt-125m",
@@ -1069,12 +1071,12 @@
   {
     "name": "lmstudio-community/LFM2.5-1.2B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "183M",
-    "parameters_raw": 182975232,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "1.2B",
+    "parameters_raw": 1200000000,
+    "min_ram_gb": 1.3,
+    "recommended_ram_gb": 1.8,
+    "min_vram_gb": 1.2,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "Instruction following, chat",
@@ -1084,7 +1086,8 @@
     "hf_downloads": 151953,
     "hf_likes": 0,
     "release_date": "2026-01-07",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 0.66
   },
   {
     "name": "rinna/japanese-gpt-neox-small",
@@ -1285,12 +1288,12 @@
   {
     "name": "lmstudio-community/LFM2.5-1.2B-Instruct-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "256M",
-    "parameters_raw": 256113408,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "1.2B",
+    "parameters_raw": 1187500000,
+    "min_ram_gb": 1.6,
+    "recommended_ram_gb": 2.4,
+    "min_vram_gb": 1.5,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "Instruction following, chat",
@@ -1300,7 +1303,8 @@
     "hf_downloads": 151434,
     "hf_likes": 0,
     "release_date": "2026-01-07",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 0.95
   },
   {
     "name": "HuggingFaceTB/SmolVLM-256M-Instruct",
@@ -1459,12 +1463,12 @@
   {
     "name": "lmstudio-community/Qwen3-1.7B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "269M",
-    "parameters_raw": 268944384,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "1.8B",
+    "parameters_raw": 1763636363,
+    "min_ram_gb": 1.7,
+    "recommended_ram_gb": 2.4,
+    "min_vram_gb": 1.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -1476,7 +1480,8 @@
     "hf_downloads": 27153,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 0.97
   },
   {
     "name": "gokaygokay/Florence-2-SD3-Captioner",
@@ -1561,12 +1566,12 @@
   {
     "name": "lmstudio-community/LFM2.5-1.2B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "329M",
-    "parameters_raw": 329251584,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "1.2B",
+    "parameters_raw": 1180952380,
+    "min_ram_gb": 2.0,
+    "recommended_ram_gb": 3.0,
+    "min_vram_gb": 1.9,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "Instruction following, chat",
@@ -1576,7 +1581,8 @@
     "hf_downloads": 154586,
     "hf_likes": 0,
     "release_date": "2026-01-07",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 1.24
   },
   {
     "name": "BAAI/bge-large-en-v1.5",
@@ -1886,12 +1892,12 @@
   {
     "name": "prism-ml/Bonsai-8B-mlx-1bit",
     "provider": "prism-ml",
-    "parameter_count": "384M",
-    "parameters_raw": 384131968,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "2.3B",
+    "parameters_raw": 2327272727,
+    "min_ram_gb": 2.0,
+    "recommended_ram_gb": 3.1,
+    "min_vram_gb": 1.9,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -1901,7 +1907,8 @@
     "hf_downloads": 46735,
     "hf_likes": 0,
     "release_date": "2026-03-18",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 1.28
   },
   {
     "name": "OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview",
@@ -1927,7 +1934,9 @@
         "repo": "mradermacher/InternVL3_5-GPT-OSS-20B-A4B-Preview-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "is_moe": true,
+    "active_parameters": 4000000000
   },
   {
     "name": "KBlueLeaf/DanTagGen-delta-rev2",
@@ -2009,12 +2018,12 @@
   {
     "name": "lmstudio-community/Qwen3-1.7B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "484M",
-    "parameters_raw": 484000768,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "1.7B",
+    "parameters_raw": 1742857142,
+    "min_ram_gb": 2.7,
+    "recommended_ram_gb": 4.2,
+    "min_vram_gb": 2.5,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -2026,7 +2035,8 @@
     "hf_downloads": 28475,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 1.83
   },
   {
     "name": "Qwen/Qwen2.5-0.5B-Instruct",
@@ -2038,7 +2048,7 @@
     "min_vram_gb": 0.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -2058,7 +2068,9 @@
         "repo": "mradermacher/Qwen2.5-0.5B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-0.5B",
@@ -2070,7 +2082,7 @@
     "min_vram_gb": 0.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -2086,7 +2098,9 @@
         "repo": "mradermacher/Qwen2.5-0.5B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2-0.5B-Instruct",
@@ -2128,7 +2142,7 @@
     "min_vram_gb": 0.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -2152,7 +2166,9 @@
         "repo": "mradermacher/Qwen2.5-Coder-0.5B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "0xgr3y/Qwen2.5-Coder-0.5B-Instruct-Gensyn-Swarm-tall_tame_panther",
@@ -2186,7 +2202,7 @@
     "min_vram_gb": 0.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -2206,7 +2222,9 @@
         "repo": "mradermacher/Qwen2.5-Coder-0.5B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "EleutherAI/pythia-410m",
@@ -2463,14 +2481,14 @@
   {
     "name": "Qwen/Qwen3-4B-MLX-4bit",
     "provider": "Alibaba",
-    "parameter_count": "566M",
-    "parameters_raw": 565828096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "3.9B",
+    "parameters_raw": 3890909090,
+    "min_ram_gb": 3.1,
+    "recommended_ram_gb": 4.8,
+    "min_vram_gb": 2.9,
+    "quantization": "MLX-4bit",
     "format": "mlx",
-    "context_length": 65536,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -2480,7 +2498,10 @@
     "hf_downloads": 70592,
     "hf_likes": 0,
     "release_date": "2025-05-23",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 2.14
   },
   {
     "name": "google/t5gemma-b-b-ul2",
@@ -2505,12 +2526,12 @@
   {
     "name": "lmstudio-community/Phi-4-mini-reasoning-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "600M",
-    "parameters_raw": 599546880,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "3.9B",
+    "parameters_raw": 3927272727,
+    "min_ram_gb": 3.1,
+    "recommended_ram_gb": 4.8,
+    "min_vram_gb": 2.9,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
@@ -2520,7 +2541,8 @@
     "hf_downloads": 53345,
     "hf_likes": 0,
     "release_date": "2025-05-01",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.16
   },
   {
     "name": "Qwen/Qwen1.5-0.5B-Chat",
@@ -2577,12 +2599,12 @@
   {
     "name": "lmstudio-community/Qwen3-4B-Thinking-2507-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "629M",
-    "parameters_raw": 628676096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.1B",
+    "parameters_raw": 4109090909,
+    "min_ram_gb": 3.2,
+    "recommended_ram_gb": 5.0,
+    "min_vram_gb": 3.0,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -2594,17 +2616,18 @@
     "hf_downloads": 72155,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.26
   },
   {
     "name": "lmstudio-community/Qwen3-4B-Instruct-2507-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "629M",
-    "parameters_raw": 628676096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.1B",
+    "parameters_raw": 4109090909,
+    "min_ram_gb": 3.2,
+    "recommended_ram_gb": 5.0,
+    "min_vram_gb": 3.0,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -2616,7 +2639,8 @@
     "hf_downloads": 60073,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.26
   },
   {
     "name": "microsoft/udop-large",
@@ -2677,7 +2701,7 @@
     "min_vram_gb": 0.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [
       "tool_use"
@@ -2704,7 +2728,9 @@
         "repo": "mradermacher/Qwen3-0.6B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3Guard-Gen-0.6B",
@@ -2780,7 +2806,7 @@
     "min_vram_gb": 0.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -2790,17 +2816,19 @@
     "hf_downloads": 1783132,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "lmstudio-community/Qwen3-4B-Instruct-2507-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "754M",
-    "parameters_raw": 754372096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "5.0B",
+    "parameters_raw": 5036363636,
+    "min_ram_gb": 3.8,
+    "recommended_ram_gb": 6.0,
+    "min_vram_gb": 3.5,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -2812,7 +2840,8 @@
     "hf_downloads": 57425,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.77
   },
   {
     "name": "microsoft/Florence-2-large-ft",
@@ -3001,12 +3030,12 @@
   {
     "name": "lmstudio-community/Qwen3-4B-Thinking-2507-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "880M",
-    "parameters_raw": 880068096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.1B",
+    "parameters_raw": 4087500000,
+    "min_ram_gb": 4.4,
+    "recommended_ram_gb": 7.0,
+    "min_vram_gb": 4.1,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -3018,17 +3047,18 @@
     "hf_downloads": 69602,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.27
   },
   {
     "name": "lmstudio-community/Qwen3-4B-Instruct-2507-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "880M",
-    "parameters_raw": 880068096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.1B",
+    "parameters_raw": 4087500000,
+    "min_ram_gb": 4.4,
+    "recommended_ram_gb": 7.0,
+    "min_vram_gb": 4.1,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -3040,7 +3070,8 @@
     "hf_downloads": 57423,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.27
   },
   {
     "name": "llava-hf/llava-onevision-qwen2-0.5b-ov-hf",
@@ -3378,12 +3409,12 @@
   {
     "name": "lmstudio-community/Qwen3-VL-4B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.0B",
-    "parameters_raw": 1044023808,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "5.6B",
+    "parameters_raw": 5618181818,
+    "min_ram_gb": 4.2,
+    "recommended_ram_gb": 6.7,
+    "min_vram_gb": 3.9,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -3396,7 +3427,8 @@
     "hf_downloads": 176345,
     "hf_likes": 0,
     "release_date": "2025-10-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.09
   },
   {
     "name": "OpenGVLab/InternVL3_5-1B-Instruct",
@@ -3520,12 +3552,12 @@
   {
     "name": "lmstudio-community/Qwen3-4B-Thinking-2507-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.1B",
-    "parameters_raw": 1131460096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.1B",
+    "parameters_raw": 4066666666,
+    "min_ram_gb": 5.6,
+    "recommended_ram_gb": 9.0,
+    "min_vram_gb": 5.2,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -3537,17 +3569,18 @@
     "hf_downloads": 70930,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.27
   },
   {
     "name": "lmstudio-community/Qwen3-4B-Instruct-2507-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.1B",
-    "parameters_raw": 1131460096,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.1B",
+    "parameters_raw": 4066666666,
+    "min_ram_gb": 5.6,
+    "recommended_ram_gb": 9.0,
+    "min_vram_gb": 5.2,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -3559,7 +3592,8 @@
     "hf_downloads": 58681,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.27
   },
   {
     "name": "opendatalab/MinerU2.5-2509-1.2B",
@@ -3616,12 +3650,12 @@
   {
     "name": "lmstudio-community/Qwen3-VL-4B-Instruct-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.2B",
-    "parameters_raw": 1169719808,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "6.5B",
+    "parameters_raw": 6545454545,
+    "min_ram_gb": 4.8,
+    "recommended_ram_gb": 7.7,
+    "min_vram_gb": 4.5,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -3634,7 +3668,8 @@
     "hf_downloads": 166835,
     "hf_likes": 0,
     "release_date": "2025-10-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.6
   },
   {
     "name": "LiquidAI/LFM2-1.2B",
@@ -3932,7 +3967,7 @@
     "min_vram_gb": 0.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -3961,7 +3996,7 @@
     "min_vram_gb": 0.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4017,7 +4052,7 @@
     "min_vram_gb": 0.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4065,7 +4100,7 @@
     "min_vram_gb": 0.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4194304,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -4113,7 +4148,7 @@
     "min_vram_gb": 0.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4194304,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4141,7 +4176,7 @@
     "min_vram_gb": 0.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4194304,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -4160,11 +4195,11 @@
   {
     "name": "warshanks/Jan-nano-AWQ",
     "provider": "warshanks",
-    "parameter_count": "1.3B",
-    "parameters_raw": 1264206840,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.6,
+    "parameter_count": "5.7B",
+    "parameters_raw": 5733333333,
+    "min_ram_gb": 4.6,
+    "recommended_ram_gb": 7.4,
+    "min_vram_gb": 4.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 40960,
@@ -4175,7 +4210,8 @@
     "hf_downloads": 113207,
     "hf_likes": 0,
     "release_date": "2025-07-12",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.44
   },
   {
     "name": "AIDC-AI/Ovis2-1B",
@@ -4229,14 +4265,14 @@
   {
     "name": "lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.3B",
-    "parameters_raw": 1280062464,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.7,
-    "quantization": "Q4_K_M",
+    "parameter_count": "8.4B",
+    "parameters_raw": 8381818181,
+    "min_ram_gb": 6.0,
+    "recommended_ram_gb": 9.7,
+    "min_vram_gb": 5.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
-    "context_length": 524288,
+    "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
     "capabilities": [
       "tool_use"
@@ -4246,17 +4282,18 @@
     "hf_downloads": 344137,
     "hf_likes": 0,
     "release_date": "2025-05-29",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.61
   },
   {
     "name": "lmstudio-community/Qwen3-8B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.3B",
-    "parameters_raw": 1280062464,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.7,
-    "quantization": "Q4_K_M",
+    "parameter_count": "8.4B",
+    "parameters_raw": 8381818181,
+    "min_ram_gb": 6.0,
+    "recommended_ram_gb": 9.7,
+    "min_vram_gb": 5.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -4268,7 +4305,8 @@
     "hf_downloads": 27602,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.61
   },
   {
     "name": "pfnet/plamo-2-1b",
@@ -4293,12 +4331,12 @@
   {
     "name": "lmstudio-community/Qwen3-VL-4B-Instruct-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.3B",
-    "parameters_raw": 1295415808,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.7,
-    "quantization": "Q4_K_M",
+    "parameter_count": "5.1B",
+    "parameters_raw": 5124999999,
+    "min_ram_gb": 5.4,
+    "recommended_ram_gb": 8.7,
+    "min_vram_gb": 5.0,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -4311,18 +4349,19 @@
     "hf_downloads": 166958,
     "hf_likes": 0,
     "release_date": "2025-10-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.1
   },
   {
     "name": "moondream/moondream-2b-2025-04-14-4bit",
     "provider": "moondream",
-    "parameter_count": "1.3B",
-    "parameters_raw": 1312927216,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.7,
-    "quantization": "Q4_K_M",
-    "format": "gguf",
+    "parameter_count": "9.6B",
+    "parameters_raw": 9633333333,
+    "min_ram_gb": 7.4,
+    "recommended_ram_gb": 12.1,
+    "min_vram_gb": 6.9,
+    "quantization": "AWQ-4bit",
+    "format": "awq",
     "context_length": 4096,
     "use_case": "General purpose",
     "capabilities": [],
@@ -4331,7 +4370,8 @@
     "hf_downloads": 17143,
     "hf_likes": 0,
     "release_date": "2025-05-20",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 5.78
   },
   {
     "name": "EleutherAI/gpt-neo-1.3B",
@@ -4595,7 +4635,7 @@
     "min_vram_gb": 0.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4194304,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4617,7 +4657,7 @@
     "min_vram_gb": 0.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4194304,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4665,7 +4705,7 @@
     "min_vram_gb": 0.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -4692,7 +4732,9 @@
         "repo": "mradermacher/Qwen2.5-Coder-1.5B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-1.5B-Instruct",
@@ -4704,7 +4746,7 @@
     "min_vram_gb": 0.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4724,7 +4766,9 @@
         "repo": "mradermacher/Qwen2.5-1.5B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2-1.5B-Instruct",
@@ -4778,7 +4822,9 @@
         "repo": "mradermacher/Qwen2.5-1.5B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Math-1.5B",
@@ -4790,7 +4836,7 @@
     "min_vram_gb": 0.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -4806,7 +4852,9 @@
         "repo": "mradermacher/Qwen2.5-Math-1.5B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "LaaP-ai/qwen-base-invoicev1.01-1.5B",
@@ -4864,7 +4912,7 @@
     "min_vram_gb": 0.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -4884,7 +4932,9 @@
         "repo": "mradermacher/Qwen2.5-Math-1.5B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "RedHatAI/Qwen2-1.5B-Instruct-FP8",
@@ -4909,12 +4959,12 @@
   {
     "name": "lmstudio-community/Qwen3-VL-4B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "1.5B",
-    "parameters_raw": 1546807808,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "4.9B",
+    "parameters_raw": 4857142857,
+    "min_ram_gb": 6.6,
+    "recommended_ram_gb": 10.7,
+    "min_vram_gb": 6.1,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -4927,7 +4977,8 @@
     "hf_downloads": 167397,
     "hf_likes": 0,
     "release_date": "2025-10-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 5.1
   },
   {
     "name": "LiquidAI/LFM2-VL-1.6B",
@@ -5075,14 +5126,14 @@
   {
     "name": "Qwen/Qwen3-1.7B-GPTQ-Int8",
     "provider": "Alibaba",
-    "parameter_count": "1.7B",
-    "parameters_raw": 1720574976,
-    "min_ram_gb": 1.9,
-    "recommended_ram_gb": 3.2,
-    "min_vram_gb": 1.8,
+    "parameter_count": "1.9B",
+    "parameters_raw": 1881818181,
+    "min_ram_gb": 3.0,
+    "recommended_ram_gb": 4.6,
+    "min_vram_gb": 2.8,
     "quantization": "GPTQ-Int8",
     "format": "gptq",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -5092,7 +5143,10 @@
     "hf_downloads": 359697,
     "hf_likes": 0,
     "release_date": "2025-05-08",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 2.07
   },
   {
     "name": "Qwen/Qwen3-1.7B-Base",
@@ -5104,7 +5158,7 @@
     "min_vram_gb": 0.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -5120,7 +5174,9 @@
         "repo": "mradermacher/Qwen3-1.7B-Base-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Vikhrmodels/QVikhr-3-1.7B-Instruction-noreasoning",
@@ -5171,12 +5227,12 @@
   {
     "name": "lmstudio-community/Qwen3-1.7B-MLX-bf16",
     "provider": "lmstudio-community",
-    "parameter_count": "1.7B",
-    "parameters_raw": 1720574976,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.9,
-    "quantization": "Q4_K_M",
+    "parameter_count": "6.3B",
+    "parameters_raw": 6254545454,
+    "min_ram_gb": 4.6,
+    "recommended_ram_gb": 7.4,
+    "min_vram_gb": 4.3,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -5188,7 +5244,8 @@
     "hf_downloads": 26774,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.44
   },
   {
     "name": "bigscience/bloom-1b7",
@@ -5219,11 +5276,11 @@
   {
     "name": "cyankiwi/Qwen3-VL-4B-Instruct-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "1.8B",
-    "parameters_raw": 1761162232,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.9,
+    "parameter_count": "7.4B",
+    "parameters_raw": 7383333333,
+    "min_ram_gb": 5.8,
+    "recommended_ram_gb": 9.4,
+    "min_vram_gb": 5.4,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -5237,7 +5294,8 @@
     "hf_downloads": 281349,
     "hf_likes": 0,
     "release_date": "2025-10-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.43
   },
   {
     "name": "winninghealth/olmOCR-2-7B-1025-INT4",
@@ -5262,14 +5320,14 @@
   {
     "name": "Qwen/Qwen2.5-1.5B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "1.8B",
-    "parameters_raw": 1777088000,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.9,
+    "parameter_count": "2.7B",
+    "parameters_raw": 2683333333,
+    "min_ram_gb": 2.4,
+    "recommended_ram_gb": 3.7,
+    "min_vram_gb": 2.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -5279,7 +5337,10 @@
     "hf_downloads": 729267,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 1.61
   },
   {
     "name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
@@ -5318,14 +5379,14 @@
   {
     "name": "Qwen/Qwen2.5-Coder-1.5B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "1.8B",
-    "parameters_raw": 1777088000,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.9,
+    "parameter_count": "2.7B",
+    "parameters_raw": 2683333333,
+    "min_ram_gb": 2.4,
+    "recommended_ram_gb": 3.7,
+    "min_vram_gb": 2.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -5335,16 +5396,19 @@
     "hf_downloads": 122941,
     "hf_likes": 0,
     "release_date": "2024-09-20",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 1.61
   },
   {
     "name": "Qwen/Qwen2-1.5B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "1.8B",
-    "parameters_raw": 1777088000,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.9,
+    "parameter_count": "2.7B",
+    "parameters_raw": 2683333333,
+    "min_ram_gb": 2.4,
+    "recommended_ram_gb": 3.7,
+    "min_vram_gb": 2.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 32768,
@@ -5355,16 +5419,17 @@
     "hf_downloads": 27197,
     "hf_likes": 0,
     "release_date": "2024-06-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 1.61
   },
   {
     "name": "Qwen/Qwen2-1.5B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "1.8B",
-    "parameters_raw": 1777675776,
-    "min_ram_gb": 1.0,
-    "recommended_ram_gb": 2.0,
-    "min_vram_gb": 0.9,
+    "parameter_count": "4.2B",
+    "parameters_raw": 4250000000,
+    "min_ram_gb": 3.6,
+    "recommended_ram_gb": 5.6,
+    "min_vram_gb": 3.3,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 32768,
@@ -5375,7 +5440,8 @@
     "hf_downloads": 27140,
     "hf_likes": 0,
     "release_date": "2024-06-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.55
   },
   {
     "name": "RedHatAI/Qwen2.5-1.5B-quantized.w8a8",
@@ -5501,7 +5567,7 @@
     "min_vram_gb": 1.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [
       "tool_use"
@@ -5528,7 +5594,9 @@
         "repo": "mradermacher/Qwen3-1.7B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "JetLM/SDAR-1.7B-Chat",
@@ -5863,11 +5931,11 @@
   {
     "name": "QuantTrio/Qwen3.5-2B-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2274069824,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.1,
-    "min_vram_gb": 1.2,
+    "parameter_count": "5.4B",
+    "parameters_raw": 5433333333,
+    "min_ram_gb": 4.4,
+    "recommended_ram_gb": 7.0,
+    "min_vram_gb": 4.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -5880,17 +5948,18 @@
     "hf_downloads": 24959,
     "hf_likes": 0,
     "release_date": "2026-03-04",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.26
   },
   {
     "name": "lmstudio-community/Phi-4-reasoning-plus-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2290897920,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.1,
-    "min_vram_gb": 1.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "15.0B",
+    "parameters_raw": 14999999999,
+    "min_ram_gb": 10.4,
+    "recommended_ram_gb": 17.0,
+    "min_vram_gb": 9.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "Advanced reasoning, chain-of-thought",
@@ -5900,19 +5969,20 @@
     "hf_downloads": 34433,
     "hf_likes": 0,
     "release_date": "2025-05-01",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.25
   },
   {
     "name": "lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2303865856,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.1,
-    "min_vram_gb": 1.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "8.3B",
+    "parameters_raw": 8285714285,
+    "min_ram_gb": 10.9,
+    "recommended_ram_gb": 17.9,
+    "min_vram_gb": 10.1,
+    "quantization": "MLX-8bit",
     "format": "mlx",
-    "context_length": 524288,
+    "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
     "capabilities": [
       "tool_use"
@@ -5922,17 +5992,18 @@
     "hf_downloads": 323123,
     "hf_likes": 0,
     "release_date": "2025-05-29",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.7
   },
   {
     "name": "lmstudio-community/Qwen3-8B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2303865856,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.1,
-    "min_vram_gb": 1.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "8.3B",
+    "parameters_raw": 8285714285,
+    "min_ram_gb": 10.9,
+    "recommended_ram_gb": 17.9,
+    "min_vram_gb": 10.1,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -5944,17 +6015,18 @@
     "hf_downloads": 26072,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.7
   },
   {
     "name": "lmstudio-community/Qwen3-14B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2307906560,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.1,
-    "min_vram_gb": 1.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "15.1B",
+    "parameters_raw": 15109090909,
+    "min_ram_gb": 10.5,
+    "recommended_ram_gb": 17.1,
+    "min_vram_gb": 9.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -5966,17 +6038,18 @@
     "hf_downloads": 39708,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.31
   },
   {
     "name": "lmstudio-community/Qwen2.5-Coder-14B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2308527104,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.1,
-    "min_vram_gb": 1.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "15.1B",
+    "parameters_raw": 15109090909,
+    "min_ram_gb": 10.5,
+    "recommended_ram_gb": 17.1,
+    "min_vram_gb": 9.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "Code generation and completion",
@@ -5988,16 +6061,17 @@
     "hf_downloads": 123860,
     "hf_likes": 0,
     "release_date": "2024-11-11",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.31
   },
   {
     "name": "cyankiwi/Qwen3.5-2B-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "2.3B",
-    "parameters_raw": 2318569082,
-    "min_ram_gb": 1.3,
-    "recommended_ram_gb": 2.2,
-    "min_vram_gb": 1.2,
+    "parameter_count": "4.2B",
+    "parameters_raw": 4166666666,
+    "min_ram_gb": 3.5,
+    "recommended_ram_gb": 5.5,
+    "min_vram_gb": 3.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -6010,7 +6084,8 @@
     "hf_downloads": 14719,
     "hf_likes": 0,
     "release_date": "2026-03-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.5
   },
   {
     "name": "LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct",
@@ -6087,11 +6162,11 @@
   {
     "name": "Qwen/Qwen2-VL-2B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "2.4B",
-    "parameters_raw": 2442359296,
-    "min_ram_gb": 1.4,
-    "recommended_ram_gb": 2.3,
-    "min_vram_gb": 1.3,
+    "parameter_count": "4.9B",
+    "parameters_raw": 4916666666,
+    "min_ram_gb": 4.0,
+    "recommended_ram_gb": 6.4,
+    "min_vram_gb": 3.7,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 32768,
@@ -6104,7 +6179,8 @@
     "hf_downloads": 82725,
     "hf_likes": 0,
     "release_date": "2024-08-29",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.95
   },
   {
     "name": "google/gemma-2b",
@@ -6323,7 +6399,7 @@
     "min_vram_gb": 1.3,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 8192,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -6386,7 +6462,7 @@
     "min_vram_gb": 1.3,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 8192,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -6501,11 +6577,11 @@
   {
     "name": "cyankiwi/Qwen3-VL-8B-Instruct-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "2.9B",
-    "parameters_raw": 2906632936,
-    "min_ram_gb": 1.6,
-    "recommended_ram_gb": 2.7,
-    "min_vram_gb": 1.5,
+    "parameter_count": "12.6B",
+    "parameters_raw": 12583333333,
+    "min_ram_gb": 9.6,
+    "recommended_ram_gb": 15.6,
+    "min_vram_gb": 8.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -6519,7 +6595,8 @@
     "hf_downloads": 39400,
     "hf_likes": 0,
     "release_date": "2025-10-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 7.55
   },
   {
     "name": "EleutherAI/pythia-2.8b",
@@ -6841,7 +6918,7 @@
     "min_vram_gb": 1.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -6861,7 +6938,9 @@
         "repo": "mradermacher/Qwen2.5-3B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-3B",
@@ -6873,7 +6952,7 @@
     "min_vram_gb": 1.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -6893,7 +6972,9 @@
         "repo": "mradermacher/Qwen2.5-3B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Coder-3B-Instruct",
@@ -6905,7 +6986,7 @@
     "min_vram_gb": 1.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -6929,7 +7010,9 @@
         "repo": "mradermacher/Qwen2.5-Coder-3B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Coder-3B",
@@ -6941,7 +7024,7 @@
     "min_vram_gb": 1.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -6961,7 +7044,9 @@
         "repo": "mradermacher/Qwen2.5-Coder-3B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "OpenGVLab/Mono-InternVL-2B",
@@ -7026,7 +7111,7 @@
     "min_vram_gb": 1.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -7055,7 +7140,7 @@
     "min_vram_gb": 1.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -7151,7 +7236,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 365515866
+    "active_parameters": 4000000000
   },
   {
     "name": "CohereLabs/tiny-aya-global",
@@ -7246,14 +7331,14 @@
   {
     "name": "Qwen/Qwen2.5-3B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "3.4B",
-    "parameters_raw": 3397103616,
-    "min_ram_gb": 1.9,
-    "recommended_ram_gb": 3.2,
-    "min_vram_gb": 1.7,
+    "parameter_count": "4.5B",
+    "parameters_raw": 4483333333,
+    "min_ram_gb": 3.7,
+    "recommended_ram_gb": 5.9,
+    "min_vram_gb": 3.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -7263,7 +7348,10 @@
     "hf_downloads": 120141,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 2.69
   },
   {
     "name": "ibm-granite/granite-4.0-micro-base",
@@ -7530,11 +7618,11 @@
   {
     "name": "Qwen/Qwen2.5-VL-3B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "3.8B",
-    "parameters_raw": 3754622976,
-    "min_ram_gb": 2.1,
-    "recommended_ram_gb": 3.5,
-    "min_vram_gb": 1.9,
+    "parameter_count": "5.7B",
+    "parameters_raw": 5666666666,
+    "min_ram_gb": 4.6,
+    "recommended_ram_gb": 7.3,
+    "min_vram_gb": 4.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 128000,
@@ -7548,7 +7636,8 @@
     "hf_downloads": 110516,
     "hf_likes": 0,
     "release_date": "2025-02-13",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 3.4
   },
   {
     "name": "nanonets/Nanonets-OCR-s",
@@ -7731,10 +7820,10 @@
     "name": "kaitchup/Phi-3-mini-4k-instruct-gptq-4bit",
     "provider": "kaitchup",
     "parameter_count": "3.8B",
-    "parameters_raw": 3822095360,
-    "min_ram_gb": 2.1,
-    "recommended_ram_gb": 3.6,
-    "min_vram_gb": 2.0,
+    "parameters_raw": 3800000000,
+    "min_ram_gb": 3.2,
+    "recommended_ram_gb": 5.1,
+    "min_vram_gb": 3.0,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 4096,
@@ -7745,7 +7834,8 @@
     "hf_downloads": 1348815,
     "hf_likes": 0,
     "release_date": "2024-04-25",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.28
   },
   {
     "name": "LiAutoAD/Ristretto-3B",
@@ -7836,11 +7926,11 @@
   {
     "name": "ciocan/gemma-4-E4B-it-W4A16",
     "provider": "ciocan",
-    "parameter_count": "4.0B",
-    "parameters_raw": 3995839008,
-    "min_ram_gb": 2.2,
-    "recommended_ram_gb": 3.7,
-    "min_vram_gb": 2.0,
+    "parameter_count": "16.8B",
+    "parameters_raw": 16800000000,
+    "min_ram_gb": 12.6,
+    "recommended_ram_gb": 20.7,
+    "min_vram_gb": 11.6,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 131072,
@@ -7851,7 +7941,8 @@
     "hf_downloads": 29264,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 10.08
   },
   {
     "name": "ibm-granite/granite-4.0-3b-vision",
@@ -7912,7 +8003,7 @@
     "min_vram_gb": 2.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 262144,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -7932,7 +8023,9 @@
         "repo": "mradermacher/Qwen3-4B-Instruct-2507-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-4B-Base",
@@ -7944,7 +8037,7 @@
     "min_vram_gb": 2.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -7960,7 +8053,9 @@
         "repo": "mradermacher/Qwen3-4B-Base-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-4B-Thinking-2507",
@@ -7972,7 +8067,7 @@
     "min_vram_gb": 2.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 262144,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -7992,19 +8087,21 @@
         "repo": "mradermacher/Qwen3-4B-Thinking-2507-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-4B-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "4.0B",
-    "parameters_raw": 4022468096,
-    "min_ram_gb": 2.2,
-    "recommended_ram_gb": 3.7,
-    "min_vram_gb": 2.1,
+    "parameter_count": "4.5B",
+    "parameters_raw": 4450000000,
+    "min_ram_gb": 3.7,
+    "recommended_ram_gb": 5.8,
+    "min_vram_gb": 3.4,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -8014,16 +8111,19 @@
     "hf_downloads": 698914,
     "hf_likes": 0,
     "release_date": "2025-05-05",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 2.67
   },
   {
     "name": "JunHowie/Qwen3-4B-Instruct-2507-GPTQ-Int4",
     "provider": "junhowie",
-    "parameter_count": "4.0B",
-    "parameters_raw": 4022468096,
-    "min_ram_gb": 2.2,
-    "recommended_ram_gb": 3.7,
-    "min_vram_gb": 2.1,
+    "parameter_count": "4.5B",
+    "parameters_raw": 4450000000,
+    "min_ram_gb": 3.7,
+    "recommended_ram_gb": 5.8,
+    "min_vram_gb": 3.4,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 262144,
@@ -8036,7 +8136,8 @@
     "hf_downloads": 114921,
     "hf_likes": 0,
     "release_date": "2025-09-01",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 2.67
   },
   {
     "name": "openbmb/MiniCPM-V-4",
@@ -8167,12 +8268,12 @@
   {
     "name": "lmstudio-community/Qwen3-14B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "4.2B",
-    "parameters_raw": 4153891840,
-    "min_ram_gb": 2.3,
-    "recommended_ram_gb": 3.9,
-    "min_vram_gb": 2.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "14.9B",
+    "parameters_raw": 14942857142,
+    "min_ram_gb": 19.3,
+    "recommended_ram_gb": 31.9,
+    "min_vram_gb": 17.8,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 40960,
     "use_case": "General purpose",
@@ -8184,17 +8285,18 @@
     "hf_downloads": 35844,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 15.69
   },
   {
     "name": "lmstudio-community/Qwen2.5-Coder-14B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "4.2B",
-    "parameters_raw": 4154676224,
-    "min_ram_gb": 2.3,
-    "recommended_ram_gb": 3.9,
-    "min_vram_gb": 2.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "14.9B",
+    "parameters_raw": 14942857142,
+    "min_ram_gb": 19.3,
+    "recommended_ram_gb": 31.9,
+    "min_vram_gb": 17.8,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "Code generation and completion",
@@ -8206,7 +8308,8 @@
     "hf_downloads": 106276,
     "hf_likes": 0,
     "release_date": "2024-11-11",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 15.69
   },
   {
     "name": "farbodtavakkoli/OTel-LLM-3B-IT",
@@ -8334,7 +8437,7 @@
     "min_vram_gb": 2.3,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -8350,7 +8453,9 @@
         "repo": "mradermacher/Qwen3-4B-SafeRL-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-4B-Instruct-2507-FP8",
@@ -8362,7 +8467,7 @@
     "min_vram_gb": 2.3,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 262144,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -8372,7 +8477,9 @@
     "hf_downloads": 664572,
     "hf_likes": 0,
     "release_date": "2025-08-06",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-4B-FP8",
@@ -8384,7 +8491,7 @@
     "min_vram_gb": 2.3,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -8394,7 +8501,9 @@
     "hf_downloads": 51483,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-VL-4B-Instruct",
@@ -8539,12 +8648,12 @@
   {
     "name": "lmstudio-community/gemma-4-26B-A4B-it-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "4.6B",
-    "parameters_raw": 4581586510,
-    "min_ram_gb": 2.6,
-    "recommended_ram_gb": 4.3,
-    "min_vram_gb": 2.3,
-    "quantization": "Q4_K_M",
+    "parameter_count": "28.4B",
+    "parameters_raw": 28381818181,
+    "min_ram_gb": 19.2,
+    "recommended_ram_gb": 31.7,
+    "min_vram_gb": 17.7,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -8558,7 +8667,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 501111021
+    "active_parameters": 4000000000,
+    "weight_gb": 15.61
   },
   {
     "name": "AIDC-AI/Ovis2-4B",
@@ -8645,11 +8755,11 @@
   {
     "name": "QuantTrio/Qwen3.5-4B-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "4.7B",
-    "parameters_raw": 4659865088,
-    "min_ram_gb": 2.6,
-    "recommended_ram_gb": 4.3,
-    "min_vram_gb": 2.4,
+    "parameter_count": "10.1B",
+    "parameters_raw": 10116666666,
+    "min_ram_gb": 7.8,
+    "recommended_ram_gb": 12.6,
+    "min_vram_gb": 7.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -8662,7 +8772,8 @@
     "hf_downloads": 41959,
     "hf_likes": 0,
     "release_date": "2026-03-04",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 6.07
   },
   {
     "name": "Jackrong/Qwen3.5-4B-Claude-4.6-Opus-Reasoning-Distilled",
@@ -8752,16 +8863,16 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 516588639
+    "active_parameters": 4000000000
   },
   {
     "name": "ISTA-DASLab/Mistral-Small-3.1-24B-Instruct-2503-GPTQ-4b-128g",
     "provider": "ista-daslab",
-    "parameter_count": "4.7B",
-    "parameters_raw": 4733947440,
-    "min_ram_gb": 2.6,
-    "recommended_ram_gb": 4.4,
-    "min_vram_gb": 2.4,
+    "parameter_count": "25.1B",
+    "parameters_raw": 25050000000,
+    "min_ram_gb": 18.5,
+    "recommended_ram_gb": 30.6,
+    "min_vram_gb": 17.0,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 131072,
@@ -8774,7 +8885,8 @@
     "hf_downloads": 22775,
     "hf_likes": 0,
     "release_date": "2025-03-20",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 15.03
   },
   {
     "name": "baidu/Qianfan-OCR",
@@ -8805,11 +8917,11 @@
   {
     "name": "cyankiwi/Qwen3.5-4B-AWQ-BF16-INT4",
     "provider": "cyankiwi",
-    "parameter_count": "4.7B",
-    "parameters_raw": 4743177998,
-    "min_ram_gb": 2.7,
-    "recommended_ram_gb": 4.4,
-    "min_vram_gb": 2.4,
+    "parameter_count": "9.2B",
+    "parameters_raw": 9150000000,
+    "min_ram_gb": 7.1,
+    "recommended_ram_gb": 11.5,
+    "min_vram_gb": 6.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -8822,7 +8934,8 @@
     "hf_downloads": 24216,
     "hf_likes": 0,
     "release_date": "2026-03-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 5.49
   },
   {
     "name": "XLabs-AI/xflux_text_encoders",
@@ -8847,11 +8960,11 @@
   {
     "name": "cyankiwi/Qwen3.5-4B-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "4.8B",
-    "parameters_raw": 4774635422,
-    "min_ram_gb": 2.7,
-    "recommended_ram_gb": 4.4,
-    "min_vram_gb": 2.4,
+    "parameter_count": "6.7B",
+    "parameters_raw": 6733333333,
+    "min_ram_gb": 5.3,
+    "recommended_ram_gb": 8.6,
+    "min_vram_gb": 4.9,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -8864,7 +8977,8 @@
     "hf_downloads": 324506,
     "hf_likes": 0,
     "release_date": "2026-03-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.04
   },
   {
     "name": "YannQi/R-4B",
@@ -8974,11 +9088,11 @@
   {
     "name": "stelterlab/NVIDIA-Nemotron-3-Nano-30B-A3B-AWQ",
     "provider": "stelterlab",
-    "parameter_count": "5.1B",
-    "parameters_raw": 5053827112,
-    "min_ram_gb": 2.8,
-    "recommended_ram_gb": 4.7,
-    "min_vram_gb": 2.6,
+    "parameter_count": "29.7B",
+    "parameters_raw": 29733333333,
+    "min_ram_gb": 21.9,
+    "recommended_ram_gb": 36.2,
+    "min_vram_gb": 20.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -8989,16 +9103,19 @@
     "hf_downloads": 335952,
     "hf_likes": 0,
     "release_date": "2026-01-31",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 17.84
   },
   {
     "name": "stelterlab/Nemotron-Cascade-2-30B-A3B-AWQ",
     "provider": "stelterlab",
-    "parameter_count": "5.1B",
-    "parameters_raw": 5053827112,
-    "min_ram_gb": 2.8,
-    "recommended_ram_gb": 4.7,
-    "min_vram_gb": 2.6,
+    "parameter_count": "29.7B",
+    "parameters_raw": 29733333333,
+    "min_ram_gb": 21.9,
+    "recommended_ram_gb": 36.2,
+    "min_vram_gb": 20.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -9009,17 +9126,20 @@
     "hf_downloads": 37405,
     "hf_likes": 0,
     "release_date": "2026-03-21",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 17.84
   },
   {
     "name": "lmstudio-community/Qwen2.5-Coder-32B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "5.1B",
-    "parameters_raw": 5120300032,
-    "min_ram_gb": 2.9,
-    "recommended_ram_gb": 4.8,
-    "min_vram_gb": 2.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "33.5B",
+    "parameters_raw": 33509090909,
+    "min_ram_gb": 22.6,
+    "recommended_ram_gb": 37.4,
+    "min_vram_gb": 20.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "Code generation and completion",
@@ -9031,17 +9151,18 @@
     "hf_downloads": 66156,
     "hf_likes": 0,
     "release_date": "2024-11-11",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 18.43
   },
   {
     "name": "lmstudio-community/QwQ-32B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "5.1B",
-    "parameters_raw": 5120300032,
-    "min_ram_gb": 2.9,
-    "recommended_ram_gb": 4.8,
-    "min_vram_gb": 2.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "33.5B",
+    "parameters_raw": 33509090909,
+    "min_ram_gb": 22.6,
+    "recommended_ram_gb": 37.4,
+    "min_vram_gb": 20.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 131072,
     "use_case": "General purpose",
@@ -9051,7 +9172,8 @@
     "hf_downloads": 33541,
     "hf_likes": 0,
     "release_date": "2025-03-05",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 18.43
   },
   {
     "name": "google/gemma-4-E2B-it",
@@ -9088,11 +9210,11 @@
   {
     "name": "ISTA-DASLab/gemma-3-27b-it-GPTQ-4b-128g",
     "provider": "ista-daslab",
-    "parameter_count": "5.2B",
-    "parameters_raw": 5233828308,
-    "min_ram_gb": 2.9,
-    "recommended_ram_gb": 4.9,
-    "min_vram_gb": 2.7,
+    "parameter_count": "28.1B",
+    "parameters_raw": 28116666666,
+    "min_ram_gb": 20.7,
+    "recommended_ram_gb": 34.2,
+    "min_vram_gb": 19.1,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 1048576,
@@ -9103,7 +9225,8 @@
     "hf_downloads": 342648,
     "hf_likes": 0,
     "release_date": "2025-03-14",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 16.87
   },
   {
     "name": "datalab-to/chandra-ocr-2",
@@ -9128,11 +9251,11 @@
   {
     "name": "cyankiwi/Qwen3-Coder-30B-A3B-Instruct-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "5.3B",
-    "parameters_raw": 5306567040,
-    "min_ram_gb": 3.0,
-    "recommended_ram_gb": 4.9,
-    "min_vram_gb": 2.7,
+    "parameter_count": "30.1B",
+    "parameters_raw": 30150000000,
+    "min_ram_gb": 22.2,
+    "recommended_ram_gb": 36.7,
+    "min_vram_gb": 20.4,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -9149,16 +9272,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 580405768
+    "active_parameters": 3000000000,
+    "weight_gb": 18.09
   },
   {
     "name": "cyankiwi/Qwen3-30B-A3B-Instruct-2507-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "5.3B",
-    "parameters_raw": 5306567040,
-    "min_ram_gb": 3.0,
-    "recommended_ram_gb": 4.9,
-    "min_vram_gb": 2.7,
+    "parameter_count": "30.1B",
+    "parameters_raw": 30150000000,
+    "min_ram_gb": 22.2,
+    "recommended_ram_gb": 36.7,
+    "min_vram_gb": 20.4,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -9175,7 +9299,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 580405768
+    "active_parameters": 3000000000,
+    "weight_gb": 18.09
   },
   {
     "name": "microsoft/Phi-4-multimodal-instruct",
@@ -9203,11 +9328,11 @@
   {
     "name": "gaunernst/gemma-3-27b-it-int4-awq",
     "provider": "gaunernst",
-    "parameter_count": "5.9B",
-    "parameters_raw": 5933782640,
-    "min_ram_gb": 3.3,
-    "recommended_ram_gb": 5.5,
-    "min_vram_gb": 3.0,
+    "parameter_count": "30.8B",
+    "parameters_raw": 30783333333,
+    "min_ram_gb": 22.7,
+    "recommended_ram_gb": 37.4,
+    "min_vram_gb": 20.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 8192,
@@ -9218,7 +9343,8 @@
     "hf_downloads": 18789,
     "hf_likes": 0,
     "release_date": "2025-03-21",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 18.47
   },
   {
     "name": "z-lab/gemma-4-31B-it-PARO",
@@ -9266,12 +9392,12 @@
   {
     "name": "lmstudio-community/gemma-4-26B-A4B-it-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "6.1B",
-    "parameters_raw": 6124686926,
-    "min_ram_gb": 3.4,
-    "recommended_ram_gb": 5.7,
-    "min_vram_gb": 3.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "27.2B",
+    "parameters_raw": 27225000000,
+    "min_ram_gb": 26.6,
+    "recommended_ram_gb": 44.1,
+    "min_vram_gb": 24.5,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -9285,7 +9411,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 669887626
+    "active_parameters": 4000000000,
+    "weight_gb": 21.78
   },
   {
     "name": "cosmicproc/gemma-4-E4B-it-NVFP4",
@@ -9331,7 +9458,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 508491454
+    "active_parameters": 3000000000
   },
   {
     "name": "dealignai/Gemma-4-31B-JANG_4M-CRACK",
@@ -9522,7 +9649,7 @@
     "min_vram_gb": 3.5,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 16384,
     "use_case": "Code generation and completion",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -9804,11 +9931,11 @@
   {
     "name": "cyankiwi/Qwen3-VL-32B-Instruct-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "7.0B",
-    "parameters_raw": 7027647600,
-    "min_ram_gb": 3.9,
-    "recommended_ram_gb": 6.5,
-    "min_vram_gb": 3.6,
+    "parameter_count": "36.4B",
+    "parameters_raw": 36433333333,
+    "min_ram_gb": 26.7,
+    "recommended_ram_gb": 44.2,
+    "min_vram_gb": 24.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -9822,7 +9949,8 @@
     "hf_downloads": 15483,
     "hf_likes": 0,
     "release_date": "2025-10-21",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 21.86
   },
   {
     "name": "facebook/chameleon-7b",
@@ -10169,11 +10297,11 @@
   {
     "name": "thesven/Mistral-7B-Instruct-v0.3-GPTQ",
     "provider": "thesven",
-    "parameter_count": "7.2B",
-    "parameters_raw": 7249399808,
-    "min_ram_gb": 4.1,
-    "recommended_ram_gb": 6.8,
-    "min_vram_gb": 3.7,
+    "parameter_count": "7.0B",
+    "parameters_raw": 6950000000,
+    "min_ram_gb": 5.5,
+    "recommended_ram_gb": 8.8,
+    "min_vram_gb": 5.1,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 32768,
@@ -10186,7 +10314,8 @@
     "hf_downloads": 65634,
     "hf_likes": 0,
     "release_date": "2024-05-22",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 4.17
   },
   {
     "name": "tiiuae/falcon-mamba-7b-instruct",
@@ -10387,7 +10516,7 @@
     "min_vram_gb": 3.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -10400,7 +10529,9 @@
     "num_hidden_layers": 28,
     "num_attention_heads": 28,
     "num_key_value_heads": 4,
-    "head_dim": 128
+    "head_dim": 128,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Coder-7B-Instruct",
@@ -10412,7 +10543,7 @@
     "min_vram_gb": 3.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -10431,7 +10562,9 @@
         "repo": "mradermacher/Qwen2.5-Coder-7B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
@@ -10466,7 +10599,7 @@
     "min_vram_gb": 3.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -10476,7 +10609,9 @@
     "hf_downloads": 1489208,
     "hf_likes": 0,
     "release_date": "2024-09-16",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-7B",
@@ -10498,19 +10633,21 @@
     "hf_downloads": 1199117,
     "hf_likes": 0,
     "release_date": "2024-09-15",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "7.6B",
-    "parameters_raw": 7615616512,
-    "min_ram_gb": 4.3,
-    "recommended_ram_gb": 7.1,
-    "min_vram_gb": 3.9,
+    "parameter_count": "9.3B",
+    "parameters_raw": 9300000000,
+    "min_ram_gb": 7.2,
+    "recommended_ram_gb": 11.7,
+    "min_vram_gb": 6.6,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -10520,7 +10657,10 @@
     "hf_downloads": 1054634,
     "hf_likes": 0,
     "release_date": "2024-09-20",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 5.58
   },
   {
     "name": "Qwen/Qwen2-7B-Instruct",
@@ -10545,14 +10685,14 @@
   {
     "name": "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "7.6B",
-    "parameters_raw": 7615616512,
-    "min_ram_gb": 4.3,
-    "recommended_ram_gb": 7.1,
-    "min_vram_gb": 3.9,
+    "parameter_count": "9.3B",
+    "parameters_raw": 9283333333,
+    "min_ram_gb": 7.2,
+    "recommended_ram_gb": 11.6,
+    "min_vram_gb": 6.6,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -10562,7 +10702,10 @@
     "hf_downloads": 246645,
     "hf_likes": 0,
     "release_date": "2024-09-20",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 5.57
   },
   {
     "name": "Qwen/Qwen2.5-Math-7B",
@@ -10574,7 +10717,7 @@
     "min_vram_gb": 3.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -10584,7 +10727,9 @@
     "hf_downloads": 220829,
     "hf_likes": 0,
     "release_date": "2024-09-16",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Dream-org/Dream-v0-Instruct-7B",
@@ -10616,7 +10761,7 @@
     "min_vram_gb": 3.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1010000,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -10626,7 +10771,9 @@
     "hf_downloads": 106356,
     "hf_likes": 0,
     "release_date": "2025-01-23",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Math-7B-Instruct",
@@ -10638,7 +10785,7 @@
     "min_vram_gb": 3.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -10648,7 +10795,9 @@
     "hf_downloads": 73202,
     "hf_likes": 0,
     "release_date": "2024-09-19",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "SWE-bench/SWE-agent-LM-7B",
@@ -10693,14 +10842,14 @@
   {
     "name": "Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "7.6B",
-    "parameters_raw": 7615616512,
-    "min_ram_gb": 4.3,
-    "recommended_ram_gb": 7.1,
-    "min_vram_gb": 3.9,
+    "parameter_count": "9.3B",
+    "parameters_raw": 9300000000,
+    "min_ram_gb": 7.2,
+    "recommended_ram_gb": 11.7,
+    "min_vram_gb": 6.6,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -10710,7 +10859,10 @@
     "hf_downloads": 60772,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 5.58
   },
   {
     "name": "XCurOS/XCurOS-0.1-8B-Instruct",
@@ -10779,12 +10931,12 @@
   {
     "name": "lmstudio-community/gemma-4-26B-A4B-it-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "7.7B",
-    "parameters_raw": 7667787342,
-    "min_ram_gb": 4.3,
-    "recommended_ram_gb": 7.1,
-    "min_vram_gb": 3.9,
-    "quantization": "Q4_K_M",
+    "parameter_count": "26.6B",
+    "parameters_raw": 26619047619,
+    "min_ram_gb": 34.0,
+    "recommended_ram_gb": 56.4,
+    "min_vram_gb": 31.2,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -10798,7 +10950,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 838664239
+    "active_parameters": 4000000000,
+    "weight_gb": 27.95
   },
   {
     "name": "Qwen/Qwen-7B-Chat",
@@ -10983,12 +11136,12 @@
   {
     "name": "lmstudio-community/gemma-3n-E4B-it-MLX-bf16",
     "provider": "lmstudio-community",
-    "parameter_count": "7.8B",
-    "parameters_raw": 7849978192,
-    "min_ram_gb": 4.4,
-    "recommended_ram_gb": 7.3,
-    "min_vram_gb": 4.0,
-    "quantization": "Q4_K_M",
+    "parameter_count": "28.5B",
+    "parameters_raw": 28545454545,
+    "min_ram_gb": 19.3,
+    "recommended_ram_gb": 31.9,
+    "min_vram_gb": 17.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "General purpose",
@@ -10998,7 +11151,8 @@
     "hf_downloads": 318526,
     "hf_likes": 0,
     "release_date": "2025-06-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 15.7
   },
   {
     "name": "Salesforce/instructblip-vicuna-7b",
@@ -11063,12 +11217,12 @@
   {
     "name": "lmstudio-community/gemma-4-31B-it-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "8.0B",
-    "parameters_raw": 7969225580,
-    "min_ram_gb": 4.5,
-    "recommended_ram_gb": 7.4,
-    "min_vram_gb": 4.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "52.4B",
+    "parameters_raw": 52399999999,
+    "min_ram_gb": 35.1,
+    "recommended_ram_gb": 58.1,
+    "min_vram_gb": 32.2,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -11078,7 +11232,8 @@
     "hf_downloads": 222547,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 28.82
   },
   {
     "name": "google/gemma-4-E4B-it",
@@ -11153,7 +11308,7 @@
     "min_vram_gb": 4.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1048576,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -11176,7 +11331,7 @@
     "min_vram_gb": 4.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1048576,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -11449,11 +11604,11 @@
   {
     "name": "MaziyarPanahi/Meta-Llama-3-8B-Instruct-GPTQ",
     "provider": "maziyarpanahi",
-    "parameter_count": "8.0B",
-    "parameters_raw": 8030261248,
-    "min_ram_gb": 4.5,
-    "recommended_ram_gb": 7.5,
-    "min_vram_gb": 4.1,
+    "parameter_count": "9.6B",
+    "parameters_raw": 9550000000,
+    "min_ram_gb": 7.4,
+    "recommended_ram_gb": 12.0,
+    "min_vram_gb": 6.8,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 8192,
@@ -11466,7 +11621,8 @@
     "hf_downloads": 25456,
     "hf_likes": 0,
     "release_date": "2024-04-18",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 5.73
   },
   {
     "name": "RedHatAI/Meta-Llama-3.1-8B-Instruct-FP8",
@@ -11579,11 +11735,11 @@
   {
     "name": "RedHatAI/Meta-Llama-3.1-8B-Instruct-quantized.w4a16",
     "provider": "redhatai",
-    "parameter_count": "8.0B",
-    "parameters_raw": 8031637504,
-    "min_ram_gb": 4.5,
-    "recommended_ram_gb": 7.5,
-    "min_vram_gb": 4.1,
+    "parameter_count": "9.6B",
+    "parameters_raw": 9566666666,
+    "min_ram_gb": 7.4,
+    "recommended_ram_gb": 12.0,
+    "min_vram_gb": 6.8,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 1048576,
@@ -11596,7 +11752,8 @@
     "hf_downloads": 41218,
     "hf_likes": 0,
     "release_date": "2024-07-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 5.74
   },
   {
     "name": "RedHatAI/Meta-Llama-3.1-8B-Instruct-FP8-dynamic",
@@ -11808,7 +11965,7 @@
     "min_vram_gb": 4.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [
       "tool_use"
@@ -11835,19 +11992,21 @@
         "repo": "mradermacher/Qwen3-8B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-8B-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "8.2B",
-    "parameters_raw": 8190735360,
-    "min_ram_gb": 4.6,
-    "recommended_ram_gb": 7.6,
-    "min_vram_gb": 4.2,
+    "parameter_count": "10.2B",
+    "parameters_raw": 10166666666,
+    "min_ram_gb": 7.8,
+    "recommended_ram_gb": 12.7,
+    "min_vram_gb": 7.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -11857,7 +12016,10 @@
     "hf_downloads": 995213,
     "hf_likes": 0,
     "release_date": "2025-05-03",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 6.1
   },
   {
     "name": "Qwen/Qwen3-8B-Base",
@@ -11869,7 +12031,7 @@
     "min_vram_gb": 4.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -11885,7 +12047,9 @@
         "repo": "mradermacher/Qwen3-8B-Base-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
@@ -11897,7 +12061,7 @@
     "min_vram_gb": 4.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 524288,
+    "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
     "capabilities": [
       "tool_use"
@@ -11979,7 +12143,7 @@
     "min_vram_gb": 4.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -11989,7 +12153,9 @@
     "hf_downloads": 150719,
     "hf_likes": 0,
     "release_date": "2025-04-28",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "nytopop/Qwen3-8B.w8a8",
@@ -12016,11 +12182,11 @@
   {
     "name": "Qwen/Qwen2-VL-7B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "8.3B",
-    "parameters_raw": 8291375616,
-    "min_ram_gb": 4.6,
-    "recommended_ram_gb": 7.7,
-    "min_vram_gb": 4.2,
+    "parameter_count": "11.5B",
+    "parameters_raw": 11533333333,
+    "min_ram_gb": 8.8,
+    "recommended_ram_gb": 14.3,
+    "min_vram_gb": 8.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 32768,
@@ -12033,7 +12199,8 @@
     "hf_downloads": 1633012,
     "hf_likes": 0,
     "release_date": "2024-08-29",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 6.92
   },
   {
     "name": "Qwen/Qwen2-VL-7B-Instruct",
@@ -12094,11 +12261,11 @@
   {
     "name": "Qwen/Qwen2-VL-7B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "8.3B",
-    "parameters_raw": 8291375616,
-    "min_ram_gb": 4.6,
-    "recommended_ram_gb": 7.7,
-    "min_vram_gb": 4.2,
+    "parameter_count": "11.6B",
+    "parameters_raw": 11550000000,
+    "min_ram_gb": 8.8,
+    "recommended_ram_gb": 14.4,
+    "min_vram_gb": 8.1,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 32768,
@@ -12111,7 +12278,8 @@
     "hf_downloads": 59392,
     "hf_likes": 0,
     "release_date": "2024-08-29",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 6.93
   },
   {
     "name": "Qwen/Qwen2-VL-7B",
@@ -12236,11 +12404,11 @@
   {
     "name": "Qwen/Qwen2.5-VL-7B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "8.3B",
-    "parameters_raw": 8292166656,
-    "min_ram_gb": 4.6,
-    "recommended_ram_gb": 7.7,
-    "min_vram_gb": 4.2,
+    "parameter_count": "11.5B",
+    "parameters_raw": 11533333333,
+    "min_ram_gb": 8.8,
+    "recommended_ram_gb": 14.3,
+    "min_vram_gb": 8.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 128000,
@@ -12254,7 +12422,8 @@
     "hf_downloads": 219681,
     "hf_likes": 0,
     "release_date": "2025-02-15",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 6.92
   },
   {
     "name": "ByteDance-Seed/UI-TARS-1.5-7B",
@@ -12493,7 +12662,7 @@
     "is_moe": true,
     "num_experts": 32,
     "active_experts": 4,
-    "active_parameters": 1500000000,
+    "active_parameters": 1000000000,
     "gguf_sources": [
       {
         "repo": "unsloth/LFM2-8B-A1B-GGUF",
@@ -12756,12 +12925,12 @@
   {
     "name": "lmstudio-community/gemma-4-31B-it-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "8.6B",
-    "parameters_raw": 8587551596,
-    "min_ram_gb": 4.8,
-    "recommended_ram_gb": 8.0,
-    "min_vram_gb": 4.4,
-    "quantization": "Q4_K_M",
+    "parameter_count": "39.1B",
+    "parameters_raw": 39112500000,
+    "min_ram_gb": 38.0,
+    "recommended_ram_gb": 63.1,
+    "min_vram_gb": 34.9,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -12771,7 +12940,8 @@
     "hf_downloads": 218306,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 31.29
   },
   {
     "name": "llm-jp/llm-jp-4-8b-thinking",
@@ -12878,11 +13048,11 @@
   {
     "name": "openbmb/MiniCPM-V-4_5-AWQ",
     "provider": "openbmb",
-    "parameter_count": "8.7B",
-    "parameters_raw": 8695895280,
-    "min_ram_gb": 4.9,
-    "recommended_ram_gb": 8.1,
-    "min_vram_gb": 4.5,
+    "parameter_count": "11.8B",
+    "parameters_raw": 11850000000,
+    "min_ram_gb": 9.0,
+    "recommended_ram_gb": 14.7,
+    "min_vram_gb": 8.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 40960,
@@ -12893,7 +13063,8 @@
     "hf_downloads": 26567,
     "hf_likes": 0,
     "release_date": "2025-08-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 7.11
   },
   {
     "name": "BAAI/Emu3-Chat-hf",
@@ -13278,12 +13449,12 @@
   {
     "name": "lmstudio-community/gemma-4-31B-it-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "9.2B",
-    "parameters_raw": 9205877612,
-    "min_ram_gb": 5.1,
-    "recommended_ram_gb": 8.6,
-    "min_vram_gb": 4.7,
-    "quantization": "Q4_K_M",
+    "parameter_count": "32.2B",
+    "parameters_raw": 32152380952,
+    "min_ram_gb": 41.0,
+    "recommended_ram_gb": 68.0,
+    "min_vram_gb": 37.6,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -13293,17 +13464,18 @@
     "hf_downloads": 223477,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 33.76
   },
   {
     "name": "lmstudio-community/Qwen2.5-Coder-32B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "9.2B",
-    "parameters_raw": 9215644672,
-    "min_ram_gb": 5.1,
-    "recommended_ram_gb": 8.6,
-    "min_vram_gb": 4.7,
-    "quantization": "Q4_K_M",
+    "parameter_count": "33.2B",
+    "parameters_raw": 33152380952,
+    "min_ram_gb": 42.3,
+    "recommended_ram_gb": 70.1,
+    "min_vram_gb": 38.8,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 32768,
     "use_case": "Code generation and completion",
@@ -13315,17 +13487,18 @@
     "hf_downloads": 62151,
     "hf_likes": 0,
     "release_date": "2024-11-11",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 34.81
   },
   {
     "name": "lmstudio-community/QwQ-32B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "9.2B",
-    "parameters_raw": 9215644672,
-    "min_ram_gb": 5.1,
-    "recommended_ram_gb": 8.6,
-    "min_vram_gb": 4.7,
-    "quantization": "Q4_K_M",
+    "parameter_count": "33.2B",
+    "parameters_raw": 33152380952,
+    "min_ram_gb": 42.3,
+    "recommended_ram_gb": 70.1,
+    "min_vram_gb": 38.8,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 131072,
     "use_case": "General purpose",
@@ -13335,7 +13508,8 @@
     "hf_downloads": 33242,
     "hf_likes": 0,
     "release_date": "2025-03-05",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 34.81
   },
   {
     "name": "google/gemma-2-9b-it",
@@ -13347,7 +13521,7 @@
     "min_vram_gb": 4.7,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 8192,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -13393,11 +13567,11 @@
   {
     "name": "btbtyler09/Qwen3-Coder-30B-A3B-Instruct-gptq-8bit",
     "provider": "btbtyler09",
-    "parameter_count": "9.3B",
-    "parameters_raw": 9298753536,
-    "min_ram_gb": 10.4,
-    "recommended_ram_gb": 17.3,
-    "min_vram_gb": 9.5,
+    "parameter_count": "31.0B",
+    "parameters_raw": 30990909090,
+    "min_ram_gb": 41.4,
+    "recommended_ram_gb": 68.7,
+    "min_vram_gb": 38.0,
     "quantization": "GPTQ-Int8",
     "format": "gptq",
     "context_length": 262144,
@@ -13414,7 +13588,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 1017051164
+    "active_parameters": 3000000000,
+    "weight_gb": 34.09
   },
   {
     "name": "ByteDance-Seed/academic-ds-9B",
@@ -13530,12 +13705,12 @@
   {
     "name": "TheCluster/Qwen3.5-9B-Claude-4.6-HighIQ-INSTRUCT-HERETIC-UNCENSORED-MLX-mxfp8",
     "provider": "thecluster",
-    "parameter_count": "9.4B",
-    "parameters_raw": 9409813744,
-    "min_ram_gb": 5.3,
-    "recommended_ram_gb": 8.8,
-    "min_vram_gb": 4.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "18.5B",
+    "parameters_raw": 18454545454,
+    "min_ram_gb": 12.7,
+    "recommended_ram_gb": 20.8,
+    "min_vram_gb": 11.7,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -13547,7 +13722,8 @@
     "hf_downloads": 15687,
     "hf_likes": 0,
     "release_date": "2026-03-04",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 10.15
   },
   {
     "name": "Qwen/Qwen3.5-9B",
@@ -13636,11 +13812,11 @@
   {
     "name": "QuantTrio/Qwen3.5-9B-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "9.7B",
-    "parameters_raw": 9653104368,
-    "min_ram_gb": 5.4,
-    "recommended_ram_gb": 9.0,
-    "min_vram_gb": 4.9,
+    "parameter_count": "20.6B",
+    "parameters_raw": 20633333333,
+    "min_ram_gb": 15.4,
+    "recommended_ram_gb": 25.3,
+    "min_vram_gb": 14.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -13653,7 +13829,8 @@
     "hf_downloads": 332065,
     "hf_likes": 0,
     "release_date": "2026-03-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 12.38
   },
   {
     "name": "Jackrong/Qwopus3.5-9B-v3",
@@ -13804,11 +13981,11 @@
   {
     "name": "cyankiwi/Qwen3.5-9B-AWQ-BF16-INT4",
     "provider": "cyankiwi",
-    "parameter_count": "9.8B",
-    "parameters_raw": 9825333246,
-    "min_ram_gb": 5.5,
-    "recommended_ram_gb": 9.2,
-    "min_vram_gb": 5.0,
+    "parameter_count": "19.0B",
+    "parameters_raw": 18966666666,
+    "min_ram_gb": 14.2,
+    "recommended_ram_gb": 23.3,
+    "min_vram_gb": 13.0,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -13821,16 +13998,17 @@
     "hf_downloads": 22275,
     "hf_likes": 0,
     "release_date": "2026-03-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 11.38
   },
   {
     "name": "cyankiwi/Qwen3.5-9B-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "9.9B",
-    "parameters_raw": 9875665038,
-    "min_ram_gb": 5.5,
-    "recommended_ram_gb": 9.2,
-    "min_vram_gb": 5.1,
+    "parameter_count": "15.1B",
+    "parameters_raw": 15116666666,
+    "min_ram_gb": 11.4,
+    "recommended_ram_gb": 18.6,
+    "min_vram_gb": 10.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -13843,16 +14021,17 @@
     "hf_downloads": 163488,
     "hf_likes": 0,
     "release_date": "2026-03-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 9.07
   },
   {
     "name": "solidrust/gemma-2-9b-it-AWQ",
     "provider": "solidrust",
-    "parameter_count": "10.2B",
-    "parameters_raw": 10159209984,
-    "min_ram_gb": 5.7,
-    "recommended_ram_gb": 9.5,
-    "min_vram_gb": 5.2,
+    "parameter_count": "13.3B",
+    "parameters_raw": 13333333333,
+    "min_ram_gb": 10.1,
+    "recommended_ram_gb": 16.5,
+    "min_vram_gb": 9.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 8192,
@@ -13863,7 +14042,8 @@
     "hf_downloads": 29474,
     "hf_likes": 0,
     "release_date": "2024-09-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.0
   },
   {
     "name": "stepfun-ai/Step3-VL-10B",
@@ -13954,11 +14134,11 @@
   {
     "name": "dengcao/GLM-4.1V-9B-Thinking-AWQ",
     "provider": "dengcao",
-    "parameter_count": "10.4B",
-    "parameters_raw": 10357264896,
-    "min_ram_gb": 5.8,
-    "recommended_ram_gb": 9.6,
-    "min_vram_gb": 5.3,
+    "parameter_count": "12.2B",
+    "parameters_raw": 12150000000,
+    "min_ram_gb": 9.2,
+    "recommended_ram_gb": 15.1,
+    "min_vram_gb": 8.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 65536,
@@ -13969,7 +14149,8 @@
     "hf_downloads": 204792,
     "hf_likes": 0,
     "release_date": "2025-07-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 7.29
   },
   {
     "name": "meta-llama/Llama-3.2-11B-Vision",
@@ -14337,11 +14518,11 @@
   {
     "name": "casperhansen/mistral-nemo-instruct-2407-awq",
     "provider": "casperhansen",
-    "parameter_count": "12.2B",
-    "parameters_raw": 12247782400,
-    "min_ram_gb": 6.8,
-    "recommended_ram_gb": 11.4,
-    "min_vram_gb": 6.3,
+    "parameter_count": "13.9B",
+    "parameters_raw": 13916666666,
+    "min_ram_gb": 10.5,
+    "recommended_ram_gb": 17.2,
+    "min_vram_gb": 9.7,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 1024000,
@@ -14354,7 +14535,8 @@
     "hf_downloads": 48682,
     "hf_likes": 0,
     "release_date": "2024-07-23",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 8.35
   },
   {
     "name": "mistral-experimental/pixtral-12b",
@@ -14505,7 +14687,7 @@
     "min_vram_gb": 6.7,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 16384,
     "use_case": "Code generation and completion",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -14820,11 +15002,11 @@
   {
     "name": "cyankiwi/Qwen3-Coder-Next-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "14.4B",
-    "parameters_raw": 14444722944,
-    "min_ram_gb": 8.1,
-    "recommended_ram_gb": 13.5,
-    "min_vram_gb": 7.4,
+    "parameter_count": "80.4B",
+    "parameters_raw": 80416666666,
+    "min_ram_gb": 58.4,
+    "recommended_ram_gb": 97.0,
+    "min_vram_gb": 53.6,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -14841,16 +15023,17 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 990253467
+    "active_parameters": 990253467,
+    "weight_gb": 48.25
   },
   {
     "name": "bullpoint/Qwen3-Coder-Next-AWQ-4bit",
     "provider": "bullpoint",
-    "parameter_count": "14.4B",
-    "parameters_raw": 14444722944,
-    "min_ram_gb": 8.1,
-    "recommended_ram_gb": 13.5,
-    "min_vram_gb": 7.4,
+    "parameter_count": "80.4B",
+    "parameters_raw": 80416666666,
+    "min_ram_gb": 58.4,
+    "recommended_ram_gb": 97.0,
+    "min_vram_gb": 53.6,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -14867,16 +15050,17 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 990253467
+    "active_parameters": 990253467,
+    "weight_gb": 48.25
   },
   {
     "name": "cyankiwi/Qwen3-Next-80B-A3B-Thinking-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "14.7B",
-    "parameters_raw": 14736242944,
-    "min_ram_gb": 8.2,
-    "recommended_ram_gb": 13.7,
-    "min_vram_gb": 7.5,
+    "parameter_count": "82.0B",
+    "parameters_raw": 82050000000,
+    "min_ram_gb": 59.6,
+    "recommended_ram_gb": 99.0,
+    "min_vram_gb": 54.7,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -14893,16 +15077,17 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 1010238527
+    "active_parameters": 3000000000,
+    "weight_gb": 49.23
   },
   {
     "name": "cyankiwi/Qwen3-Next-80B-A3B-Instruct-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "14.7B",
-    "parameters_raw": 14736242944,
-    "min_ram_gb": 8.2,
-    "recommended_ram_gb": 13.7,
-    "min_vram_gb": 7.5,
+    "parameter_count": "82.0B",
+    "parameters_raw": 82050000000,
+    "min_ram_gb": 59.6,
+    "recommended_ram_gb": 99.0,
+    "min_vram_gb": 54.7,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -14919,16 +15104,17 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 1010238527
+    "active_parameters": 3000000000,
+    "weight_gb": 49.23
   },
   {
     "name": "K-Compression/HyperCLOVAX-SEED-Think-14B-GPTQ",
     "provider": "k-compression",
-    "parameter_count": "14.7B",
-    "parameters_raw": 14748112896,
-    "min_ram_gb": 8.2,
-    "recommended_ram_gb": 13.7,
-    "min_vram_gb": 7.6,
+    "parameter_count": "16.1B",
+    "parameters_raw": 16133333333,
+    "min_ram_gb": 12.1,
+    "recommended_ram_gb": 19.9,
+    "min_vram_gb": 11.1,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 131072,
@@ -14939,7 +15125,8 @@
     "hf_downloads": 824406,
     "hf_likes": 0,
     "release_date": "2025-08-23",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 9.68
   },
   {
     "name": "naver-hyperclovax/HyperCLOVAX-SEED-Think-14B",
@@ -14964,14 +15151,14 @@
   {
     "name": "Qwen/Qwen3-14B-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "14.8B",
-    "parameters_raw": 14768307200,
-    "min_ram_gb": 8.3,
-    "recommended_ram_gb": 13.8,
-    "min_vram_gb": 7.6,
+    "parameter_count": "16.6B",
+    "parameters_raw": 16633333333,
+    "min_ram_gb": 12.5,
+    "recommended_ram_gb": 20.5,
+    "min_vram_gb": 11.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -14981,7 +15168,10 @@
     "hf_downloads": 815067,
     "hf_likes": 0,
     "release_date": "2025-05-01",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 9.98
   },
   {
     "name": "OpenPipe/Qwen3-14B-Instruct",
@@ -15008,11 +15198,11 @@
   {
     "name": "stelterlab/Qwen3-14B-AWQ",
     "provider": "stelterlab",
-    "parameter_count": "14.8B",
-    "parameters_raw": 14768307200,
-    "min_ram_gb": 8.3,
-    "recommended_ram_gb": 13.8,
-    "min_vram_gb": 7.6,
+    "parameter_count": "16.6B",
+    "parameters_raw": 16633333333,
+    "min_ram_gb": 12.5,
+    "recommended_ram_gb": 20.5,
+    "min_vram_gb": 11.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 40960,
@@ -15025,7 +15215,8 @@
     "hf_downloads": 111649,
     "hf_likes": 0,
     "release_date": "2025-04-30",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 9.98
   },
   {
     "name": "Qwen/Qwen3-14B-Base",
@@ -15037,7 +15228,7 @@
     "min_vram_gb": 7.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -15053,7 +15244,9 @@
         "repo": "mradermacher/Qwen3-14B-Base-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-14B-Instruct",
@@ -15080,7 +15273,9 @@
         "repo": "mradermacher/Qwen2.5-14B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen3-14B",
@@ -15111,7 +15306,9 @@
         "repo": "mradermacher/Qwen3-14B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-Coder-14B-Instruct",
@@ -15123,7 +15320,7 @@
     "min_vram_gb": 7.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -15150,19 +15347,21 @@
         "repo": "mradermacher/Qwen2.5-Coder-14B-Instruct-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-14B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "14.8B",
-    "parameters_raw": 14770033664,
-    "min_ram_gb": 8.3,
-    "recommended_ram_gb": 13.8,
-    "min_vram_gb": 7.6,
+    "parameter_count": "16.6B",
+    "parameters_raw": 16633333333,
+    "min_ram_gb": 12.5,
+    "recommended_ram_gb": 20.5,
+    "min_vram_gb": 11.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -15172,19 +15371,22 @@
     "hf_downloads": 1875689,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 9.98
   },
   {
     "name": "Qwen/Qwen2.5-Coder-14B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "14.8B",
-    "parameters_raw": 14770033664,
-    "min_ram_gb": 8.3,
-    "recommended_ram_gb": 13.8,
-    "min_vram_gb": 7.6,
+    "parameter_count": "16.6B",
+    "parameters_raw": 16633333333,
+    "min_ram_gb": 12.5,
+    "recommended_ram_gb": 20.5,
+    "min_vram_gb": 11.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -15194,7 +15396,10 @@
     "hf_downloads": 630166,
     "hf_likes": 0,
     "release_date": "2024-11-09",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 9.98
   },
   {
     "name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
@@ -15233,14 +15438,14 @@
   {
     "name": "Qwen/Qwen2.5-14B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "14.8B",
-    "parameters_raw": 14770033664,
-    "min_ram_gb": 8.3,
-    "recommended_ram_gb": 13.8,
-    "min_vram_gb": 7.6,
+    "parameter_count": "16.6B",
+    "parameters_raw": 16650000000,
+    "min_ram_gb": 12.5,
+    "recommended_ram_gb": 20.5,
+    "min_vram_gb": 11.5,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -15250,7 +15455,10 @@
     "hf_downloads": 137926,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 9.99
   },
   {
     "name": "Qwen/Qwen2.5-14B",
@@ -15278,19 +15486,21 @@
         "repo": "mradermacher/Qwen2.5-14B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2.5-14B-Instruct-GPTQ-Int8",
     "provider": "Alibaba",
-    "parameter_count": "14.8B",
-    "parameters_raw": 14770033664,
-    "min_ram_gb": 16.5,
-    "recommended_ram_gb": 27.5,
-    "min_vram_gb": 15.1,
+    "parameter_count": "15.1B",
+    "parameters_raw": 15136363636,
+    "min_ram_gb": 20.5,
+    "recommended_ram_gb": 33.8,
+    "min_vram_gb": 18.8,
     "quantization": "GPTQ-Int8",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -15300,7 +15510,10 @@
     "hf_downloads": 67548,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 16.65
   },
   {
     "name": "bg-digitalservices/Gemma-4-26B-A4B-it-NVFP4",
@@ -15324,7 +15537,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 1650953866
+    "active_parameters": 4000000000
   },
   {
     "name": "microsoft/Phi-4-reasoning-vision-15B",
@@ -15395,7 +15608,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 1704458782
+    "active_parameters": 3000000000
   },
   {
     "name": "bigcode/starcoder2-15b",
@@ -15430,7 +15643,7 @@
     "min_vram_gb": 8.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -15467,7 +15680,7 @@
     "min_vram_gb": 8.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -15497,7 +15710,7 @@
     "min_vram_gb": 8.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -15527,7 +15740,7 @@
     "min_vram_gb": 8.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -15544,14 +15757,14 @@
   {
     "name": "TechxGenus/DeepSeek-Coder-V2-Lite-Instruct-AWQ",
     "provider": "techxgenus",
-    "parameter_count": "15.7B",
-    "parameters_raw": 15706484224,
-    "min_ram_gb": 8.8,
-    "recommended_ram_gb": 14.6,
-    "min_vram_gb": 8.0,
+    "parameter_count": "15.2B",
+    "parameters_raw": 15150000000,
+    "min_ram_gb": 11.4,
+    "recommended_ram_gb": 18.7,
+    "min_vram_gb": 10.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -15563,7 +15776,8 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 6,
-    "active_parameters": 2184182961
+    "active_parameters": 2184182961,
+    "weight_gb": 9.09
   },
   {
     "name": "moonshotai/Moonlight-16B-A3B",
@@ -15587,7 +15801,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 6,
-    "active_parameters": 1153367458
+    "active_parameters": 3000000000
   },
   {
     "name": "moonshotai/Moonlight-16B-A3B-Instruct",
@@ -15611,7 +15825,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 6,
-    "active_parameters": 1153367458
+    "active_parameters": 3000000000
   },
   {
     "name": "deepseek-ai/deepseek-vl2-small",
@@ -15675,7 +15889,9 @@
     "hf_downloads": 30116,
     "hf_likes": 0,
     "release_date": "2026-03-22",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "moonshotai/Kimi-VL-A3B-Instruct",
@@ -15882,7 +16098,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 1908836870
+    "active_parameters": 3000000000
   },
   {
     "name": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-NVFP4",
@@ -15902,7 +16118,9 @@
     "hf_downloads": 511561,
     "hf_likes": 0,
     "release_date": "2025-12-20",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "happypatrick/Qwen3.5-122B-A10B-heretic-int4-AutoRound",
@@ -15928,7 +16146,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 1477170948
+    "active_parameters": 10000000000
   },
   {
     "name": "RedHatAI/Qwen3-32B-NVFP4",
@@ -15955,11 +16173,11 @@
   {
     "name": "cyankiwi/GLM-4.6V-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "19.5B",
-    "parameters_raw": 19485088360,
-    "min_ram_gb": 10.9,
-    "recommended_ram_gb": 18.1,
-    "min_vram_gb": 10.0,
+    "parameter_count": "108.5B",
+    "parameters_raw": 108533333333,
+    "min_ram_gb": 78.6,
+    "recommended_ram_gb": 130.7,
+    "min_vram_gb": 72.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 131072,
@@ -15970,7 +16188,8 @@
     "hf_downloads": 16485,
     "hf_likes": 0,
     "release_date": "2025-12-08",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 65.12
   },
   {
     "name": "RedHatAI/Llama-4-Scout-17B-16E-Instruct-quantized.w4a16",
@@ -15982,7 +16201,7 @@
     "min_vram_gb": 10.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 167772160,
+    "context_length": 10000000,
     "use_case": "Instruction following, chat",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -16060,7 +16279,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 1678276637
+    "active_parameters": 10000000000
   },
   {
     "name": "OpenGVLab/InternVL3_5-GPT-OSS-20B-A4B-Preview-HF",
@@ -16084,7 +16303,7 @@
     "is_moe": true,
     "num_experts": 32,
     "active_experts": 4,
-    "active_parameters": 3583029715
+    "active_parameters": 4000000000
   },
   {
     "name": "openai/gpt-oss-20b",
@@ -16127,12 +16346,12 @@
   {
     "name": "lmstudio-community/ERNIE-4.5-21B-A3B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "21.8B",
-    "parameters_raw": 21825436160,
-    "min_ram_gb": 12.2,
-    "recommended_ram_gb": 20.3,
-    "min_vram_gb": 11.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "22.3B",
+    "parameters_raw": 22327272727,
+    "min_ram_gb": 15.2,
+    "recommended_ram_gb": 25.1,
+    "min_vram_gb": 14.0,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 131072,
     "use_case": "General purpose",
@@ -16142,17 +16361,20 @@
     "hf_downloads": 29408,
     "hf_likes": 0,
     "release_date": "2025-07-09",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 12.28
   },
   {
     "name": "lmstudio-community/ERNIE-4.5-21B-A3B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "21.8B",
-    "parameters_raw": 21825436160,
-    "min_ram_gb": 12.2,
-    "recommended_ram_gb": 20.3,
-    "min_vram_gb": 11.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "22.1B",
+    "parameters_raw": 22085714285,
+    "min_ram_gb": 28.3,
+    "recommended_ram_gb": 46.9,
+    "min_vram_gb": 26.0,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 131072,
     "use_case": "General purpose",
@@ -16162,17 +16384,20 @@
     "hf_downloads": 29183,
     "hf_likes": 0,
     "release_date": "2025-07-10",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 23.19
   },
   {
     "name": "lmstudio-community/ERNIE-4.5-21B-A3B-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "21.8B",
-    "parameters_raw": 21825436160,
-    "min_ram_gb": 12.2,
-    "recommended_ram_gb": 20.3,
-    "min_vram_gb": 11.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "22.2B",
+    "parameters_raw": 22162500000,
+    "min_ram_gb": 21.8,
+    "recommended_ram_gb": 36.0,
+    "min_vram_gb": 20.0,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 131072,
     "use_case": "General purpose",
@@ -16182,7 +16407,10 @@
     "hf_downloads": 29140,
     "hf_likes": 0,
     "release_date": "2025-07-10",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 17.73
   },
   {
     "name": "mconcat/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-NVFP4",
@@ -16234,16 +16462,18 @@
         "repo": "mradermacher/GLM-4.7-Flash-REAP-23B-A3B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "stelterlab/Mistral-Small-24B-Instruct-2501-AWQ",
     "provider": "stelterlab",
-    "parameter_count": "23.6B",
-    "parameters_raw": 23572403200,
-    "min_ram_gb": 13.2,
-    "recommended_ram_gb": 22.0,
-    "min_vram_gb": 12.1,
+    "parameter_count": "23.7B",
+    "parameters_raw": 23716666666,
+    "min_ram_gb": 17.6,
+    "recommended_ram_gb": 29.0,
+    "min_vram_gb": 16.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 32768,
@@ -16256,16 +16486,17 @@
     "hf_downloads": 448286,
     "hf_likes": 0,
     "release_date": "2025-01-30",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 14.23
   },
   {
     "name": "gghfez/Mistral-Small-3.2-24B-Instruct-hf-AWQ",
     "provider": "gghfez",
-    "parameter_count": "23.6B",
-    "parameters_raw": 23572403200,
-    "min_ram_gb": 13.2,
-    "recommended_ram_gb": 22.0,
-    "min_vram_gb": 12.1,
+    "parameter_count": "23.7B",
+    "parameters_raw": 23716666666,
+    "min_ram_gb": 17.6,
+    "recommended_ram_gb": 29.0,
+    "min_vram_gb": 16.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 32768,
@@ -16278,17 +16509,18 @@
     "hf_downloads": 55272,
     "hf_likes": 0,
     "release_date": "2025-06-25",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 14.23
   },
   {
     "name": "lmstudio-community/LFM2-24B-A2B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "23.8B",
-    "parameters_raw": 23843659008,
-    "min_ram_gb": 13.3,
-    "recommended_ram_gb": 22.2,
-    "min_vram_gb": 12.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "24.4B",
+    "parameters_raw": 24399999999,
+    "min_ram_gb": 16.6,
+    "recommended_ram_gb": 27.3,
+    "min_vram_gb": 15.3,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "General purpose",
@@ -16302,17 +16534,18 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 4,
-    "active_parameters": 2607900202
+    "active_parameters": 2000000000,
+    "weight_gb": 13.42
   },
   {
     "name": "lmstudio-community/LFM2-24B-A2B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "23.8B",
-    "parameters_raw": 23843659008,
-    "min_ram_gb": 13.3,
-    "recommended_ram_gb": 22.2,
-    "min_vram_gb": 12.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "24.1B",
+    "parameters_raw": 24123809523,
+    "min_ram_gb": 30.9,
+    "recommended_ram_gb": 51.2,
+    "min_vram_gb": 28.4,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "General purpose",
@@ -16326,17 +16559,18 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 4,
-    "active_parameters": 2607900202
+    "active_parameters": 2000000000,
+    "weight_gb": 25.33
   },
   {
     "name": "lmstudio-community/LFM2-24B-A2B-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "23.8B",
-    "parameters_raw": 23843659008,
-    "min_ram_gb": 13.3,
-    "recommended_ram_gb": 22.2,
-    "min_vram_gb": 12.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "24.2B",
+    "parameters_raw": 24212500000,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "General purpose",
@@ -16350,17 +16584,18 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 4,
-    "active_parameters": 2607900202
+    "active_parameters": 2000000000,
+    "weight_gb": 19.37
   },
   {
     "name": "lmstudio-community/LFM2-24B-A2B-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "23.8B",
-    "parameters_raw": 23843659008,
-    "min_ram_gb": 13.3,
-    "recommended_ram_gb": 22.2,
-    "min_vram_gb": 12.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "29.8B",
+    "parameters_raw": 29799999999,
+    "min_ram_gb": 20.2,
+    "recommended_ram_gb": 33.3,
+    "min_vram_gb": 18.5,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 128000,
     "use_case": "General purpose",
@@ -16374,7 +16609,8 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 4,
-    "active_parameters": 2607900202
+    "active_parameters": 2000000000,
+    "weight_gb": 16.39
   },
   {
     "name": "LiquidAI/LFM2-24B-A2B",
@@ -16401,7 +16637,7 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 4,
-    "active_parameters": 2300000000,
+    "active_parameters": 2000000000,
     "gguf_sources": [
       {
         "repo": "mradermacher/LFM2-24B-A2B-GGUF",
@@ -16469,11 +16705,11 @@
   {
     "name": "cyankiwi/Qwen3.5-122B-A10B-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "24.3B",
-    "parameters_raw": 24266876928,
-    "min_ram_gb": 13.6,
-    "recommended_ram_gb": 22.6,
-    "min_vram_gb": 12.4,
+    "parameter_count": "133.4B",
+    "parameters_raw": 133366666666,
+    "min_ram_gb": 96.5,
+    "recommended_ram_gb": 160.5,
+    "min_vram_gb": 88.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -16490,7 +16726,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 1933766750
+    "active_parameters": 10000000000,
+    "weight_gb": 80.02
   },
   {
     "name": "m-ric/Aria_hf_2",
@@ -16554,7 +16791,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 2822524013,
+    "active_parameters": 4000000000,
     "gguf_sources": [
       {
         "repo": "mradermacher/gemma-4-26B-A4B-it-heretic-GGUF",
@@ -16584,7 +16821,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 2822524013
+    "active_parameters": 4000000000
   },
   {
     "name": "LargitData/gemma-4-26b-a4b-it-fp8",
@@ -16608,7 +16845,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 2824358130
+    "active_parameters": 4000000000
   },
   {
     "name": "google/gemma-4-26B-A4B-it",
@@ -16676,7 +16913,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 2903264368,
+    "active_parameters": 4000000000,
     "gguf_sources": [
       {
         "repo": "mradermacher/gemma-4-26B-A4B-GGUF",
@@ -16687,11 +16924,11 @@
   {
     "name": "cyankiwi/gemma-4-26B-A4B-it-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "26.6B",
-    "parameters_raw": 26554316366,
-    "min_ram_gb": 14.8,
-    "recommended_ram_gb": 24.7,
-    "min_vram_gb": 13.6,
+    "parameter_count": "28.6B",
+    "parameters_raw": 28650000000,
+    "min_ram_gb": 21.1,
+    "recommended_ram_gb": 34.9,
+    "min_vram_gb": 19.4,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -16706,16 +16943,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 2904378346
+    "active_parameters": 4000000000,
+    "weight_gb": 17.19
   },
   {
     "name": "cyankiwi/gemma-4-26B-A4B-it-AWQ-8bit",
     "provider": "cyankiwi",
-    "parameter_count": "26.6B",
-    "parameters_raw": 26554316366,
-    "min_ram_gb": 29.7,
-    "recommended_ram_gb": 49.5,
-    "min_vram_gb": 27.2,
+    "parameter_count": "26.5B",
+    "parameters_raw": 26509090909,
+    "min_ram_gb": 35.5,
+    "recommended_ram_gb": 58.8,
+    "min_vram_gb": 32.6,
     "quantization": "AWQ-8bit",
     "format": "awq",
     "context_length": 262144,
@@ -16730,7 +16968,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 2904378346
+    "active_parameters": 4000000000,
+    "weight_gb": 29.16
   },
   {
     "name": "google/gemma-2-27b-it",
@@ -16742,7 +16981,7 @@
     "min_vram_gb": 13.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 8192,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -16816,11 +17055,11 @@
   {
     "name": "QuantTrio/Qwopus3.5-27B-v3-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "27.4B",
-    "parameters_raw": 27356728560,
-    "min_ram_gb": 15.3,
-    "recommended_ram_gb": 25.5,
-    "min_vram_gb": 14.0,
+    "parameter_count": "35B",
+    "parameters_raw": 35000000000,
+    "min_ram_gb": 25.7,
+    "recommended_ram_gb": 42.5,
+    "min_vram_gb": 23.6,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -16831,7 +17070,8 @@
     "hf_downloads": 22636,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 21.0
   },
   {
     "name": "mconcat/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-FP8-Dynamic",
@@ -17026,11 +17266,11 @@
   {
     "name": "QuantTrio/Qwen3.5-27B-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "27.8B",
-    "parameters_raw": 27781427952,
-    "min_ram_gb": 15.5,
-    "recommended_ram_gb": 25.9,
-    "min_vram_gb": 14.2,
+    "parameter_count": "36.4B",
+    "parameters_raw": 36416666666,
+    "min_ram_gb": 26.7,
+    "recommended_ram_gb": 44.2,
+    "min_vram_gb": 24.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17043,16 +17283,17 @@
     "hf_downloads": 379749,
     "hf_likes": 0,
     "release_date": "2026-02-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 21.85
   },
   {
     "name": "Qwen/Qwen3.5-27B-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "27.8B",
-    "parameters_raw": 27781427952,
-    "min_ram_gb": 15.5,
-    "recommended_ram_gb": 25.9,
-    "min_vram_gb": 14.2,
+    "parameter_count": "50.4B",
+    "parameters_raw": 50400000000,
+    "min_ram_gb": 36.8,
+    "recommended_ram_gb": 61.0,
+    "min_vram_gb": 33.8,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 262144,
@@ -17065,7 +17306,8 @@
     "hf_downloads": 264708,
     "hf_likes": 0,
     "release_date": "2026-03-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 30.24
   },
   {
     "name": "huihui-ai/Huihui-Qwen3.5-27B-abliterated",
@@ -17098,11 +17340,11 @@
   {
     "name": "QuantTrio/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-v2-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "27.8B",
-    "parameters_raw": 27781427952,
-    "min_ram_gb": 15.5,
-    "recommended_ram_gb": 25.9,
-    "min_vram_gb": 14.2,
+    "parameter_count": "36.4B",
+    "parameters_raw": 36416666666,
+    "min_ram_gb": 26.7,
+    "recommended_ram_gb": 44.2,
+    "min_vram_gb": 24.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17115,7 +17357,8 @@
     "hf_downloads": 45512,
     "hf_likes": 0,
     "release_date": "2026-03-30",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 21.85
   },
   {
     "name": "huihui-ai/Huihui-Qwen3.5-27B-Claude-4.6-Opus-abliterated",
@@ -17170,11 +17413,11 @@
   {
     "name": "cyankiwi/Qwen3.5-27B-AWQ-BF16-INT4",
     "provider": "cyankiwi",
-    "parameter_count": "28.4B",
-    "parameters_raw": 28380263678,
-    "min_ram_gb": 15.9,
-    "recommended_ram_gb": 26.4,
-    "min_vram_gb": 14.5,
+    "parameter_count": "46.7B",
+    "parameters_raw": 46700000000,
+    "min_ram_gb": 34.1,
+    "recommended_ram_gb": 56.5,
+    "min_vram_gb": 31.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17187,16 +17430,17 @@
     "hf_downloads": 46163,
     "hf_likes": 0,
     "release_date": "2026-02-24",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 28.02
   },
   {
     "name": "cyankiwi/Qwen3.5-27B-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "28.6B",
-    "parameters_raw": 28553279006,
-    "min_ram_gb": 16.0,
-    "recommended_ram_gb": 26.6,
-    "min_vram_gb": 14.6,
+    "parameter_count": "33.4B",
+    "parameters_raw": 33433333333,
+    "min_ram_gb": 24.6,
+    "recommended_ram_gb": 40.6,
+    "min_vram_gb": 22.6,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17209,7 +17453,8 @@
     "hf_downloads": 199770,
     "hf_likes": 0,
     "release_date": "2026-02-25",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.06
   },
   {
     "name": "baidu/ERNIE-4.5-VL-28B-A3B-PT",
@@ -17231,17 +17476,19 @@
     "hf_downloads": 63543,
     "hf_likes": 0,
     "release_date": "2025-06-28",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "lmstudio-community/GLM-4.7-Flash-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "29.9B",
-    "parameters_raw": 29943393920,
-    "min_ram_gb": 16.7,
-    "recommended_ram_gb": 27.9,
-    "min_vram_gb": 15.3,
-    "quantization": "Q4_K_M",
+    "parameter_count": "30.3B",
+    "parameters_raw": 30304761904,
+    "min_ram_gb": 38.7,
+    "recommended_ram_gb": 64.1,
+    "min_vram_gb": 35.5,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 202752,
     "use_case": "General purpose",
@@ -17251,17 +17498,18 @@
     "hf_downloads": 352994,
     "hf_likes": 0,
     "release_date": "2026-01-19",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 31.82
   },
   {
     "name": "lmstudio-community/GLM-4.7-Flash-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "29.9B",
-    "parameters_raw": 29943393920,
-    "min_ram_gb": 16.7,
-    "recommended_ram_gb": 27.9,
-    "min_vram_gb": 15.3,
-    "quantization": "Q4_K_M",
+    "parameter_count": "30.4B",
+    "parameters_raw": 30425000000,
+    "min_ram_gb": 29.7,
+    "recommended_ram_gb": 49.2,
+    "min_vram_gb": 27.3,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 202752,
     "use_case": "General purpose",
@@ -17271,7 +17519,8 @@
     "hf_downloads": 335140,
     "hf_likes": 0,
     "release_date": "2026-01-19",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 24.34
   },
   {
     "name": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
@@ -17297,7 +17546,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907,
+    "active_parameters": 3000000000,
     "gguf_sources": [
       {
         "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
@@ -17312,12 +17561,12 @@
   {
     "name": "lmstudio-community/Qwen3-Coder-30B-A3B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "31.2B",
+    "parameters_raw": 31218181818,
+    "min_ram_gb": 21.1,
+    "recommended_ram_gb": 34.8,
+    "min_vram_gb": 19.4,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Code generation and completion",
@@ -17333,17 +17582,18 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 17.17
   },
   {
     "name": "lmstudio-community/Qwen3-Coder-30B-A3B-Instruct-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "38.2B",
+    "parameters_raw": 38163636363,
+    "min_ram_gb": 25.7,
+    "recommended_ram_gb": 42.5,
+    "min_vram_gb": 23.6,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Code generation and completion",
@@ -17359,16 +17609,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 20.99
   },
   {
     "name": "Qwen/Qwen3-30B-A3B-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
+    "parameter_count": "28.2B",
+    "parameters_raw": 28216666666,
+    "min_ram_gb": 20.8,
+    "recommended_ram_gb": 34.4,
+    "min_vram_gb": 19.1,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 40960,
@@ -17385,17 +17636,18 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 16.93
   },
   {
     "name": "lmstudio-community/Qwen3-Coder-30B-A3B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "30.9B",
+    "parameters_raw": 30895238095,
+    "min_ram_gb": 39.4,
+    "recommended_ram_gb": 65.4,
+    "min_vram_gb": 36.2,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Code generation and completion",
@@ -17411,17 +17663,18 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 32.44
   },
   {
     "name": "lmstudio-community/Qwen3-Coder-30B-A3B-Instruct-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "31.0B",
+    "parameters_raw": 31012500000,
+    "min_ram_gb": 30.3,
+    "recommended_ram_gb": 50.1,
+    "min_vram_gb": 27.8,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Code generation and completion",
@@ -17437,16 +17690,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 24.81
   },
   {
     "name": "QuantTrio/Qwen3-Coder-30B-A3B-Instruct-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
+    "parameter_count": "28.0B",
+    "parameters_raw": 28016666666,
+    "min_ram_gb": 20.7,
+    "recommended_ram_gb": 34.1,
+    "min_vram_gb": 19.0,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17463,7 +17717,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 16.81
   },
   {
     "name": "Qwen/Qwen3-30B-A3B-Thinking-2507",
@@ -17489,7 +17744,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907,
+    "active_parameters": 3000000000,
     "gguf_sources": [
       {
         "repo": "unsloth/Qwen3-30B-A3B-Thinking-2507-GGUF",
@@ -17555,7 +17810,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907,
+    "active_parameters": 3000000000,
     "gguf_sources": [
       {
         "repo": "mradermacher/Qwen3-30B-A3B-Base-GGUF",
@@ -17587,17 +17842,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000
   },
   {
     "name": "lmstudio-community/Qwen3-30B-A3B-Instruct-2507-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "31.2B",
+    "parameters_raw": 31218181818,
+    "min_ram_gb": 21.1,
+    "recommended_ram_gb": 34.8,
+    "min_vram_gb": 19.4,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -17613,17 +17868,18 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 17.17
   },
   {
     "name": "lmstudio-community/Qwen3-30B-A3B-Instruct-2507-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "30.9B",
+    "parameters_raw": 30895238095,
+    "min_ram_gb": 39.4,
+    "recommended_ram_gb": 65.4,
+    "min_vram_gb": 36.2,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -17639,17 +17895,18 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 32.44
   },
   {
     "name": "lmstudio-community/Qwen3-30B-A3B-Instruct-2507-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
-    "quantization": "Q4_K_M",
+    "parameter_count": "31.0B",
+    "parameters_raw": 31012500000,
+    "min_ram_gb": 30.3,
+    "recommended_ram_gb": 50.1,
+    "min_vram_gb": 27.8,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -17665,16 +17922,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 24.81
   },
   {
     "name": "btbtyler09/Qwen3-Coder-30B-A3B-Instruct-gptq-4bit",
     "provider": "btbtyler09",
-    "parameter_count": "30.5B",
-    "parameters_raw": 30532122624,
-    "min_ram_gb": 17.1,
-    "recommended_ram_gb": 28.4,
-    "min_vram_gb": 15.6,
+    "parameter_count": "31.1B",
+    "parameters_raw": 31116666666,
+    "min_ram_gb": 22.9,
+    "recommended_ram_gb": 37.8,
+    "min_vram_gb": 21.0,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 262144,
@@ -17691,7 +17949,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339450907
+    "active_parameters": 3000000000,
+    "weight_gb": 18.67
   },
   {
     "name": "Qwen/Qwen3-30B-A3B-Instruct-2507-FP8",
@@ -17717,7 +17976,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339650489
+    "active_parameters": 3000000000
   },
   {
     "name": "Qwen/Qwen3-Coder-30B-A3B-Instruct-FP8",
@@ -17743,7 +18002,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3339650489
+    "active_parameters": 3000000000
   },
   {
     "name": "OpenGVLab/InternVL3_5-30B-A3B",
@@ -17769,16 +18028,18 @@
         "repo": "mradermacher/InternVL3_5-30B-A3B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "QuantTrio/Qwen3-VL-30B-A3B-Instruct-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "31.1B",
-    "parameters_raw": 31070754032,
-    "min_ram_gb": 17.4,
-    "recommended_ram_gb": 28.9,
-    "min_vram_gb": 15.9,
+    "parameter_count": "29.8B",
+    "parameters_raw": 29816666666,
+    "min_ram_gb": 22.0,
+    "recommended_ram_gb": 36.3,
+    "min_vram_gb": 20.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17796,7 +18057,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3398363717
+    "active_parameters": 3000000000,
+    "weight_gb": 17.89
   },
   {
     "name": "Qwen/Qwen3-VL-30B-A3B-Thinking",
@@ -17823,7 +18085,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3398363717,
+    "active_parameters": 3000000000,
     "gguf_sources": [
       {
         "repo": "unsloth/Qwen3-VL-30B-A3B-Thinking-GGUF",
@@ -17872,11 +18134,11 @@
   {
     "name": "QuantTrio/GLM-4.7-Flash-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "31.2B",
-    "parameters_raw": 31221488576,
-    "min_ram_gb": 17.4,
-    "recommended_ram_gb": 29.1,
-    "min_vram_gb": 16.0,
+    "parameter_count": "32.9B",
+    "parameters_raw": 32933333333,
+    "min_ram_gb": 24.2,
+    "recommended_ram_gb": 40.0,
+    "min_vram_gb": 22.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 202752,
@@ -17887,7 +18149,8 @@
     "hf_downloads": 90181,
     "hf_likes": 0,
     "release_date": "2026-01-21",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 19.76
   },
   {
     "name": "aifeifei798/Gemma-4-31B-Cognitive-Unshackled",
@@ -17970,11 +18233,11 @@
   {
     "name": "QuantTrio/gemma-4-31B-it-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "31.3B",
-    "parameters_raw": 31273088876,
-    "min_ram_gb": 17.5,
-    "recommended_ram_gb": 29.1,
-    "min_vram_gb": 16.0,
+    "parameter_count": "34.1B",
+    "parameters_raw": 34100000000,
+    "min_ram_gb": 25.1,
+    "recommended_ram_gb": 41.4,
+    "min_vram_gb": 23.0,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -17985,16 +18248,17 @@
     "hf_downloads": 85829,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.46
   },
   {
     "name": "QuantTrio/gemma-4-31B-it-AWQ-6Bit",
     "provider": "quanttrio",
-    "parameter_count": "31.3B",
-    "parameters_raw": 31273088876,
-    "min_ram_gb": 17.5,
-    "recommended_ram_gb": 29.1,
-    "min_vram_gb": 16.0,
+    "parameter_count": "41.5B",
+    "parameters_raw": 41500000000,
+    "min_ram_gb": 30.4,
+    "recommended_ram_gb": 50.3,
+    "min_vram_gb": 27.9,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -18005,7 +18269,8 @@
     "hf_downloads": 11919,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 24.9
   },
   {
     "name": "RedHatAI/gemma-4-31B-it-FP8-block",
@@ -18049,17 +18314,17 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 3432403762
+    "active_parameters": 3000000000
   },
   {
     "name": "lmstudio-community/NVIDIA-Nemotron-3-Nano-30B-A3B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "31.6B",
-    "parameters_raw": 31577935872,
-    "min_ram_gb": 17.6,
-    "recommended_ram_gb": 29.4,
-    "min_vram_gb": 16.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "32.3B",
+    "parameters_raw": 32327272727,
+    "min_ram_gb": 21.8,
+    "recommended_ram_gb": 36.1,
+    "min_vram_gb": 20.1,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -18069,17 +18334,20 @@
     "hf_downloads": 145841,
     "hf_likes": 0,
     "release_date": "2025-12-16",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 17.78
   },
   {
     "name": "lmstudio-community/NVIDIA-Nemotron-3-Nano-30B-A3B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "31.6B",
-    "parameters_raw": 31577935872,
-    "min_ram_gb": 17.6,
-    "recommended_ram_gb": 29.4,
-    "min_vram_gb": 16.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "32.0B",
+    "parameters_raw": 31961904761,
+    "min_ram_gb": 40.8,
+    "recommended_ram_gb": 67.6,
+    "min_vram_gb": 37.4,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -18089,17 +18357,20 @@
     "hf_downloads": 135565,
     "hf_likes": 0,
     "release_date": "2025-12-16",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 33.56
   },
   {
     "name": "lmstudio-community/NVIDIA-Nemotron-3-Nano-30B-A3B-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "31.6B",
-    "parameters_raw": 31577935872,
-    "min_ram_gb": 17.6,
-    "recommended_ram_gb": 29.4,
-    "min_vram_gb": 16.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "32.1B",
+    "parameters_raw": 32087500000,
+    "min_ram_gb": 31.3,
+    "recommended_ram_gb": 51.8,
+    "min_vram_gb": 28.7,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -18109,17 +18380,20 @@
     "hf_downloads": 134182,
     "hf_likes": 0,
     "release_date": "2025-12-16",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 25.67
   },
   {
     "name": "lmstudio-community/NVIDIA-Nemotron-3-Nano-30B-A3B-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "31.6B",
-    "parameters_raw": 31577935872,
-    "min_ram_gb": 17.6,
-    "recommended_ram_gb": 29.4,
-    "min_vram_gb": 16.2,
-    "quantization": "Q4_K_M",
+    "parameter_count": "39.5B",
+    "parameters_raw": 39490909090,
+    "min_ram_gb": 26.6,
+    "recommended_ram_gb": 43.9,
+    "min_vram_gb": 24.4,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -18129,7 +18403,10 @@
     "hf_downloads": 133737,
     "hf_likes": 0,
     "release_date": "2025-12-16",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000,
+    "weight_gb": 21.72
   },
   {
     "name": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
@@ -18158,7 +18435,9 @@
         "repo": "mradermacher/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "nvidia/Nemotron-Cascade-2-30B-A3B",
@@ -18184,7 +18463,9 @@
         "repo": "mradermacher/Nemotron-Cascade-2-30B-A3B-GGUF",
         "provider": "mradermacher"
       }
-    ]
+    ],
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-Base-BF16",
@@ -18204,7 +18485,9 @@
     "hf_downloads": 87889,
     "hf_likes": 0,
     "release_date": "2025-12-03",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-FP8",
@@ -18224,7 +18507,9 @@
     "hf_downloads": 738899,
     "hf_likes": 0,
     "release_date": "2025-12-06",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "LGAI-EXAONE/EXAONE-3.5-32B-Instruct",
@@ -18259,11 +18544,11 @@
   {
     "name": "LGAI-EXAONE/EXAONE-3.5-32B-Instruct-AWQ",
     "provider": "lgai-exaone",
-    "parameter_count": "32.0B",
-    "parameters_raw": 32003200000,
-    "min_ram_gb": 17.9,
-    "recommended_ram_gb": 29.8,
-    "min_vram_gb": 16.4,
+    "parameter_count": "30.3B",
+    "parameters_raw": 30300000000,
+    "min_ram_gb": 22.3,
+    "recommended_ram_gb": 36.9,
+    "min_vram_gb": 20.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -18274,7 +18559,8 @@
     "hf_downloads": 32582,
     "hf_likes": 0,
     "release_date": "2024-12-01",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 18.18
   },
   {
     "name": "LGAI-EXAONE/EXAONE-4.0-32B",
@@ -18308,11 +18594,11 @@
   {
     "name": "LGAI-EXAONE/EXAONE-4.0-32B-AWQ",
     "provider": "lgai-exaone",
-    "parameter_count": "32.0B",
-    "parameters_raw": 32003216384,
-    "min_ram_gb": 17.9,
-    "recommended_ram_gb": 29.8,
-    "min_vram_gb": 16.4,
+    "parameter_count": "30.3B",
+    "parameters_raw": 30300000000,
+    "min_ram_gb": 22.3,
+    "recommended_ram_gb": 36.9,
+    "min_vram_gb": 20.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 2097152,
@@ -18323,7 +18609,8 @@
     "hf_downloads": 82723,
     "hf_likes": 0,
     "release_date": "2025-07-11",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 18.18
   },
   {
     "name": "LGAI-EXAONE/EXAONE-4.0-32B-FP8",
@@ -18348,11 +18635,11 @@
   {
     "name": "cyankiwi/GLM-4.7-Flash-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "32.1B",
-    "parameters_raw": 32140559382,
-    "min_ram_gb": 18.0,
-    "recommended_ram_gb": 29.9,
-    "min_vram_gb": 16.5,
+    "parameter_count": "33.6B",
+    "parameters_raw": 33616666666,
+    "min_ram_gb": 24.7,
+    "recommended_ram_gb": 40.8,
+    "min_vram_gb": 22.7,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 202752,
@@ -18363,7 +18650,8 @@
     "hf_downloads": 293969,
     "hf_likes": 0,
     "release_date": "2026-01-19",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.17
   },
   {
     "name": "aoxo/sarvam-30b-uncensored",
@@ -18416,11 +18704,11 @@
   {
     "name": "cyankiwi/gemma-4-31B-it-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "32.2B",
-    "parameters_raw": 32188299936,
-    "min_ram_gb": 18.0,
-    "recommended_ram_gb": 30.0,
-    "min_vram_gb": 16.5,
+    "parameter_count": "34.1B",
+    "parameters_raw": 34083333333,
+    "min_ram_gb": 25.0,
+    "recommended_ram_gb": 41.4,
+    "min_vram_gb": 23.0,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -18431,16 +18719,17 @@
     "hf_downloads": 373329,
     "hf_likes": 0,
     "release_date": "2026-04-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.45
   },
   {
     "name": "cyankiwi/gemma-4-31B-it-AWQ-8bit",
     "provider": "cyankiwi",
-    "parameter_count": "32.2B",
-    "parameters_raw": 32188299936,
-    "min_ram_gb": 36.0,
-    "recommended_ram_gb": 60.0,
-    "min_vram_gb": 33.0,
+    "parameter_count": "31.9B",
+    "parameters_raw": 31899999999,
+    "min_ram_gb": 42.6,
+    "recommended_ram_gb": 70.7,
+    "min_vram_gb": 39.1,
     "quantization": "AWQ-8bit",
     "format": "awq",
     "context_length": 262144,
@@ -18451,7 +18740,8 @@
     "hf_downloads": 28092,
     "hf_likes": 0,
     "release_date": "2026-04-02",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 35.09
   },
   {
     "name": "allenai/Olmo-3-1125-32B",
@@ -18523,7 +18813,9 @@
     "architecture": "qwen2",
     "hf_downloads": 0,
     "hf_likes": 0,
-    "release_date": null
+    "release_date": null,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "LilaRest/gemma-4-31B-it-NVFP4-turbo",
@@ -18634,14 +18926,14 @@
   {
     "name": "Qwen/Qwen3-32B-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32762123264,
-    "min_ram_gb": 18.3,
-    "recommended_ram_gb": 30.5,
-    "min_vram_gb": 16.8,
+    "parameter_count": "32.2B",
+    "parameters_raw": 32216666666,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 40960,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [
       "tool_use"
@@ -18651,16 +18943,19 @@
     "hf_downloads": 675592,
     "hf_likes": 0,
     "release_date": "2025-05-01",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 19.33
   },
   {
     "name": "JunHowie/Qwen3-32B-GPTQ-Int4",
     "provider": "junhowie",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32762123264,
-    "min_ram_gb": 18.3,
-    "recommended_ram_gb": 30.5,
-    "min_vram_gb": 16.8,
+    "parameter_count": "32.2B",
+    "parameters_raw": 32233333333,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 40960,
@@ -18673,7 +18968,8 @@
     "hf_downloads": 27920,
     "hf_likes": 0,
     "release_date": "2025-04-29",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 19.34
   },
   {
     "name": "Qwen/Qwen2.5-Coder-32B-Instruct",
@@ -18685,7 +18981,7 @@
     "min_vram_gb": 16.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -18698,7 +18994,9 @@
     "num_hidden_layers": 64,
     "num_attention_heads": 40,
     "num_key_value_heads": 8,
-    "head_dim": 128
+    "head_dim": 128,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
@@ -18726,14 +19024,14 @@
   {
     "name": "Qwen/Qwen2.5-32B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32763876352,
-    "min_ram_gb": 18.3,
-    "recommended_ram_gb": 30.5,
-    "min_vram_gb": 16.8,
+    "parameter_count": "32.2B",
+    "parameters_raw": 32216666666,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -18743,19 +19041,22 @@
     "hf_downloads": 1371182,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 19.33
   },
   {
     "name": "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32763876352,
-    "min_ram_gb": 18.3,
-    "recommended_ram_gb": 30.5,
-    "min_vram_gb": 16.8,
+    "parameter_count": "32.2B",
+    "parameters_raw": 32216666666,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -18765,19 +19066,22 @@
     "hf_downloads": 656177,
     "hf_likes": 0,
     "release_date": "2024-11-09",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 19.33
   },
   {
     "name": "Qwen/Qwen2.5-32B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32763876352,
-    "min_ram_gb": 18.3,
-    "recommended_ram_gb": 30.5,
-    "min_vram_gb": 16.8,
+    "parameter_count": "32.2B",
+    "parameters_raw": 32233333333,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -18787,7 +19091,10 @@
     "hf_downloads": 509919,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 19.34
   },
   {
     "name": "Qwen/Qwen2.5-32B",
@@ -18809,16 +19116,18 @@
     "hf_downloads": 197240,
     "hf_likes": 0,
     "release_date": "2024-09-15",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/QwQ-32B-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32763876352,
-    "min_ram_gb": 18.3,
-    "recommended_ram_gb": 30.5,
-    "min_vram_gb": 16.8,
+    "parameter_count": "32.2B",
+    "parameters_raw": 32216666666,
+    "min_ram_gb": 23.7,
+    "recommended_ram_gb": 39.2,
+    "min_vram_gb": 21.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 40960,
@@ -18829,19 +19138,20 @@
     "hf_downloads": 152024,
     "hf_likes": 0,
     "release_date": "2025-03-05",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 19.33
   },
   {
     "name": "Qwen/Qwen2.5-32B-Instruct-GPTQ-Int8",
     "provider": "Alibaba",
-    "parameter_count": "32.8B",
-    "parameters_raw": 32763876352,
-    "min_ram_gb": 36.6,
-    "recommended_ram_gb": 61.0,
-    "min_vram_gb": 33.6,
+    "parameter_count": "31.9B",
+    "parameters_raw": 31881818181,
+    "min_ram_gb": 42.6,
+    "recommended_ram_gb": 70.6,
+    "min_vram_gb": 39.1,
     "quantization": "GPTQ-Int8",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -18851,7 +19161,10 @@
     "hf_downloads": 112296,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 35.07
   },
   {
     "name": "nvidia/OpenReasoning-Nemotron-32B",
@@ -18943,7 +19256,7 @@
     "min_vram_gb": 16.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -18953,7 +19266,9 @@
     "hf_downloads": 38061,
     "hf_likes": 0,
     "release_date": "2024-11-08",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "RedHatAI/Qwen3-32B-FP8-dynamic",
@@ -19023,11 +19338,11 @@
   {
     "name": "QuantTrio/Qwen3-VL-32B-Instruct-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "33.4B",
-    "parameters_raw": 33357390064,
-    "min_ram_gb": 18.6,
-    "recommended_ram_gb": 31.1,
-    "min_vram_gb": 17.1,
+    "parameter_count": "34.2B",
+    "parameters_raw": 34200000000,
+    "min_ram_gb": 25.1,
+    "recommended_ram_gb": 41.5,
+    "min_vram_gb": 23.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -19041,7 +19356,8 @@
     "hf_downloads": 72630,
     "hf_likes": 0,
     "release_date": "2025-10-22",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.52
   },
   {
     "name": "Qwen/Qwen3-VL-32B-Thinking",
@@ -19069,11 +19385,11 @@
   {
     "name": "Qwen/Qwen2.5-VL-32B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "33.5B",
-    "parameters_raw": 33452718336,
-    "min_ram_gb": 18.7,
-    "recommended_ram_gb": 31.2,
-    "min_vram_gb": 17.1,
+    "parameter_count": "34.5B",
+    "parameters_raw": 34516666666,
+    "min_ram_gb": 25.4,
+    "recommended_ram_gb": 41.9,
+    "min_vram_gb": 23.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 128000,
@@ -19087,7 +19403,8 @@
     "hf_downloads": 228733,
     "hf_likes": 0,
     "release_date": "2025-03-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.71
   },
   {
     "name": "Qwen/Qwen2.5-VL-32B-Instruct",
@@ -19144,7 +19461,7 @@
     "min_vram_gb": 17.3,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4096,
+    "context_length": 16384,
     "use_case": "Code generation and completion",
     "capabilities": [
       "tool_use"
@@ -19305,7 +19622,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2797603552
+    "active_parameters": 3000000000
   },
   {
     "name": "Qwen/Qwen3.5-35B-A3B",
@@ -19361,16 +19678,16 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000
   },
   {
     "name": "Qwen/Qwen3.5-35B-A3B-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "36.0B",
-    "parameters_raw": 35951822704,
-    "min_ram_gb": 20.1,
-    "recommended_ram_gb": 33.5,
-    "min_vram_gb": 18.4,
+    "parameter_count": "40.7B",
+    "parameters_raw": 40700000000,
+    "min_ram_gb": 29.8,
+    "recommended_ram_gb": 49.3,
+    "min_vram_gb": 27.4,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 262144,
@@ -19387,7 +19704,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000,
+    "weight_gb": 24.42
   },
   {
     "name": "huihui-ai/Huihui-Qwen3.5-35B-A3B-Claude-4.6-Opus-abliterated",
@@ -19413,16 +19731,16 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000
   },
   {
     "name": "QuantTrio/Qwen3.5-35B-A3B-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "36.0B",
-    "parameters_raw": 35951822704,
-    "min_ram_gb": 20.1,
-    "recommended_ram_gb": 33.5,
-    "min_vram_gb": 18.4,
+    "parameter_count": "42.4B",
+    "parameters_raw": 42433333333,
+    "min_ram_gb": 31.1,
+    "recommended_ram_gb": 51.4,
+    "min_vram_gb": 28.5,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -19439,7 +19757,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000,
+    "weight_gb": 25.46
   },
   {
     "name": "Qwen/Qwen3.6-35B-A3B",
@@ -19465,7 +19784,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000
   },
   {
     "name": "Qwen/Qwen3.5-35B-A3B-Base",
@@ -19491,7 +19810,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000
   },
   {
     "name": "huihui-ai/Huihui-Qwen3.5-35B-A3B-abliterated",
@@ -19517,16 +19836,16 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910871
+    "active_parameters": 3000000000
   },
   {
     "name": "codgician/Qwen3.5-35B-A3B-Claude-4.6-Opus-Reasoning-Distilled-GPTQ-int4",
     "provider": "codgician",
-    "parameter_count": "36.0B",
-    "parameters_raw": 35951822786,
-    "min_ram_gb": 20.1,
-    "recommended_ram_gb": 33.5,
-    "min_vram_gb": 18.4,
+    "parameter_count": "40.7B",
+    "parameters_raw": 40700000000,
+    "min_ram_gb": 29.8,
+    "recommended_ram_gb": 49.3,
+    "min_vram_gb": 27.4,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 262144,
@@ -19543,7 +19862,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2864910875
+    "active_parameters": 3000000000,
+    "weight_gb": 24.42
   },
   {
     "name": "Qwen/Qwen3.5-35B-A3B-FP8",
@@ -19569,7 +19889,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2865078437
+    "active_parameters": 3000000000
   },
   {
     "name": "Qwen/Qwen3.6-35B-A3B-FP8",
@@ -19595,17 +19915,17 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2865078437
+    "active_parameters": 3000000000
   },
   {
     "name": "lmstudio-community/Seed-OSS-36B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "36.2B",
-    "parameters_raw": 36151104512,
-    "min_ram_gb": 20.2,
-    "recommended_ram_gb": 33.7,
-    "min_vram_gb": 18.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "36.6B",
+    "parameters_raw": 36580952380,
+    "min_ram_gb": 46.6,
+    "recommended_ram_gb": 77.3,
+    "min_vram_gb": 42.8,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 524288,
     "use_case": "Instruction following, chat",
@@ -19615,17 +19935,18 @@
     "hf_downloads": 45239,
     "hf_likes": 0,
     "release_date": "2025-08-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 38.41
   },
   {
     "name": "lmstudio-community/Seed-OSS-36B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "36.2B",
-    "parameters_raw": 36151104512,
-    "min_ram_gb": 20.2,
-    "recommended_ram_gb": 33.7,
-    "min_vram_gb": 18.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "37.0B",
+    "parameters_raw": 36981818181,
+    "min_ram_gb": 24.9,
+    "recommended_ram_gb": 41.2,
+    "min_vram_gb": 22.9,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 524288,
     "use_case": "Instruction following, chat",
@@ -19635,17 +19956,18 @@
     "hf_downloads": 44419,
     "hf_likes": 0,
     "release_date": "2025-08-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 20.34
   },
   {
     "name": "lmstudio-community/Seed-OSS-36B-Instruct-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "36.2B",
-    "parameters_raw": 36151104512,
-    "min_ram_gb": 20.2,
-    "recommended_ram_gb": 33.7,
-    "min_vram_gb": 18.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "36.7B",
+    "parameters_raw": 36712500000,
+    "min_ram_gb": 35.7,
+    "recommended_ram_gb": 59.2,
+    "min_vram_gb": 32.8,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 524288,
     "use_case": "Instruction following, chat",
@@ -19655,17 +19977,18 @@
     "hf_downloads": 44140,
     "hf_likes": 0,
     "release_date": "2025-08-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 29.37
   },
   {
     "name": "lmstudio-community/Seed-OSS-36B-Instruct-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "36.2B",
-    "parameters_raw": 36151104512,
-    "min_ram_gb": 20.2,
-    "recommended_ram_gb": 33.7,
-    "min_vram_gb": 18.5,
-    "quantization": "Q4_K_M",
+    "parameter_count": "45.2B",
+    "parameters_raw": 45200000000,
+    "min_ram_gb": 30.3,
+    "recommended_ram_gb": 50.2,
+    "min_vram_gb": 27.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 524288,
     "use_case": "Instruction following, chat",
@@ -19675,16 +19998,17 @@
     "hf_downloads": 43993,
     "hf_likes": 0,
     "release_date": "2025-08-26",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 24.86
   },
   {
     "name": "cyankiwi/MiniMax-M2.1-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "36.8B",
-    "parameters_raw": 36811839984,
-    "min_ram_gb": 20.6,
-    "recommended_ram_gb": 34.3,
-    "min_vram_gb": 18.9,
+    "parameter_count": "217.5B",
+    "parameters_raw": 217500000000,
+    "min_ram_gb": 157.1,
+    "recommended_ram_gb": 261.5,
+    "min_vram_gb": 144.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 196608,
@@ -19699,16 +20023,17 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2933443495
+    "active_parameters": 2933443495,
+    "weight_gb": 130.5
   },
   {
     "name": "cyankiwi/MiniMax-M2.7-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "36.8B",
-    "parameters_raw": 36811839984,
-    "min_ram_gb": 20.6,
-    "recommended_ram_gb": 34.3,
-    "min_vram_gb": 18.9,
+    "parameter_count": "217.5B",
+    "parameters_raw": 217500000000,
+    "min_ram_gb": 157.1,
+    "recommended_ram_gb": 261.5,
+    "min_vram_gb": 144.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 196608,
@@ -19723,16 +20048,17 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2933443495
+    "active_parameters": 2933443495,
+    "weight_gb": 130.5
   },
   {
     "name": "cyankiwi/Qwen3.5-35B-A3B-AWQ-4bit",
     "provider": "cyankiwi",
-    "parameter_count": "37.0B",
-    "parameters_raw": 36983684464,
-    "min_ram_gb": 20.7,
-    "recommended_ram_gb": 34.4,
-    "min_vram_gb": 18.9,
+    "parameter_count": "40.8B",
+    "parameters_raw": 40750000000,
+    "min_ram_gb": 29.8,
+    "recommended_ram_gb": 49.4,
+    "min_vram_gb": 27.4,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -19749,7 +20075,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 2947137351
+    "active_parameters": 3000000000,
+    "weight_gb": 24.45
   },
   {
     "name": "OpenGVLab/InternVL3-38B",
@@ -19906,7 +20233,9 @@
     "hf_downloads": 61972,
     "hf_likes": 0,
     "release_date": "2025-10-30",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 3000000000
   },
   {
     "name": "nvidia/Llama-3_3-Nemotron-Super-49B-v1_5",
@@ -19975,12 +20304,12 @@
   {
     "name": "lmstudio-community/Qwen3.5-397B-A17B-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "62.4B",
-    "parameters_raw": 62387428336,
-    "min_ram_gb": 34.9,
-    "recommended_ram_gb": 58.1,
-    "min_vram_gb": 32.0,
-    "quantization": "Q4_K_M",
+    "parameter_count": "407.0B",
+    "parameters_raw": 407018181818,
+    "min_ram_gb": 269.1,
+    "recommended_ram_gb": 448.2,
+    "min_vram_gb": 246.7,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -19996,7 +20325,8 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 4276950646
+    "active_parameters": 17000000000,
+    "weight_gb": 223.86
   },
   {
     "name": "txn545/Qwen3.5-122B-A10B-NVFP4",
@@ -20022,7 +20352,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 5128230639
+    "active_parameters": 10000000000
   },
   {
     "name": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
@@ -20042,7 +20372,9 @@
     "hf_downloads": 1379978,
     "hf_likes": 0,
     "release_date": "2026-03-10",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 12000000000
   },
   {
     "name": "meta-llama/Llama-3.1-70B-Instruct",
@@ -20054,7 +20386,7 @@
     "min_vram_gb": 36.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1048576,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -20123,11 +20455,11 @@
   {
     "name": "kosbu/Llama-3.3-70B-Instruct-AWQ",
     "provider": "kosbu",
-    "parameter_count": "70.6B",
-    "parameters_raw": 70553706496,
-    "min_ram_gb": 39.4,
-    "recommended_ram_gb": 65.7,
-    "min_vram_gb": 36.1,
+    "parameter_count": "66.3B",
+    "parameters_raw": 66283333333,
+    "min_ram_gb": 48.2,
+    "recommended_ram_gb": 80.0,
+    "min_vram_gb": 44.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 1048576,
@@ -20140,16 +20472,17 @@
     "hf_downloads": 479695,
     "hf_likes": 0,
     "release_date": "2024-12-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 39.77
   },
   {
     "name": "casperhansen/llama-3.3-70b-instruct-awq",
     "provider": "casperhansen",
-    "parameter_count": "70.6B",
-    "parameters_raw": 70553706496,
-    "min_ram_gb": 39.4,
-    "recommended_ram_gb": 65.7,
-    "min_vram_gb": 36.1,
+    "parameter_count": "66.3B",
+    "parameters_raw": 66283333333,
+    "min_ram_gb": 48.2,
+    "recommended_ram_gb": 80.0,
+    "min_vram_gb": 44.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 1048576,
@@ -20162,16 +20495,17 @@
     "hf_downloads": 276818,
     "hf_likes": 0,
     "release_date": "2024-12-06",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 39.77
   },
   {
     "name": "ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4",
     "provider": "ibnzterrell",
-    "parameter_count": "70.6B",
-    "parameters_raw": 70553706496,
-    "min_ram_gb": 39.4,
-    "recommended_ram_gb": 65.7,
-    "min_vram_gb": 36.1,
+    "parameter_count": "66.3B",
+    "parameters_raw": 66283333333,
+    "min_ram_gb": 48.2,
+    "recommended_ram_gb": 80.0,
+    "min_vram_gb": 44.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 1048576,
@@ -20184,7 +20518,8 @@
     "hf_downloads": 229496,
     "hf_likes": 0,
     "release_date": "2024-12-07",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 39.77
   },
   {
     "name": "meta-llama/Meta-Llama-3-70B",
@@ -20216,7 +20551,7 @@
     "min_vram_gb": 36.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1048576,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -20271,11 +20606,11 @@
   {
     "name": "casperhansen/llama-3-70b-instruct-awq",
     "provider": "casperhansen",
-    "parameter_count": "70.6B",
-    "parameters_raw": 70553706496,
-    "min_ram_gb": 39.4,
-    "recommended_ram_gb": 65.7,
-    "min_vram_gb": 36.1,
+    "parameter_count": "66.3B",
+    "parameters_raw": 66283333333,
+    "min_ram_gb": 48.2,
+    "recommended_ram_gb": 80.0,
+    "min_vram_gb": 44.2,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 8192,
@@ -20288,7 +20623,8 @@
     "hf_downloads": 25804,
     "hf_likes": 0,
     "release_date": "2024-04-18",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 39.77
   },
   {
     "name": "RedHatAI/Llama-3.3-70B-Instruct-FP8-dynamic",
@@ -20336,18 +20672,18 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 5675147164
+    "active_parameters": 10000000000
   },
   {
     "name": "inceptionai/jais-adapted-70b-chat-4bit-bnb",
     "provider": "inceptionai",
-    "parameter_count": "71.6B",
-    "parameters_raw": 71644554296,
-    "min_ram_gb": 40.0,
-    "recommended_ram_gb": 66.7,
-    "min_vram_gb": 36.7,
-    "quantization": "Q4_K_M",
-    "format": "gguf",
+    "parameter_count": "62.4B",
+    "parameters_raw": 62350000000,
+    "min_ram_gb": 45.4,
+    "recommended_ram_gb": 75.3,
+    "min_vram_gb": 41.7,
+    "quantization": "BNB-4bit",
+    "format": "bnb",
     "context_length": 4096,
     "use_case": "Instruction following, chat",
     "capabilities": [],
@@ -20356,7 +20692,8 @@
     "hf_downloads": 66982,
     "hf_likes": 0,
     "release_date": "2025-02-21",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 37.41
   },
   {
     "name": "Qwen/Qwen2.5-72B-Instruct",
@@ -20368,7 +20705,7 @@
     "min_vram_gb": 37.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -20381,7 +20718,9 @@
     "num_hidden_layers": 80,
     "num_attention_heads": 64,
     "num_key_value_heads": 8,
-    "head_dim": 128
+    "head_dim": 128,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "huihui-ai/Qwen2.5-72B-Instruct-abliterated",
@@ -20445,7 +20784,9 @@
     "hf_downloads": 51654,
     "hf_likes": 0,
     "release_date": "2024-09-15",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN"
   },
   {
     "name": "Qwen/Qwen2-72B",
@@ -20470,14 +20811,14 @@
   {
     "name": "Qwen/Qwen2.5-72B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "73.0B",
-    "parameters_raw": 72957861888,
-    "min_ram_gb": 40.8,
-    "recommended_ram_gb": 67.9,
-    "min_vram_gb": 37.4,
+    "parameter_count": "69.3B",
+    "parameters_raw": 69333333333,
+    "min_ram_gb": 50.4,
+    "recommended_ram_gb": 83.7,
+    "min_vram_gb": 46.3,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -20487,19 +20828,22 @@
     "hf_downloads": 427856,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 41.6
   },
   {
     "name": "Qwen/Qwen2.5-72B-Instruct-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "73.0B",
-    "parameters_raw": 72957861888,
-    "min_ram_gb": 40.8,
-    "recommended_ram_gb": 67.9,
-    "min_vram_gb": 37.4,
+    "parameter_count": "69.4B",
+    "parameters_raw": 69366666666,
+    "min_ram_gb": 50.4,
+    "recommended_ram_gb": 83.7,
+    "min_vram_gb": 46.3,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
-    "context_length": 32768,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -20509,7 +20853,10 @@
     "hf_downloads": 35054,
     "hf_likes": 0,
     "release_date": "2024-09-17",
-    "_discovered": true
+    "_discovered": true,
+    "native_context_length": 32768,
+    "context_extension": "YaRN",
+    "weight_gb": 41.62
   },
   {
     "name": "Qwen/Qwen2-VL-72B-Instruct",
@@ -20559,11 +20906,11 @@
   {
     "name": "Qwen/Qwen2.5-VL-72B-Instruct-AWQ",
     "provider": "Alibaba",
-    "parameter_count": "73.7B",
-    "parameters_raw": 73662435584,
-    "min_ram_gb": 41.2,
-    "recommended_ram_gb": 68.6,
-    "min_vram_gb": 37.7,
+    "parameter_count": "71.7B",
+    "parameters_raw": 71666666666,
+    "min_ram_gb": 52.1,
+    "recommended_ram_gb": 86.5,
+    "min_vram_gb": 47.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 128000,
@@ -20577,18 +20924,19 @@
     "hf_downloads": 157285,
     "hf_likes": 0,
     "release_date": "2025-02-13",
-    "_discovered": true
+    "_discovered": true,
+    "weight_gb": 43.0
   },
   {
     "name": "NexVeridian/Qwen3-Coder-Next-8bit",
     "provider": "nexveridian",
-    "parameter_count": "79.7B",
-    "parameters_raw": 79674388992,
-    "min_ram_gb": 44.5,
-    "recommended_ram_gb": 74.2,
-    "min_vram_gb": 40.8,
-    "quantization": "Q4_K_M",
-    "format": "gguf",
+    "parameter_count": "77.0B",
+    "parameters_raw": 76963636363,
+    "min_ram_gb": 102.1,
+    "recommended_ram_gb": 169.8,
+    "min_vram_gb": 93.6,
+    "quantization": "AWQ-8bit",
+    "format": "awq",
     "context_length": 262144,
     "use_case": "Code generation and completion",
     "capabilities": [
@@ -20603,17 +20951,18 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5462052829
+    "active_parameters": 5462052829,
+    "weight_gb": 84.66
   },
   {
     "name": "lmstudio-community/Qwen3-Next-80B-A3B-Instruct-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "79.7B",
-    "parameters_raw": 79674388992,
-    "min_ram_gb": 44.5,
-    "recommended_ram_gb": 74.2,
-    "min_vram_gb": 40.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "81.5B",
+    "parameters_raw": 81527272727,
+    "min_ram_gb": 54.3,
+    "recommended_ram_gb": 90.2,
+    "min_vram_gb": 49.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -20629,17 +20978,18 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5462052829
+    "active_parameters": 3000000000,
+    "weight_gb": 44.84
   },
   {
     "name": "lmstudio-community/Qwen3-Next-80B-A3B-Instruct-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "79.7B",
-    "parameters_raw": 79674388992,
-    "min_ram_gb": 44.5,
-    "recommended_ram_gb": 74.2,
-    "min_vram_gb": 40.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "80.6B",
+    "parameters_raw": 80628571428,
+    "min_ram_gb": 102.1,
+    "recommended_ram_gb": 169.8,
+    "min_vram_gb": 93.6,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -20655,17 +21005,18 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5462052829
+    "active_parameters": 3000000000,
+    "weight_gb": 84.66
   },
   {
     "name": "lmstudio-community/Qwen3-Next-80B-A3B-Instruct-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "79.7B",
-    "parameters_raw": 79674388992,
-    "min_ram_gb": 44.5,
-    "recommended_ram_gb": 74.2,
-    "min_vram_gb": 40.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "80.9B",
+    "parameters_raw": 80937500000,
+    "min_ram_gb": 78.2,
+    "recommended_ram_gb": 130.0,
+    "min_vram_gb": 71.7,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -20681,17 +21032,18 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5462052829
+    "active_parameters": 3000000000,
+    "weight_gb": 64.75
   },
   {
     "name": "lmstudio-community/Qwen3-Next-80B-A3B-Instruct-MLX-5bit",
     "provider": "lmstudio-community",
-    "parameter_count": "79.7B",
-    "parameters_raw": 79674388992,
-    "min_ram_gb": 44.5,
-    "recommended_ram_gb": 74.2,
-    "min_vram_gb": 40.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "99.6B",
+    "parameters_raw": 99636363636,
+    "min_ram_gb": 66.3,
+    "recommended_ram_gb": 110.1,
+    "min_vram_gb": 60.8,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "Instruction following, chat",
@@ -20707,7 +21059,8 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5462052829
+    "active_parameters": 3000000000,
+    "weight_gb": 54.8
   },
   {
     "name": "Qwen/Qwen3-Coder-Next",
@@ -20788,7 +21141,7 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5575200546
+    "active_parameters": 3000000000
   },
   {
     "name": "Qwen/Qwen3-Next-80B-A3B-Instruct-FP8",
@@ -20814,7 +21167,7 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 5575537949
+    "active_parameters": 3000000000
   },
   {
     "name": "meta-llama/Llama-3.2-90B-Vision-Instruct",
@@ -20893,7 +21246,7 @@
     "min_vram_gb": 55.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 167772160,
+    "context_length": 10000000,
     "use_case": "Instruction following, chat",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -20917,7 +21270,7 @@
     "min_vram_gb": 55.7,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 167772160,
+    "context_length": 10000000,
     "use_case": "Instruction following, chat",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -20949,7 +21302,11 @@
     "hf_downloads": 383050,
     "hf_likes": 0,
     "release_date": "2025-07-20",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "num_experts": 256,
+    "active_experts": 8,
+    "active_parameters": 32000000000
   },
   {
     "name": "CohereLabs/command-a-vision-07-2025",
@@ -20976,12 +21333,12 @@
   {
     "name": "lmstudio-community/Qwen3.5-397B-A17B-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "111.9B",
-    "parameters_raw": 111930381296,
-    "min_ram_gb": 62.5,
-    "recommended_ram_gb": 104.2,
-    "min_vram_gb": 57.3,
-    "quantization": "Q4_K_M",
+    "parameter_count": "401.9B",
+    "parameters_raw": 401933333333,
+    "min_ram_gb": 506.9,
+    "recommended_ram_gb": 844.6,
+    "min_vram_gb": 464.7,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 262144,
     "use_case": "General purpose",
@@ -20997,7 +21354,8 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 7673352304
+    "active_parameters": 17000000000,
+    "weight_gb": 422.03
   },
   {
     "name": "nvidia/MiniMax-M2.5-NVFP4",
@@ -21026,12 +21384,12 @@
   {
     "name": "lmstudio-community/gpt-oss-120b-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "116.8B",
-    "parameters_raw": 116829154368,
-    "min_ram_gb": 65.3,
-    "recommended_ram_gb": 108.8,
-    "min_vram_gb": 59.8,
-    "quantization": "Q4_K_M",
+    "parameter_count": "118.3B",
+    "parameters_raw": 118257142857,
+    "min_ram_gb": 149.5,
+    "recommended_ram_gb": 248.8,
+    "min_vram_gb": 137.1,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 4194304,
     "use_case": "General purpose",
@@ -21045,7 +21403,8 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 4,
-    "active_parameters": 9309823238
+    "active_parameters": 9309823238,
+    "weight_gb": 124.17
   },
   {
     "name": "openai/gpt-oss-120b",
@@ -21109,7 +21468,9 @@
     "hf_downloads": 652551,
     "hf_likes": 0,
     "release_date": "2026-03-10",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 12000000000
   },
   {
     "name": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
@@ -21129,7 +21490,9 @@
     "hf_downloads": 562128,
     "hf_likes": 0,
     "release_date": "2026-03-10",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "active_parameters": 12000000000
   },
   {
     "name": "Qwen/Qwen3.5-122B-A10B",
@@ -21164,11 +21527,11 @@
   {
     "name": "Qwen/Qwen3.5-122B-A10B-GPTQ-Int4",
     "provider": "Alibaba",
-    "parameter_count": "125.1B",
-    "parameters_raw": 125086497008,
-    "min_ram_gb": 69.9,
-    "recommended_ram_gb": 116.5,
-    "min_vram_gb": 64.1,
+    "parameter_count": "131.4B",
+    "parameters_raw": 131433333333,
+    "min_ram_gb": 95.1,
+    "recommended_ram_gb": 158.2,
+    "min_vram_gb": 87.2,
     "quantization": "GPTQ-Int4",
     "format": "gptq",
     "context_length": 262144,
@@ -21185,16 +21548,17 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 9967830226
+    "active_parameters": 10000000000,
+    "weight_gb": 78.86
   },
   {
     "name": "QuantTrio/Qwen3.5-122B-A10B-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "125.1B",
-    "parameters_raw": 125086497008,
-    "min_ram_gb": 69.9,
-    "recommended_ram_gb": 116.5,
-    "min_vram_gb": 64.1,
+    "parameter_count": "136.9B",
+    "parameters_raw": 136933333333,
+    "min_ram_gb": 99.1,
+    "recommended_ram_gb": 164.8,
+    "min_vram_gb": 90.9,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 262144,
@@ -21211,7 +21575,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 9967830226
+    "active_parameters": 10000000000,
+    "weight_gb": 82.16
   },
   {
     "name": "Qwen/Qwen3.5-122B-A10B-FP8",
@@ -21237,7 +21602,7 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 9968428637
+    "active_parameters": 10000000000
   },
   {
     "name": "mistralai/Mixtral-8x22B-Instruct-v0.1",
@@ -21401,17 +21766,17 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 15233125507
+    "active_parameters": 17000000000
   },
   {
     "name": "lmstudio-community/MiniMax-M2.5-MLX-8bit",
     "provider": "lmstudio-community",
-    "parameter_count": "228.7B",
-    "parameters_raw": 228689748992,
-    "min_ram_gb": 127.8,
-    "recommended_ram_gb": 213.0,
-    "min_vram_gb": 117.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "231.4B",
+    "parameters_raw": 231419047619,
+    "min_ram_gb": 292.1,
+    "recommended_ram_gb": 486.5,
+    "min_vram_gb": 267.8,
+    "quantization": "MLX-8bit",
     "format": "mlx",
     "context_length": 196608,
     "use_case": "Lightweight, edge deployment",
@@ -21425,17 +21790,18 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 18223714369
+    "active_parameters": 18223714369,
+    "weight_gb": 242.99
   },
   {
     "name": "lmstudio-community/MiniMax-M2.5-MLX-4bit",
     "provider": "lmstudio-community",
-    "parameter_count": "228.7B",
-    "parameters_raw": 228689748992,
-    "min_ram_gb": 127.8,
-    "recommended_ram_gb": 213.0,
-    "min_vram_gb": 117.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "233.9B",
+    "parameters_raw": 233945454545,
+    "min_ram_gb": 154.9,
+    "recommended_ram_gb": 257.8,
+    "min_vram_gb": 142.0,
+    "quantization": "MLX-4bit",
     "format": "mlx",
     "context_length": 196608,
     "use_case": "Lightweight, edge deployment",
@@ -21449,17 +21815,18 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 18223714369
+    "active_parameters": 18223714369,
+    "weight_gb": 128.67
   },
   {
     "name": "lmstudio-community/MiniMax-M2.5-MLX-6bit",
     "provider": "lmstudio-community",
-    "parameter_count": "228.7B",
-    "parameters_raw": 228689748992,
-    "min_ram_gb": 127.8,
-    "recommended_ram_gb": 213.0,
-    "min_vram_gb": 117.1,
-    "quantization": "Q4_K_M",
+    "parameter_count": "232.3B",
+    "parameters_raw": 232287500000,
+    "min_ram_gb": 223.5,
+    "recommended_ram_gb": 372.2,
+    "min_vram_gb": 204.9,
+    "quantization": "MLX-6bit",
     "format": "mlx",
     "context_length": 196608,
     "use_case": "Lightweight, edge deployment",
@@ -21473,16 +21840,17 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 18223714369
+    "active_parameters": 18223714369,
+    "weight_gb": 185.83
   },
   {
     "name": "QuantTrio/MiniMax-M2.5-AWQ",
     "provider": "quanttrio",
-    "parameter_count": "228.7B",
-    "parameters_raw": 228689764864,
-    "min_ram_gb": 127.8,
-    "recommended_ram_gb": 213.0,
-    "min_vram_gb": 117.1,
+    "parameter_count": "217.0B",
+    "parameters_raw": 217049999999,
+    "min_ram_gb": 156.8,
+    "recommended_ram_gb": 261.0,
+    "min_vram_gb": 143.8,
     "quantization": "AWQ-4bit",
     "format": "awq",
     "context_length": 196608,
@@ -21497,7 +21865,8 @@
     "is_moe": true,
     "num_experts": 256,
     "active_experts": 8,
-    "active_parameters": 18223715635
+    "active_parameters": 18223715635,
+    "weight_gb": 130.23
   },
   {
     "name": "MiniMaxAI/MiniMax-M2.7",
@@ -21660,7 +22029,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 25714927049
+    "active_parameters": 22000000000
   },
   {
     "name": "Qwen/Qwen3-235B-A22B-FP8",
@@ -21686,7 +22055,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 25714927049
+    "active_parameters": 22000000000
   },
   {
     "name": "Qwen/Qwen3-VL-235B-A22B-Instruct",
@@ -21713,7 +22082,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 25776408752
+    "active_parameters": 22000000000
   },
   {
     "name": "Qwen/Qwen3-VL-235B-A22B-Thinking",
@@ -21740,7 +22109,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 25776408752
+    "active_parameters": 22000000000
   },
   {
     "name": "Qwen/Qwen3-VL-235B-A22B-Instruct-FP8",
@@ -21767,19 +22136,19 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 25777969522
+    "active_parameters": 22000000000
   },
   {
     "name": "casperhansen/deepseek-coder-v2-instruct-awq",
     "provider": "casperhansen",
-    "parameter_count": "235.7B",
-    "parameters_raw": 235741434880,
-    "min_ram_gb": 131.7,
-    "recommended_ram_gb": 219.6,
-    "min_vram_gb": 120.8,
+    "parameter_count": "214.5B",
+    "parameters_raw": 214483333333,
+    "min_ram_gb": 154.9,
+    "recommended_ram_gb": 257.9,
+    "min_vram_gb": 142.1,
     "quantization": "AWQ-4bit",
     "format": "awq",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Code generation and completion",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -21791,7 +22160,8 @@
     "is_moe": true,
     "num_experts": 64,
     "active_experts": 6,
-    "active_parameters": 32782793288
+    "active_parameters": 32782793288,
+    "weight_gb": 128.69
   },
   {
     "name": "RedHatAI/DeepSeek-V2.5-1210-FP8",
@@ -21803,7 +22173,7 @@
     "min_vram_gb": 120.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -21839,7 +22209,7 @@
     "is_moe": true,
     "num_experts": 128,
     "active_experts": 8,
-    "active_parameters": 25932776361
+    "active_parameters": 23000000000
   },
   {
     "name": "internlm/Intern-S1",
@@ -21886,7 +22256,9 @@
     "num_hidden_layers": 54,
     "num_attention_heads": 64,
     "num_key_value_heads": 8,
-    "head_dim": 128
+    "head_dim": 128,
+    "is_moe": true,
+    "active_parameters": 47000000000
   },
   {
     "name": "XiaomiMiMo/MiMo-V2-Flash",
@@ -21989,7 +22361,11 @@
     "hf_downloads": 69665,
     "hf_likes": 0,
     "release_date": "2025-07-20",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "num_experts": 256,
+    "active_experts": 8,
+    "active_parameters": 32000000000
   },
   {
     "name": "nvidia/DeepSeek-R1-0528-NVFP4-v2",
@@ -22001,7 +22377,7 @@
     "min_vram_gb": 201.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22025,7 +22401,7 @@
     "min_vram_gb": 202.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22045,7 +22421,7 @@
     "min_vram_gb": 203.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22172,7 +22548,7 @@
     "is_moe": true,
     "num_experts": 512,
     "active_experts": 10,
-    "active_parameters": 27656495656,
+    "active_parameters": 17000000000,
     "gguf_sources": [
       {
         "repo": "mradermacher/Qwen3.5-397B-A17B-FP8-GGUF",
@@ -22190,7 +22566,7 @@
     "min_vram_gb": 207.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1048576,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [
       "tool_use"
@@ -22215,7 +22591,7 @@
     "min_vram_gb": 207.9,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 1048576,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22334,7 +22710,7 @@
     "min_vram_gb": 350.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -22367,7 +22743,7 @@
     "min_vram_gb": 350.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -22404,7 +22780,7 @@
     "min_vram_gb": 350.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "Advanced reasoning, chain-of-thought",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22434,7 +22810,7 @@
     "min_vram_gb": 350.6,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22485,7 +22861,7 @@
     "min_vram_gb": 351.1,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 6553600,
+    "context_length": 131072,
     "use_case": "General purpose text generation",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -22531,7 +22907,11 @@
         "repo": "unsloth/GLM-5-GGUF",
         "provider": "unsloth"
       }
-    ]
+    ],
+    "is_moe": true,
+    "num_experts": 256,
+    "active_experts": 8,
+    "active_parameters": 40000000000
   },
   {
     "name": "zai-org/GLM-5.1",
@@ -22557,7 +22937,11 @@
         "repo": "unsloth/GLM-5.1-GGUF",
         "provider": "unsloth"
       }
-    ]
+    ],
+    "is_moe": true,
+    "num_experts": 256,
+    "active_experts": 8,
+    "active_parameters": 40000000000
   },
   {
     "name": "zai-org/GLM-5-FP8",
@@ -22577,7 +22961,11 @@
     "hf_downloads": 1400322,
     "hf_likes": 0,
     "release_date": "2026-02-11",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "num_experts": 256,
+    "active_experts": 8,
+    "active_parameters": 40000000000
   },
   {
     "name": "zai-org/GLM-5.1-FP8",
@@ -22597,7 +22985,11 @@
     "hf_downloads": 273120,
     "hf_likes": 0,
     "release_date": "2026-04-03",
-    "_discovered": true
+    "_discovered": true,
+    "is_moe": true,
+    "num_experts": 256,
+    "active_experts": 8,
+    "active_parameters": 40000000000
   },
   {
     "name": "inclusionAI/Ring-2.5-1T",
@@ -22633,7 +23025,7 @@
     "min_vram_gb": 525.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 4194304,
+    "context_length": 131072,
     "use_case": "Instruction following, chat",
     "capabilities": [],
     "pipeline_tag": "text-generation",
@@ -22650,7 +23042,11 @@
         "repo": "unsloth/Kimi-K2-Instruct-GGUF",
         "provider": "unsloth"
       }
-    ]
+    ],
+    "is_moe": true,
+    "num_experts": 384,
+    "active_experts": 8,
+    "active_parameters": 32000000000
   },
   {
     "name": "moonshotai/Kimi-K2-Instruct-0905",
@@ -22662,7 +23058,7 @@
     "min_vram_gb": 525.8,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 16777216,
+    "context_length": 262144,
     "use_case": "Instruction following, chat",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22676,7 +23072,11 @@
         "repo": "unsloth/Kimi-K2-Instruct-0905-GGUF",
         "provider": "unsloth"
       }
-    ]
+    ],
+    "is_moe": true,
+    "num_experts": 384,
+    "active_experts": 8,
+    "active_parameters": 32000000000
   },
   {
     "name": "moonshotai/Kimi-K2-Thinking",
@@ -22688,7 +23088,7 @@
     "min_vram_gb": 542.0,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 16777216,
+    "context_length": 262144,
     "use_case": "General purpose",
     "capabilities": [],
     "pipeline_tag": "unknown",
@@ -22702,7 +23102,11 @@
         "repo": "unsloth/Kimi-K2-Thinking-GGUF",
         "provider": "unsloth"
       }
-    ]
+    ],
+    "is_moe": true,
+    "num_experts": 384,
+    "active_experts": 8,
+    "active_parameters": 32000000000
   },
   {
     "name": "moonshotai/Kimi-K2.5",
@@ -22714,7 +23118,7 @@
     "min_vram_gb": 542.2,
     "quantization": "Q4_K_M",
     "format": "gguf",
-    "context_length": 16777216,
+    "context_length": 262144,
     "use_case": "General purpose",
     "capabilities": [
       "vision"
@@ -22733,6 +23137,10 @@
         "repo": "unsloth/Kimi-K2.5-GGUF",
         "provider": "unsloth"
       }
-    ]
+    ],
+    "is_moe": true,
+    "num_experts": 384,
+    "active_experts": 8,
+    "active_parameters": 32000000000
   }
 ]

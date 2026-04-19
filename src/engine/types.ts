@@ -19,6 +19,8 @@ export interface LlmModel {
   quantization: string
   format: string
   context_length: number
+  native_context_length?: number | null
+  context_extension?: string | null
   use_case: string
   is_moe: boolean
   num_experts: number | null

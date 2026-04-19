@@ -16,6 +16,9 @@ The upstream llmfit scraper trusts safetensors.total, so every pre-quantized
 entry in public/models.json has VRAM/RAM estimates that are ~8x too small.
 
 This script fixes that in place by:
+  - correcting known context-window metadata that HF configs expose
+    inconsistently across RoPE/YaRN families
+  - backfilling MoE active-parameter metadata for known families
   - detecting pre-quantized entries (format in awq/gptq/mlx, plus name regex)
   - fetching .safetensors / .gguf / .bin sizes from the HF tree API
   - rewriting weight_gb (new field), min_vram_gb, min_ram_gb,
@@ -78,6 +81,31 @@ VRAM_HEADROOM = 1.10  # +10% for activations/KV headroom
 RAM_MIN_MULT = 1.20   # min RAM = weight * 1.2 (KV + overhead)
 RAM_REC_MULT = 2.00   # recommended RAM = weight * 2.0 (generous headroom)
 
+CONTEXT_RULES = [
+    (re.compile(r"^meta-llama/Llama-3\.1-"), 131_072, 131_072, None),
+    (re.compile(r"^meta-llama/Llama-3\.2-[13]B(?:-|$)"), 131_072, 131_072, None),
+    (re.compile(r"/?Llama-3\.2-1B"), 131_072, 131_072, None),
+    (re.compile(r"/?Llama-4-Scout-"), 10_000_000, 10_000_000, None),
+    (re.compile(r"^(?:meta-llama|codellama)/CodeLlama-"), 16_384, 16_384, None),
+    (re.compile(r"^google/gemma-2-"), 8_192, 8_192, None),
+    (re.compile(r"^Qwen/Qwen2\.5-(?!VL-)"), 131_072, 32_768, "YaRN"),
+    (re.compile(r"^Qwen/Qwen3-(?:0\.6B|1\.7B|4B|8B|14B|32B)(?:-|$)"), 131_072, 32_768, "YaRN"),
+    (re.compile(r"(?:^deepseek-ai/|/)deepseek-(?:coder-)?v2(?:\.5)?", re.I), 131_072, 131_072, None),
+    (re.compile(r"(?:^deepseek-ai/|/)DeepSeek-R1-0528-Qwen3-8B"), 131_072, 131_072, None),
+    (re.compile(r"/DeepSeek-(?:R1-0528|V3(?:\.2|-0324)?)-NVFP4"), 131_072, 131_072, None),
+    (re.compile(r"^deepseek-ai/DeepSeek-(?:V3|R1)(?:-|$|\.)"), 131_072, 131_072, None),
+    (re.compile(r"^moonshotai/Kimi-K2-Instruct$"), 131_072, 131_072, None),
+    (re.compile(r"^moonshotai/Kimi-K2(?:-Instruct-0905|-Thinking|\.5)"), 262_144, 262_144, None),
+]
+
+MOE_RULES = [
+    (re.compile(r"^moonshotai/Kimi-K2"), 384, 8, 32_000_000_000),
+    (re.compile(r"^zai-org/GLM-4\.5(?:-|$)"), 256, 8, 32_000_000_000),
+    (re.compile(r"^zai-org/GLM-5(?:\.1)?(?:-|$)"), 256, 8, 40_000_000_000),
+]
+
+A_ACTIVE_RE = re.compile(r"(\d+(?:\.\d+)?)B-A(\d+(?:\.\d+)?)B", re.I)
+
 
 def is_prequantized(entry: dict) -> bool:
     """A repo is pre-quantized when its native format isn't GGUF (= Q4_K_M
@@ -91,6 +119,61 @@ def is_prequantized(entry: dict) -> bool:
     if QUANT_NAME_RE.search(entry.get("name", "")):
         return True
     return False
+
+
+def apply_metadata_fixups(entry: dict) -> bool:
+    """Apply deterministic metadata fixes that do not require network calls."""
+    changed = False
+    name = entry.get("name", "")
+
+    for pattern, context, native_context, method in CONTEXT_RULES:
+        if pattern.search(name):
+            if entry.get("context_length") != context:
+                entry["context_length"] = context
+                changed = True
+            if native_context is not None and native_context != context:
+                if entry.get("native_context_length") != native_context:
+                    entry["native_context_length"] = native_context
+                    changed = True
+            else:
+                if "native_context_length" in entry:
+                    entry.pop("native_context_length", None)
+                    changed = True
+            if method:
+                if entry.get("context_extension") != method:
+                    entry["context_extension"] = method
+                    changed = True
+            else:
+                if "context_extension" in entry:
+                    entry.pop("context_extension", None)
+                    changed = True
+            break
+
+    for pattern, num_experts, active_experts, active_params in MOE_RULES:
+        if pattern.search(name):
+            for key, val in (
+                ("is_moe", True),
+                ("num_experts", num_experts),
+                ("active_experts", active_experts),
+                ("active_parameters", active_params),
+            ):
+                if entry.get(key) != val:
+                    entry[key] = val
+                    changed = True
+            break
+
+    # Generic MoE naming convention: Qwen3-Coder-480B-A35B, GLM-4.5-355B-A32B.
+    m = A_ACTIVE_RE.search(name)
+    if m:
+        active_params = int(float(m.group(2)) * 1_000_000_000)
+        if entry.get("is_moe") is not True:
+            entry["is_moe"] = True
+            changed = True
+        if entry.get("active_parameters") != active_params:
+            entry["active_parameters"] = active_params
+            changed = True
+
+    return changed
 
 
 def infer_native_quant(entry: dict) -> str:
@@ -242,6 +325,9 @@ def main() -> int:
     with open(args.json) as f:
         data = json.load(f)
 
+    metadata_changed = sum(1 for e in data if apply_metadata_fixups(e))
+    print(f"Applied deterministic metadata fixups to {metadata_changed} entries", file=sys.stderr)
+
     targets = [
         e for e in data
         if is_prequantized(e) and (not args.only or e.get("name") == args.only)
@@ -264,7 +350,7 @@ def main() -> int:
         time.sleep(0.15)
 
     print(
-        f"\nPatched {changed}, failed {failed}, total {len(targets)}",
+        f"\nMetadata fixed {metadata_changed}; quantized patched {changed}, failed {failed}, total {len(targets)}",
         file=sys.stderr,
     )
 
@@ -273,7 +359,8 @@ def main() -> int:
         return 0
 
     with open(args.json, "w") as f:
-        json.dump(data, f, separators=(",", ":"))
+        json.dump(data, f, indent=2)
+        f.write("\n")
     print(f"Wrote {args.json}", file=sys.stderr)
     return 0
 

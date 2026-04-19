@@ -16,6 +16,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -280,6 +281,8 @@ MOE_CONFIGS = {
     "nemotron3_nano": {"num_experts": 128, "active_experts": 6},
     "qwen3_5_moe": {"num_experts": 256, "active_experts": 8},
     "qwen3_vl_moe": {"num_experts": 256, "active_experts": 8},
+    "glm_moe_dsa": {"num_experts": 256, "active_experts": 8},
+    "kimi": {"num_experts": 384, "active_experts": 8},
 }
 
 # Published active parameter counts for well-known MoE models
@@ -303,8 +306,13 @@ MOE_ACTIVE_PARAMS = {
     "meta-llama/Llama-4-Maverick-17B-128E-Instruct": 17_000_000_000,
     "xai-org/grok-1": 86_000_000_000,
     "moonshotai/Kimi-K2-Instruct": 32_000_000_000,
+    "moonshotai/Kimi-K2-Instruct-0905": 32_000_000_000,
+    "moonshotai/Kimi-K2-Thinking": 32_000_000_000,
     "moonshotai/Kimi-K2.5": 32_000_000_000,
+    "zai-org/GLM-4.5": 32_000_000_000,
+    "zai-org/GLM-4.5-Air": 12_000_000_000,
     "zai-org/GLM-5": 40_000_000_000,
+    "zai-org/GLM-5.1": 40_000_000_000,
     "MiniMaxAI/MiniMax-M2.7": 10_000_000_000,
     "MiniMaxAI/MiniMax-M2.5": 10_000_000_000,
     "XiaomiMiMo/MiMo-V2-Flash": 15_000_000_000,
@@ -313,6 +321,34 @@ MOE_ACTIVE_PARAMS = {
     "LiquidAI/LFM2-24B-A2B": 2_300_000_000,  # 23.8B total, 2.3B active
     "google/gemma-4-26B-A4B-it": 4_000_000_000,
 }
+
+# Documented maximum contexts for model families whose HF config either gates
+# the full config, exposes only the default/native length, or already contains
+# YaRN/RoPE-scaled max_position_embeddings. Keep this list small and tied to
+# families we have checked against model cards.
+CONTEXT_OVERRIDES: list[tuple[re.Pattern[str], int, int | None, str | None]] = [
+    (re.compile(r"^meta-llama/Llama-3\.1-"), 131_072, 131_072, None),
+    (re.compile(r"^meta-llama/Llama-3\.2-[13]B(?:-|$)"), 131_072, 131_072, None),
+    (re.compile(r"/?Llama-3\.2-1B"), 131_072, 131_072, None),
+    (re.compile(r"/?Llama-4-Scout-"), 10_000_000, 10_000_000, None),
+    (re.compile(r"^(?:meta-llama|codellama)/CodeLlama-"), 16_384, 16_384, None),
+    (re.compile(r"^google/gemma-2-"), 8_192, 8_192, None),
+    (re.compile(r"^Qwen/Qwen2\.5-(?!VL-)"), 131_072, 32_768, "YaRN"),
+    (re.compile(r"^Qwen/Qwen3-(?:0\.6B|1\.7B|4B|8B|14B|32B)(?:-|$)"), 131_072, 32_768, "YaRN"),
+    (re.compile(r"(?:^deepseek-ai/|/)deepseek-(?:coder-)?v2(?:\.5)?", re.I), 131_072, 131_072, None),
+    (re.compile(r"(?:^deepseek-ai/|/)DeepSeek-R1-0528-Qwen3-8B"), 131_072, 131_072, None),
+    (re.compile(r"/DeepSeek-(?:R1-0528|V3(?:\.2|-0324)?)-NVFP4"), 131_072, 131_072, None),
+    (re.compile(r"^deepseek-ai/DeepSeek-(?:V3|R1)(?:-|$|\.)"), 131_072, 131_072, None),
+    (re.compile(r"^moonshotai/Kimi-K2-Instruct$"), 131_072, 131_072, None),
+    (re.compile(r"^moonshotai/Kimi-K2(?:-Instruct-0905|-Thinking|\.5)"), 262_144, 262_144, None),
+]
+
+
+def context_override(repo_id: str) -> tuple[int, int | None, str | None] | None:
+    for pattern, max_ctx, native_ctx, method in CONTEXT_OVERRIDES:
+        if pattern.search(repo_id):
+            return max_ctx, native_ctx, method
+    return None
 
 
 def fetch_model_info(repo_id: str) -> dict | None:
@@ -492,12 +528,30 @@ def detect_moe(repo_id: str, config: dict | None, architecture: str,
     num_experts = None
     active_experts = None
     if config:
-        num_experts = config.get("num_local_experts") or config.get("num_experts")
-        active_experts = config.get("num_experts_per_tok") or config.get("top_k_experts")
+        num_experts = (
+            config.get("num_local_experts")
+            or config.get("num_experts")
+            or config.get("n_routed_experts")
+        )
+        active_experts = (
+            config.get("num_experts_per_tok")
+            or config.get("top_k_experts")
+            or config.get("num_selected_experts")
+        )
         if (not num_experts or not active_experts) and isinstance(config.get("text_config"), dict):
             tc = config["text_config"]
-            num_experts = num_experts or tc.get("num_local_experts") or tc.get("num_experts")
-            active_experts = active_experts or tc.get("num_experts_per_tok") or tc.get("top_k_experts")
+            num_experts = (
+                num_experts
+                or tc.get("num_local_experts")
+                or tc.get("num_experts")
+                or tc.get("n_routed_experts")
+            )
+            active_experts = (
+                active_experts
+                or tc.get("num_experts_per_tok")
+                or tc.get("top_k_experts")
+                or tc.get("num_selected_experts")
+            )
 
     # Check if architecture is in known MoE configs
     if architecture in MOE_CONFIGS:
@@ -552,10 +606,20 @@ def infer_use_case(repo_id: str, pipeline_tag: str | None, config: dict | None) 
     return "General purpose"
 
 
-def infer_context_length(config: dict | None) -> int:
-    """Try to extract context length from model config."""
+def infer_context_info(repo_id: str, config: dict | None) -> tuple[int, int | None, str | None]:
+    """Return (max_context, native_context, extension_method).
+
+    `context_length` is the documented maximum context LLMSizer should size
+    for. Some HF configs expose a smaller default context and rely on YaRN for
+    advertised long context; others already expose the scaled length and also
+    carry `rope_scaling.factor`. We avoid blindly multiplying both.
+    """
+    override = context_override(repo_id)
+    if override is not None:
+        return override
+
     if not config:
-        return 4096
+        return 4096, None, None
 
     # Common config keys for max sequence length
     keys_to_check = [
@@ -574,30 +638,42 @@ def infer_context_length(config: dict | None) -> int:
                     return val
         return None
 
-    def _apply_rope_scaling(val: int, cfg: dict) -> int:
-        """Apply RoPE scaling factor when present (e.g., Llama 4 Maverick
-        has max_position_embeddings=4096 but a rope_scaling factor of 256,
-        giving an effective context of 1M tokens)."""
+    def _apply_rope_scaling(val: int, cfg: dict) -> tuple[int, str | None]:
+        """Apply RoPE scaling only from the original context when provided."""
         rope = cfg.get("rope_scaling")
         if isinstance(rope, dict) and isinstance(rope.get("factor"), (int, float)):
-            scaled = int(val * rope["factor"])
-            if scaled > val:
-                return scaled
-        return val
+            original = rope.get("original_max_position_embeddings")
+            if isinstance(original, int) and original > 0:
+                scaled = int(original * rope["factor"])
+                # Many modern configs already set max_position_embeddings to
+                # the scaled length. Use the larger of the two rather than
+                # multiplying the scaled value again.
+                return max(val, scaled), str(rope.get("type") or "rope_scaling")
+            # Without an original length, multiplying can overstate context by
+            # an order of magnitude. Trust the explicit max field.
+            return val, str(rope.get("type") or "rope_scaling")
+        return val, None
 
     # Check top-level config
     val = _extract_from(config)
     if val is not None:
-        return _apply_rope_scaling(val, config)
+        max_ctx, method = _apply_rope_scaling(val, config)
+        return max_ctx, val, method
 
     # For multimodal models (e.g., Qwen3.5), check text_config
     if "text_config" in config and isinstance(config["text_config"], dict):
         tc = config["text_config"]
         val = _extract_from(tc)
         if val is not None:
-            return _apply_rope_scaling(val, tc)
+            max_ctx, method = _apply_rope_scaling(val, tc)
+            return max_ctx, val, method
 
-    return 4096
+    return 4096, None, None
+
+
+def infer_context_length(config: dict | None) -> int:
+    """Backward-compatible wrapper used by older callers/tests."""
+    return infer_context_info("", config)[0]
 
 
 def fetch_config_json(repo_id: str) -> dict | None:
@@ -772,7 +848,9 @@ def scrape_model(repo_id: str) -> dict | None:
 
     # Detect quantization format from config.json
     model_format, default_quant = detect_quant_format(repo_id, full_config)
-    context_length = infer_context_length(full_config) if full_config else infer_context_length(config)
+    context_length, native_context_length, context_extension = infer_context_info(
+        repo_id, full_config if full_config else config
+    )
 
     # For pre-quantized repos (AWQ/GPTQ/MLX/BNB), safetensors.total reflects
     # packed-tensor element counts, not real parameter counts. Sum actual
@@ -831,6 +909,11 @@ def scrape_model(repo_id: str) -> dict | None:
         "num_key_value_heads": num_key_value_heads,
         "head_dim": head_dim,
     }
+
+    if native_context_length is not None and native_context_length != context_length:
+        result["native_context_length"] = native_context_length
+    if context_extension:
+        result["context_extension"] = context_extension
 
     # Add MoE fields if detected
     if moe_info["is_moe"]:
@@ -2168,10 +2251,20 @@ def main():
             full_config = fetch_config_json(repo_id)
 
             model_format, default_quant = detect_quant_format(repo_id, full_config)
-            context_length = infer_context_length(full_config) if full_config else infer_context_length(config)
+            context_length, native_context_length, context_extension = infer_context_info(
+                repo_id, full_config if full_config else config
+            )
 
-            min_ram, rec_ram = estimate_ram(total_params, default_quant)
-            min_vram = estimate_vram(total_params, default_quant)
+            real_params, weight_gb, min_ram_pq, rec_ram_pq, min_vram_pq = apply_prequant_sizing(
+                repo_id, model_format, default_quant, total_params
+            )
+            if weight_gb is not None:
+                total_params = real_params
+                min_ram, rec_ram = min_ram_pq, rec_ram_pq
+                min_vram = min_vram_pq
+            else:
+                min_ram, rec_ram = estimate_ram(total_params, default_quant)
+                min_vram = estimate_vram(total_params, default_quant)
 
             architecture = config.get("model_type", "unknown")
             moe_info = detect_moe(repo_id, full_config, architecture, total_params)
@@ -2197,6 +2290,13 @@ def main():
                 "release_date": (listing.get("createdAt") or "")[:10] or None,
                 "_discovered": True,
             }
+
+            if native_context_length is not None and native_context_length != context_length:
+                model["native_context_length"] = native_context_length
+            if context_extension:
+                model["context_extension"] = context_extension
+            if weight_gb is not None:
+                model["weight_gb"] = weight_gb
 
             if moe_info["is_moe"]:
                 model["is_moe"] = True
