@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import type { LlmModel, SystemSpecs, ModelFit, FilterState, FitLevel } from '../engine/types'
 import { analyzeModelFit } from '../engine/fit'
+import { filterCompatibleModels } from '../engine/compatibility'
 
 const FIT_ORDER: Record<FitLevel, number> = {
   perfect: 3,
@@ -48,13 +49,17 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
     return () => { cancelled = true }
   }, [])
 
+  const compatibleModels = useMemo(
+    () => filterCompatibleModels(models, system),
+    [models, system],
+  )
+
   const results = useMemo<ModelFit[]>(() => {
-    if (models.length === 0) return []
+    if (compatibleModels.length === 0) return []
 
     const useCase = filters.useCase === 'all' ? 'general' : filters.useCase
 
-    // Analyze all models
-    const fits = models.map((m) => analyzeModelFit(m, system, useCase, filters.context))
+    const fits = compatibleModels.map((m) => analyzeModelFit(m, system, useCase, filters.context))
 
     // Filter by minFit
     const minFitLevel = filters.minFit === 'all' ? 0 : FIT_ORDER[filters.minFit]
@@ -122,12 +127,13 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
     })
 
     return sorted
-  }, [models, system, filters])
+  }, [compatibleModels, system, filters])
 
   return {
     results,
     loading,
     error,
-    totalModels: models.length,
+    totalModels: compatibleModels.length,
+    databaseModels: models.length,
   }
 }
