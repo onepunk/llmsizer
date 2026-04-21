@@ -1,5 +1,5 @@
 import type { GpuSpec } from '../engine/types'
-import { parseRendererString, lookupGpu } from './parse-renderer'
+import { parseRendererString, lookupGpu, isIntegratedGpu } from './parse-renderer'
 
 export interface HardwareDetection {
   gpu_renderer: string | null
@@ -10,34 +10,69 @@ export interface HardwareDetection {
 }
 
 /**
+ * Creates a WebGL context with the given attributes and reads the unmasked
+ * renderer string. Returns null if WebGL or the debug extension is unavailable.
+ */
+function probeRenderer(attrs?: WebGLContextAttributes): string | null {
+  try {
+    const canvas = document.createElement('canvas')
+    const gl =
+      canvas.getContext('webgl2', attrs) ??
+      canvas.getContext('webgl', attrs) ??
+      (canvas.getContext('experimental-webgl', attrs) as WebGLRenderingContext | null)
+    if (!gl) return null
+    const ext = gl.getExtension('WEBGL_debug_renderer_info')
+    if (!ext) return null
+    const raw = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string
+    return raw || null
+  } catch {
+    return null
+  }
+}
+
+/**
  * Detects GPU info via WebGL, CPU core count, and device memory.
  * Must be called in a browser environment.
+ *
+ * On laptops with switchable graphics (Intel iGPU + NVIDIA/AMD dGPU), the
+ * browser defaults WebGL contexts to the integrated GPU for power savings —
+ * which means a naive probe misses the discrete GPU entirely. We probe twice:
+ * once with powerPreference: 'high-performance' to hint the browser toward
+ * the dGPU, and once with the default preference. If the two probes return
+ * different GPUs, prefer the discrete one.
  */
 export function detectHardware(): HardwareDetection {
   let gpu_renderer: string | null = null
   let gpu_parsed: string | null = null
   let gpu_spec: GpuSpec | null = null
 
-  try {
-    const canvas = document.createElement('canvas')
-    const gl =
-      canvas.getContext('webgl2') ??
-      canvas.getContext('webgl') ??
-      canvas.getContext('experimental-webgl') as WebGLRenderingContext | null
+  const candidates: string[] = []
+  const seen = new Set<string>()
+  const perfRaw = probeRenderer({ powerPreference: 'high-performance' })
+  if (perfRaw) {
+    candidates.push(perfRaw)
+    seen.add(perfRaw)
+  }
+  const defaultRaw = probeRenderer()
+  if (defaultRaw && !seen.has(defaultRaw)) {
+    candidates.push(defaultRaw)
+  }
 
-    if (gl) {
-      const ext = gl.getExtension('WEBGL_debug_renderer_info')
-      if (ext) {
-        const raw = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string
-        if (raw) {
-          gpu_renderer = raw
-          gpu_parsed = parseRendererString(raw)
-          gpu_spec = lookupGpu(gpu_parsed)
-        }
-      }
+  // Prefer a discrete GPU over an integrated one. Among multiple discretes
+  // (rare), the high-performance probe comes first so it wins.
+  let chosen: string | null = null
+  for (const raw of candidates) {
+    if (!isIntegratedGpu(parseRendererString(raw))) {
+      chosen = raw
+      break
     }
-  } catch {
-    // WebGL not available — leave gpu fields null
+  }
+  if (chosen === null) chosen = candidates[0] ?? null
+
+  if (chosen !== null) {
+    gpu_renderer = chosen
+    gpu_parsed = parseRendererString(chosen)
+    gpu_spec = lookupGpu(gpu_parsed)
   }
 
   const cpu_cores = navigator.hardwareConcurrency ?? 1
