@@ -98,6 +98,9 @@ TARGET_MODELS = [
     "Qwen/Qwen3.5-2B-Base",
     "Qwen/Qwen3.5-4B-Base",
     "Qwen/Qwen3.5-9B-Base",
+    # Qwen 3.6 (April 2026)
+    "Qwen/Qwen3.6-27B",
+    "Qwen/Qwen3.6-35B-A3B",
     # Microsoft Phi
     "microsoft/phi-3-mini-4k-instruct",
     "microsoft/Phi-3-medium-14b-instruct",
