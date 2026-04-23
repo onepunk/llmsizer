@@ -74,3 +74,44 @@ describe('estimateTps', () => {
     expect(boosted).toBeCloseTo(base * 1.6, 2)
   })
 })
+
+describe('RAM bandwidth override', () => {
+  it('fast RAM yields higher cpu_only TPS than slow RAM at same paramsB', () => {
+    const fast = estimateTps({
+      paramsB: 8,
+      quant: 'Q4_K_M',
+      bandwidthGbps: 0,
+      runMode: 'cpu_only',
+      cpuCores: 8,
+      ramBandwidthGbps: 90,
+    })
+    const slow = estimateTps({
+      paramsB: 8,
+      quant: 'Q4_K_M',
+      bandwidthGbps: 0,
+      runMode: 'cpu_only',
+      cpuCores: 8,
+      ramBandwidthGbps: 25,
+    })
+    expect(fast).toBeGreaterThan(slow)
+  })
+
+  it('undefined ramBandwidthGbps behaves as the reference baseline', () => {
+    const defaulted = estimateTps({
+      paramsB: 8,
+      quant: 'Q4_K_M',
+      bandwidthGbps: 0,
+      runMode: 'cpu_only',
+      cpuCores: 8,
+    })
+    const baseline = estimateTps({
+      paramsB: 8,
+      quant: 'Q4_K_M',
+      bandwidthGbps: 0,
+      runMode: 'cpu_only',
+      cpuCores: 8,
+      ramBandwidthGbps: 50, // matches REFERENCE_RAM_GBPS
+    })
+    expect(defaulted).toBeCloseTo(baseline, 4)
+  })
+})
