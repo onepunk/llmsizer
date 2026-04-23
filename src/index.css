@@ -1459,3 +1459,26 @@ select.filter-input {
   margin: 0;
   cursor: pointer;
 }
+
+.hw-advanced-wrap { margin-top: 0.75rem; }
+.hw-advanced-toggle { padding-left: 0; padding-right: 0; }
+.hw-advanced {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.hw-cpu-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+.hw-cpu-flags label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}

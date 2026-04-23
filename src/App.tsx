@@ -224,6 +224,12 @@ export default function App() {
           onRamChange={hw.setRamGb}
           onCpuCoresChange={hw.setCpuCores}
           onRescan={hw.scan}
+          ramBandwidthGbps={hw.ramBandwidthGbps}
+          cpuFlags={hw.cpuFlags}
+          diskFreeGb={hw.diskFreeGb}
+          onRamBandwidthChange={hw.setRamBandwidthGbps}
+          onCpuFlagsChange={hw.setCpuFlags}
+          onDiskFreeChange={hw.setDiskFreeGb}
         />
       )}
 

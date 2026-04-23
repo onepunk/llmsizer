@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
-import type { GpuSpec, GpuEntry, Interconnect, ParallelismMode } from '../engine/types'
+import type { GpuSpec, GpuEntry, Interconnect, ParallelismMode, CpuFlags } from '../engine/types'
 import { getAllGpuNames, lookupGpu } from '../detection/parse-renderer'
 
 function clamp(value: number, min: number, max: number): number {
@@ -59,6 +59,12 @@ interface HardwarePanelProps {
   onRamChange: (gb: number) => void
   onCpuCoresChange: (cores: number) => void
   onRescan: () => void
+  ramBandwidthGbps: number | null
+  cpuFlags: CpuFlags | null
+  diskFreeGb: number | null
+  onRamBandwidthChange: (gbps: number | null) => void
+  onCpuFlagsChange: (flags: CpuFlags | null) => void
+  onDiskFreeChange: (gb: number | null) => void
 }
 
 interface GpuRowProps {
@@ -184,9 +190,18 @@ export default function HardwarePanel({
   onRamChange,
   onCpuCoresChange,
   onRescan,
+  ramBandwidthGbps,
+  cpuFlags,
+  diskFreeGb,
+  onRamBandwidthChange,
+  onCpuFlagsChange,
+  onDiskFreeChange,
 }: HardwarePanelProps) {
   const allGpus = useMemo(() => getAllGpuNames(), [])
   const [manualEntry, setManualEntry] = useState(false)
+  const [advancedOpen, setAdvancedOpen] = useState(
+    ramBandwidthGbps != null || cpuFlags != null || diskFreeGb != null
+  )
 
   // Reset interconnect to a valid choice when the GPU lineup loses NVLink
   // capability (e.g. user swaps an A6000 for an RTX 4090).
@@ -308,6 +323,101 @@ export default function HardwarePanel({
           </button>
         </div>
       )}
+
+      <div className="hw-advanced-wrap">
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm hw-advanced-toggle"
+          onClick={() => setAdvancedOpen((x) => !x)}
+          aria-expanded={advancedOpen}
+        >
+          {advancedOpen ? '− hide advanced' : '+ advanced'}
+        </button>
+
+        {advancedOpen && (
+          <div className="hw-advanced">
+            <div className="hw-field">
+              <span className="hw-field-label">RAM bandwidth (GB/s)</span>
+              <input
+                className="hw-input hw-input-narrow"
+                type="number"
+                min={0}
+                max={2000}
+                value={ramBandwidthGbps ?? ''}
+                placeholder="auto"
+                onChange={(e) => {
+                  const v = e.target.value
+                  onRamBandwidthChange(v === '' ? null : clamp(Number(v), 0, 2000))
+                }}
+              />
+            </div>
+
+            <div className="hw-field">
+              <span className="hw-field-label">Free disk (GB)</span>
+              <input
+                className="hw-input hw-input-narrow"
+                type="number"
+                min={0}
+                max={100000}
+                value={diskFreeGb ?? ''}
+                placeholder="unset"
+                onChange={(e) => {
+                  const v = e.target.value
+                  onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
+                }}
+              />
+            </div>
+
+            <div className="hw-field hw-field-grow">
+              <span className="hw-field-label">CPU features</span>
+              <div className="hw-cpu-flags">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={cpuFlags?.avx512 ?? false}
+                    onChange={(e) =>
+                      onCpuFlagsChange({
+                        avx512: e.target.checked,
+                        amx: cpuFlags?.amx ?? false,
+                        neon: cpuFlags?.neon ?? false,
+                      })
+                    }
+                  />{' '}
+                  AVX-512
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={cpuFlags?.amx ?? false}
+                    onChange={(e) =>
+                      onCpuFlagsChange({
+                        avx512: cpuFlags?.avx512 ?? false,
+                        amx: e.target.checked,
+                        neon: cpuFlags?.neon ?? false,
+                      })
+                    }
+                  />{' '}
+                  AMX
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={cpuFlags?.neon ?? false}
+                    onChange={(e) =>
+                      onCpuFlagsChange({
+                        avx512: cpuFlags?.avx512 ?? false,
+                        amx: cpuFlags?.amx ?? false,
+                        neon: e.target.checked,
+                      })
+                    }
+                  />{' '}
+                  NEON
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
