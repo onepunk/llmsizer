@@ -10,6 +10,7 @@ import type {
 import {
   GGUF_QUANT_HIERARCHY,
   bestQuantForBudget,
+  quantBpp,
 } from './quantization'
 import { estimateMemory, type ModelMeta } from './memory'
 import { estimateTps } from './speed'
@@ -158,6 +159,28 @@ export function analyzeModelFit(
     ? model.quantization
     : bestQuantForBudget(paramsB, availableGb, context, meta) ?? 'Q4_K_M'
 
+  // Disk-space gate (Advanced mode). Skipped when user hasn't set disk_free_gb.
+  const diskNeededGb = model.weight_gb ?? (paramsB * quantBpp(bestQuant))
+  if (system.disk_free_gb != null && diskNeededGb > system.disk_free_gb) {
+    return {
+      model,
+      fit_level: 'wont_run',
+      fit_reason: 'disk_full',
+      run_mode: 'cpu_only',
+      best_quant: bestQuant,
+      memory_required_gb: 0,
+      memory_available_gb: 0,
+      memory_breakdown: { model_weight_gb: diskNeededGb, kv_cache_gb: 0, overhead_gb: 0, total_gb: diskNeededGb },
+      context_used: requestedContext,
+      estimated_tps: 0,
+      score: 0,
+      scores: { quality: 0, speed: 0, fit: 0, context: 0 },
+      viable_quants: [],
+      resolved_parallelism: system.parallelism,
+      gpu_count: 0,
+    }
+  }
+
   const memEstimate = estimateMemory(
     paramsB,
     bestQuant,
@@ -174,6 +197,8 @@ export function analyzeModelFit(
     tpMultiplier: runMode === 'gpu' || runMode === 'unified' ? tpMult : 1.0,
     runMode,
     cpuCores: system.cpu_cores,
+    ramBandwidthGbps: system.ram_bandwidth_gbps,
+    cpuFlags: system.cpu_flags,
   })
 
   const fitLevel = classifyFitLevel(
@@ -210,6 +235,8 @@ export function analyzeModelFit(
           tpMultiplier: runMode === 'gpu' || runMode === 'unified' ? tpMult : 1.0,
           runMode,
           cpuCores: system.cpu_cores,
+          ramBandwidthGbps: system.ram_bandwidth_gbps,
+          cpuFlags: system.cpu_flags,
         })
         return {
           quant,
@@ -222,6 +249,7 @@ export function analyzeModelFit(
   return {
     model,
     fit_level: fitLevel,
+    fit_reason: fitLevel === 'wont_run' ? 'memory' : 'ok',
     run_mode: runMode,
     best_quant: bestQuant,
     memory_required_gb: requiredGb,

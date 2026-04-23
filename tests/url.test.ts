@@ -257,6 +257,112 @@ describe('multi-GPU URL state', () => {
   })
 })
 
+describe('Advanced hardware URL params', () => {
+  it('reads ramBandwidthGbps from ?rs=', () => {
+    const state = readUrlState('?rs=90')
+    expect(state.hw.ramBandwidthGbps).toBe(90)
+  })
+
+  it('reads cpu_flags bitmask from ?cf=', () => {
+    const state = readUrlState('?cf=3') // avx512 + amx
+    expect(state.hw.cpuFlags).toEqual({ avx512: true, amx: true, neon: false })
+  })
+
+  it('reads diskFreeGb from ?dk=', () => {
+    const state = readUrlState('?dk=500')
+    expect(state.hw.diskFreeGb).toBe(500)
+  })
+
+  it('returns null for Advanced fields when unset', () => {
+    const state = readUrlState('')
+    expect(state.hw.ramBandwidthGbps).toBeNull()
+    expect(state.hw.cpuFlags).toBeNull()
+    expect(state.hw.diskFreeGb).toBeNull()
+  })
+
+  it('treats cf=0 as null (no flags set)', () => {
+    const state = readUrlState('?cf=0')
+    expect(state.hw.cpuFlags).toBeNull()
+  })
+
+  it('clamps ramBandwidthGbps within 0..2000', () => {
+    expect(readUrlState('?rs=-5').hw.ramBandwidthGbps).toBe(0)
+    expect(readUrlState('?rs=9999').hw.ramBandwidthGbps).toBe(2000)
+  })
+
+  it('clamps diskFreeGb within 0..100000', () => {
+    expect(readUrlState('?dk=-5').hw.diskFreeGb).toBe(0)
+    expect(readUrlState('?dk=999999').hw.diskFreeGb).toBe(100000)
+  })
+
+  it('writer omits Advanced params when null/undefined', () => {
+    const qs = buildUrlSearch({
+      hw: {
+        gpus: [],
+        interconnect: 'none',
+        parallelism: 'auto',
+        ramGb: 64,
+        cpuCores: 16,
+        unified: false,
+        ramBandwidthGbps: null,
+        cpuFlags: null,
+        diskFreeGb: null,
+      },
+      filters: DEFAULTS,
+      compare: [],
+      defaults: DEFAULTS,
+    })
+    expect(qs).not.toContain('rs=')
+    expect(qs).not.toContain('cf=')
+    expect(qs).not.toContain('dk=')
+  })
+
+  it('writer emits rs/cf/dk when set', () => {
+    const qs = buildUrlSearch({
+      hw: {
+        gpus: [],
+        interconnect: 'none',
+        parallelism: 'auto',
+        ramGb: 64,
+        cpuCores: 16,
+        unified: false,
+        ramBandwidthGbps: 90,
+        cpuFlags: { avx512: true, amx: false, neon: true }, // bits 1 + 4 = 5
+        diskFreeGb: 500,
+      },
+      filters: DEFAULTS,
+      compare: [],
+      defaults: DEFAULTS,
+    })
+    expect(qs).toContain('rs=90')
+    expect(qs).toContain('cf=5')
+    expect(qs).toContain('dk=500')
+  })
+
+  it('round-trips rs/cf/dk through write then read', () => {
+    const qs = buildUrlSearch({
+      hw: {
+        gpus: [],
+        interconnect: 'none',
+        parallelism: 'auto',
+        ramGb: 32,
+        cpuCores: 8,
+        unified: false,
+        ramBandwidthGbps: 75,
+        cpuFlags: { avx512: false, amx: true, neon: false },
+        diskFreeGb: 250,
+      },
+      filters: DEFAULTS,
+      compare: [],
+      defaults: DEFAULTS,
+    })
+    const state = readUrlState('?' + qs)
+    expect(state.hw.ramBandwidthGbps).toBe(75)
+    expect(state.hw.cpuFlags).toEqual({ avx512: false, amx: true, neon: false })
+    expect(state.hw.diskFreeGb).toBe(250)
+  })
+})
+
 describe('multi-GPU URL writing', () => {
   const DEFAULTS: FilterState = {
     search: '', useCase: 'all', minFit: 'all', context: 8192,

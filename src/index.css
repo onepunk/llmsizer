@@ -58,6 +58,12 @@
   padding: 0;
 }
 
+html {
+  /* Reserve space for the vertical scrollbar at all times so the empty-state
+   * view and the post-detection results view don't shift horizontally. */
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: var(--font-mono);
   background: var(--bg);
@@ -281,25 +287,75 @@ body {
   margin-bottom: 1rem;
 }
 
-.hw-row-2up {
+.hw-panel-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-.hw-row-2up > .hw-field {
-  flex: 1 1 200px;
-  min-width: 0;
+.hw-panel-title {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
 
-.hw-system-row {
+.hw-rescan {
+  white-space: nowrap;
+}
+
+.hw-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.hw-section-title {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 0.15rem 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  cursor: default;
+}
+
+.hw-section-hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.hw-section-advanced .hw-section-title {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+}
+
+.hw-advanced-caret {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.hw-field-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   gap: 0.75rem;
 }
 
-.hw-system-row > .hw-field {
+.hw-field-row > .hw-field {
   flex: 0 0 auto;
 }
 
@@ -438,6 +494,11 @@ select.hw-ram-select {
 .gpu-search-wrap {
   position: relative;
   min-width: 200px;
+}
+
+/* RAM uses the same combobox pattern but is narrower since values are short. */
+.hw-ram-combo-wrap {
+  min-width: 130px;
 }
 
 .gpu-dropdown {
@@ -937,28 +998,25 @@ select.filter-input {
 }
 
 /* ============================================================
-   Scan prompt (initial state before hardware detected)
+   Hardware empty state (no GPU selected yet)
    ============================================================ */
-.scan-prompt {
+.hw-empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1rem;
-  gap: 1.25rem;
+  padding: 3rem 1rem;
+  gap: 1rem;
   border: 1px dashed var(--border);
   border-radius: var(--radius);
   margin-top: 0.5rem;
 }
 
-.scan-prompt-text {
+.hw-empty-state-text {
   color: var(--text-muted);
   font-size: 0.875rem;
-}
-
-.scan-prompt-actions {
-  display: flex;
-  gap: 0.75rem;
+  margin: 0;
+  text-align: center;
 }
 
 /* ============================================================
@@ -1386,19 +1444,8 @@ select.filter-input {
     to   { opacity: 1; }
   }
 
-  /* Scan prompt: stack actions vertically for easier tapping on first run. */
-  .scan-prompt {
-    padding: 2.5rem 1rem;
-  }
-  .scan-prompt-actions {
-    flex-direction: column;
-    width: 100%;
-    max-width: 280px;
-  }
-  .scan-prompt-actions .btn {
-    width: 100%;
-    padding: 0.6rem 0.75rem;
-    font-size: 0.8125rem;
+  .hw-empty-state {
+    padding: 2rem 1rem;
   }
 
   .col-hide-mobile {
@@ -1458,4 +1505,17 @@ select.filter-input {
 .hw-unified-toggle input {
   margin: 0;
   cursor: pointer;
+}
+
+.hw-cpu-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+.hw-cpu-flags label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
 }

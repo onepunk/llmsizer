@@ -1,4 +1,4 @@
-import type { FilterState, GpuEntry, Interconnect, ParallelismMode } from './engine/types'
+import type { FilterState, GpuEntry, Interconnect, ParallelismMode, CpuFlags } from './engine/types'
 import { lookupGpu } from './detection/parse-renderer'
 
 const INTERCONNECTS: Interconnect[] = ['nvlink', 'pcie5', 'pcie4', 'pcie3', 'none']
@@ -11,6 +11,10 @@ export interface HardwareUrlState {
   ram: number | null
   cores: number | null
   unified: boolean | null
+  ramBandwidthGbps: number | null
+  cpuFlags: CpuFlags | null
+  diskFreeGb: number | null
+  cpuName: string | null
 }
 
 export interface AppUrlState {
@@ -66,6 +70,20 @@ function parseGpusParam(raw: string | null, vramLegacy: number | null): GpuEntry
   })
 }
 
+// Bit layout: avx512 = 1 (bit 0), amx = 2 (bit 1), neon = 4 (bit 2).
+// cf=0, missing, or non-numeric all decode to null so the writer can round-trip
+// "unknown flags" as an omitted param.
+function parseCpuFlags(raw: string | null): CpuFlags | null {
+  if (raw === null) return null
+  const n = Number(raw)
+  if (!Number.isFinite(n) || n <= 0) return null
+  return {
+    avx512: (n & 1) !== 0,
+    amx: (n & 2) !== 0,
+    neon: (n & 4) !== 0,
+  }
+}
+
 function parseInterconnect(raw: string | null): Interconnect | null {
   if (raw === null) return null
   return (INTERCONNECTS as string[]).includes(raw) ? (raw as Interconnect) : null
@@ -87,6 +105,10 @@ export function readUrlState(search: string = window.location.search): AppUrlSta
     ram: clampNum(params.get('ram'), 1, 8192),
     cores: clampNum(params.get('cores'), 1, 512),
     unified: params.has('unified') ? params.get('unified') === '1' : null,
+    ramBandwidthGbps: clampNum(params.get('rs'), 0, 2000),
+    cpuFlags: parseCpuFlags(params.get('cf')),
+    diskFreeGb: clampNum(params.get('dk'), 0, 100000),
+    cpuName: params.get('cpu') || null,
   }
 
   const filters: Partial<FilterState> = {}
@@ -117,6 +139,10 @@ export interface WriteUrlInput {
     ramGb: number
     cpuCores: number
     unified: boolean
+    ramBandwidthGbps: number | null
+    cpuFlags: CpuFlags | null
+    diskFreeGb: number | null
+    cpuName: string | null
   }
   filters: FilterState
   compare: string[]
@@ -138,6 +164,13 @@ export function buildUrlSearch(input: WriteUrlInput): string {
   if (hw.ramGb > 0) params.set('ram', String(hw.ramGb))
   if (hw.cpuCores > 0) params.set('cores', String(hw.cpuCores))
   if (hw.unified) params.set('unified', '1')
+  if (hw.ramBandwidthGbps != null) params.set('rs', String(hw.ramBandwidthGbps))
+  if (hw.cpuFlags) {
+    const bits = (hw.cpuFlags.avx512 ? 1 : 0) | (hw.cpuFlags.amx ? 2 : 0) | (hw.cpuFlags.neon ? 4 : 0)
+    if (bits > 0) params.set('cf', String(bits))
+  }
+  if (hw.diskFreeGb != null) params.set('dk', String(hw.diskFreeGb))
+  if (hw.cpuName) params.set('cpu', hw.cpuName)
 
   if (filters.context !== defaults.context) params.set('ctx', String(filters.context))
   if (filters.useCase !== defaults.useCase) params.set('uc', filters.useCase)

@@ -120,21 +120,16 @@ export default function App() {
         ramGb: hw.ramGb,
         cpuCores: hw.cpuCores,
         unified: hw.unified,
+        ramBandwidthGbps: hw.ramBandwidthGbps,
+        cpuFlags: hw.cpuFlags,
+        diskFreeGb: hw.diskFreeGb,
+        cpuName: hw.cpuName,
       },
       filters,
       compare,
       defaults: DEFAULT_FILTERS,
     })
-  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
-
-  // On reset, drop the query string entirely.
-  const previousReadyRef = useRef(hw.ready)
-  useEffect(() => {
-    if (previousReadyRef.current && !hw.ready) {
-      window.history.replaceState(null, '', window.location.pathname)
-    }
-    previousReadyRef.current = hw.ready
-  }, [hw.ready])
+  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, hw.cpuName, filters, compare])
 
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   const shareTimer = useRef<number | null>(null)
@@ -148,6 +143,10 @@ export default function App() {
         ramGb: hw.ramGb,
         cpuCores: hw.cpuCores,
         unified: hw.unified,
+        ramBandwidthGbps: hw.ramBandwidthGbps,
+        cpuFlags: hw.cpuFlags,
+        diskFreeGb: hw.diskFreeGb,
+        cpuName: hw.cpuName,
       },
       filters,
       compare,
@@ -161,7 +160,7 @@ export default function App() {
     }
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
     shareTimer.current = window.setTimeout(() => setShareStatus('idle'), 2000)
-  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, hw.cpuName, filters, compare])
 
   useEffect(() => () => {
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
@@ -199,29 +198,40 @@ export default function App() {
         </div>
       </header>
 
-      {hw.ready && (
-        <HardwarePanel
-          gpus={hw.gpus}
-          interconnect={hw.interconnect}
-          parallelism={hw.parallelism}
-          ramGb={hw.ramGb}
-          ramUserSet={hw.ramUserSet}
-          cpuCores={hw.cpuCores}
-          unified={hw.unified}
-          gpuDetected={hw.gpuDetected}
-          onAddGpu={hw.addGpu}
-          onRemoveGpu={hw.removeGpu}
-          onUpdateGpuAt={hw.updateGpuAt}
-          onSelectGpu={hw.selectGpu}
-          onInterconnectChange={hw.setInterconnect}
-          onParallelismChange={hw.setParallelism}
-          onRamChange={hw.setRamGb}
-          onCpuCoresChange={hw.setCpuCores}
-          onRescan={hw.scan}
-        />
-      )}
+      <HardwarePanel
+        gpus={hw.gpus}
+        interconnect={hw.interconnect}
+        parallelism={hw.parallelism}
+        ramGb={hw.ramGb}
+        ramUserSet={hw.ramUserSet}
+        unified={hw.unified}
+        gpuDetected={hw.gpuDetected}
+        onAddGpu={hw.addGpu}
+        onRemoveGpu={hw.removeGpu}
+        onUpdateGpuAt={hw.updateGpuAt}
+        onSelectGpu={hw.selectGpu}
+        onInterconnectChange={hw.setInterconnect}
+        onParallelismChange={hw.setParallelism}
+        onRamChange={hw.setRamGb}
+        onRescan={hw.scan}
+        ramBandwidthGbps={hw.ramBandwidthGbps}
+        diskFreeGb={hw.diskFreeGb}
+        cpuName={hw.cpuName}
+        onRamBandwidthChange={hw.setRamBandwidthGbps}
+        onDiskFreeChange={hw.setDiskFreeGb}
+        onCpuChange={hw.selectCpu}
+      />
 
-      {hw.ready ? (
+      {hw.gpus.filter((g) => g.name).length === 0 && !hw.unified ? (
+        <div className="hw-empty-state">
+          <p className="hw-empty-state-text">
+            Select a GPU or auto-detect your hardware to find models that fit.
+          </p>
+          <button className="btn btn-primary" onClick={hw.scan}>
+            ⟳ auto-detect
+          </button>
+        </div>
+      ) : (
         <>
           <FilterBar
             filters={filters}
@@ -266,18 +276,6 @@ export default function App() {
             </div>
           )}
         </>
-      ) : (
-        <div className="scan-prompt">
-          <p className="scan-prompt-text">Detect your hardware to see which models fit.</p>
-          <div className="scan-prompt-actions">
-            <button className="btn btn-primary" onClick={hw.scan}>
-              Scan My Hardware
-            </button>
-            <button className="btn btn-secondary" onClick={hw.enterManual}>
-              Enter Manually
-            </button>
-          </div>
-        </div>
       )}
     </div>
   )

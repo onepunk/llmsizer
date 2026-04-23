@@ -61,6 +61,12 @@ export interface GpuEntry {
   nvlink?: boolean
 }
 
+export interface CpuFlags {
+  avx512: boolean
+  amx: boolean
+  neon: boolean
+}
+
 export interface SystemSpecs {
   gpu_name: string | null
   gpu_detected: boolean
@@ -69,7 +75,19 @@ export interface SystemSpecs {
   parallelism: ParallelismMode
   ram_gb: number
   cpu_cores: number
+  /** Display-only name of the picked CPU (from the curated catalog). Not
+   *  consumed by the fit engine — cores + flags + unified do the work. */
+  cpu_name?: string | null
   unified_memory: boolean
+  /** Effective system-memory bandwidth in GB/s. When set, overrides the default
+   *  CPU-mode bandwidth used in speed estimation. Undefined = use default. */
+  ram_bandwidth_gbps?: number | null
+  /** Feature flags reported by the user. Missing means "unknown", which we treat
+   *  as "no bonus" so estimates stay conservative. */
+  cpu_flags?: CpuFlags | null
+  /** Free disk space in GB. When set, models whose on-disk weight exceeds this
+   *  value are rejected with fit_level='wont_run' and fit_reason='disk_full'. */
+  disk_free_gb?: number | null
 }
 
 export interface MemoryEstimate {
@@ -79,9 +97,12 @@ export interface MemoryEstimate {
   total_gb: number
 }
 
+export type FitReason = 'ok' | 'memory' | 'disk_full' | 'incompatible_format'
+
 export interface ModelFit {
   model: LlmModel
   fit_level: FitLevel
+  fit_reason: FitReason
   run_mode: RunMode
   best_quant: string
   memory_required_gb: number
