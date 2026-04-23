@@ -234,6 +234,7 @@ export function analyzeModelFit(
           tpMultiplier: runMode === 'gpu' || runMode === 'unified' ? tpMult : 1.0,
           runMode,
           cpuCores: system.cpu_cores,
+          ramBandwidthGbps: system.ram_bandwidth_gbps ?? null,
         })
         return {
           quant,
