@@ -69,6 +69,9 @@ function parseGpusParam(raw: string | null, vramLegacy: number | null): GpuEntry
   })
 }
 
+// Bit layout: avx512 = 1 (bit 0), amx = 2 (bit 1), neon = 4 (bit 2).
+// cf=0, missing, or non-numeric all decode to null so the writer can round-trip
+// "unknown flags" as an omitted param.
 function parseCpuFlags(raw: string | null): CpuFlags | null {
   if (raw === null) return null
   const n = Number(raw)
