@@ -230,183 +230,189 @@ export default function HardwarePanel({
 
   return (
     <div className="hardware-panel">
-      <div className="hw-system-row">
-        <div className="hw-field">
-          <span className="hw-field-label">RAM</span>
-          <select
-            className={`hw-input${ramUserSet ? '' : ' hw-input-hint'}`}
-            value={ramUserSet && RAM_OPTIONS.includes(ramGb as typeof RAM_OPTIONS[number]) ? ramGb : ''}
-            onChange={(e) => onRamChange(Number(e.target.value))}
-            title={ramUserSet ? 'System RAM' : 'Set your system RAM — we can\u2019t detect this reliably'}
-          >
-            {!ramUserSet && <option value="" disabled>set RAM…</option>}
-            {RAM_OPTIONS.map((gb) => (
-              <option key={gb} value={gb}>{formatRam(gb)}</option>
-            ))}
-          </select>
-        </div>
+      <div className="hw-columns">
+        <div className="hw-column hw-column-gpus">
+          {manualEntry ? (
+            <>
+              {gpus.map((gpu, i) => (
+                <GpuRow
+                  key={i}
+                  gpu={gpu}
+                  index={i}
+                  allGpus={allGpus}
+                  canRemove={gpus.length > 1}
+                  onSelect={onSelectGpu}
+                  onUpdate={onUpdateGpuAt}
+                  onRemove={onRemoveGpu}
+                />
+              ))}
 
-        <div className="hw-field">
-          <span className="hw-field-label">CPU cores</span>
-          <input
-            className="hw-input hw-input-narrow"
-            type="number"
-            min={1}
-            max={512}
-            value={cpuCores}
-            onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
-          />
-        </div>
-
-        <div className="hw-row-spacer" />
-
-        {gpuDetected && <span className="hw-badge">detected</span>}
-        <button className="btn btn-ghost btn-sm" onClick={onRescan}>re-scan</button>
-      </div>
-
-      {manualEntry ? (
-        <>
-          {gpus.map((gpu, i) => (
-            <GpuRow
-              key={i}
-              gpu={gpu}
-              index={i}
-              allGpus={allGpus}
-              canRemove={gpus.length > 1}
-              onSelect={onSelectGpu}
-              onUpdate={onUpdateGpuAt}
-              onRemove={onRemoveGpu}
-            />
-          ))}
-
-          <div className="hw-gpu-actions">
-            <button className="hw-add-gpu" onClick={handleAddGpu} title="Add another GPU">
-              + add GPU
-            </button>
-            <div className="hw-row-spacer" />
-            <button className="btn btn-ghost btn-sm" onClick={() => setManualEntry(false)}>done</button>
-          </div>
-
-          {gpus.reduce((s, g) => s + g.count, 0) >= 2 && (
-            <div className="hw-row-2up">
-              <div className="hw-field">
-                <span className="hw-field-label">Interconnect</span>
-                <select
-                  className="hw-input"
-                  value={interconnect}
-                  onChange={(e) => onInterconnectChange(e.target.value as Interconnect)}
-                >
-                  {(['nvlink', 'pcie5', 'pcie4', 'pcie3', 'none'] as Interconnect[])
-                    // Hide NVLink unless every selected GPU physically supports it
-                    .filter((ic) => ic !== 'nvlink' || gpus.every((g) => g.nvlink === true))
-                    .map((ic) => (
-                      <option key={ic} value={ic}>{INTERCONNECT_LABELS[ic]}</option>
-                    ))}
-                </select>
+              <div className="hw-gpu-actions">
+                <button className="hw-add-gpu" onClick={handleAddGpu} title="Add another GPU">
+                  + add GPU
+                </button>
+                <div className="hw-row-spacer" />
+                <button className="btn btn-ghost btn-sm" onClick={() => setManualEntry(false)}>done</button>
               </div>
 
-              <div className="hw-field">
-                <span className="hw-field-label">Parallelism</span>
-                <select
-                  className="hw-input"
-                  value={parallelism}
-                  onChange={(e) => onParallelismChange(e.target.value as ParallelismMode)}
-                >
-                  {(['auto', 'layer_split', 'tensor_parallel'] as ParallelismMode[]).map((p) => (
-                    <option key={p} value={p}>{PARALLELISM_LABELS[p]}</option>
-                  ))}
-                </select>
+              {gpus.reduce((s, g) => s + g.count, 0) >= 2 && (
+                <div className="hw-row-2up">
+                  <div className="hw-field">
+                    <span className="hw-field-label">Interconnect</span>
+                    <select
+                      className="hw-input"
+                      value={interconnect}
+                      onChange={(e) => onInterconnectChange(e.target.value as Interconnect)}
+                    >
+                      {(['nvlink', 'pcie5', 'pcie4', 'pcie3', 'none'] as Interconnect[])
+                        // Hide NVLink unless every selected GPU physically supports it
+                        .filter((ic) => ic !== 'nvlink' || gpus.every((g) => g.nvlink === true))
+                        .map((ic) => (
+                          <option key={ic} value={ic}>{INTERCONNECT_LABELS[ic]}</option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="hw-field">
+                    <span className="hw-field-label">Parallelism</span>
+                    <select
+                      className="hw-input"
+                      value={parallelism}
+                      onChange={(e) => onParallelismChange(e.target.value as ParallelismMode)}
+                    >
+                      {(['auto', 'layer_split', 'tensor_parallel'] as ParallelismMode[]).map((p) => (
+                        <option key={p} value={p}>{PARALLELISM_LABELS[p]}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="hw-gpu-view-row">
+              <div className="hw-field hw-field-grow">
+                <span className="hw-field-label">GPU</span>
+                <span className="hw-gpu-summary">{summarizeGpus(gpus, unified)}</span>
               </div>
+              <button className="btn btn-ghost btn-sm" onClick={() => setManualEntry(true)}>
+                manual entry
+              </button>
             </div>
           )}
-        </>
-      ) : (
-        <div className="hw-gpu-view-row">
-          <div className="hw-field hw-field-grow">
-            <span className="hw-field-label">GPU</span>
-            <span className="hw-gpu-summary">{summarizeGpus(gpus, unified)}</span>
-          </div>
-          <button className="btn btn-ghost btn-sm" onClick={() => setManualEntry(true)}>
-            manual entry
-          </button>
         </div>
-      )}
 
-      <div className="hw-advanced-wrap">
-        <button
-          type="button"
-          className="btn btn-ghost btn-sm hw-advanced-toggle"
-          onClick={() => setAdvancedOpen((x) => !x)}
-          aria-expanded={advancedOpen}
-        >
-          {advancedOpen ? '− hide advanced' : '+ advanced'}
-        </button>
-
-        {advancedOpen && (
-          <div className="hw-advanced">
+        <div className="hw-column hw-column-system">
+          <div className="hw-system-row">
             <div className="hw-field">
-              <span className="hw-field-label">RAM bandwidth (GB/s)</span>
-              <input
-                className="hw-input hw-input-narrow"
-                type="number"
-                min={0}
-                max={2000}
-                value={ramBandwidthGbps ?? ''}
-                placeholder="auto"
-                onChange={(e) => {
-                  const v = e.target.value
-                  onRamBandwidthChange(v === '' ? null : clamp(Number(v), 0, 2000))
-                }}
-              />
+              <span className="hw-field-label">RAM</span>
+              <select
+                className={`hw-input${ramUserSet ? '' : ' hw-input-hint'}`}
+                value={ramUserSet && RAM_OPTIONS.includes(ramGb as typeof RAM_OPTIONS[number]) ? ramGb : ''}
+                onChange={(e) => onRamChange(Number(e.target.value))}
+                title={ramUserSet ? 'System RAM' : 'Set your system RAM — we can’t detect this reliably'}
+              >
+                {!ramUserSet && <option value="" disabled>set RAM…</option>}
+                {RAM_OPTIONS.map((gb) => (
+                  <option key={gb} value={gb}>{formatRam(gb)}</option>
+                ))}
+              </select>
             </div>
 
             <div className="hw-field">
-              <span className="hw-field-label">Free disk (GB)</span>
+              <span className="hw-field-label">CPU cores</span>
               <input
                 className="hw-input hw-input-narrow"
                 type="number"
-                min={0}
-                max={100000}
-                value={diskFreeGb ?? ''}
-                placeholder="unset"
-                onChange={(e) => {
-                  const v = e.target.value
-                  onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
-                }}
+                min={1}
+                max={512}
+                value={cpuCores}
+                onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
               />
             </div>
 
-            <div className="hw-field hw-field-grow">
-              <span className="hw-field-label">CPU features</span>
-              <div className="hw-cpu-flags">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={cpuFlags?.avx512 ?? false}
-                    onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
-                  />{' '}
-                  AVX-512
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={cpuFlags?.amx ?? false}
-                    onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
-                  />{' '}
-                  AMX
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={cpuFlags?.neon ?? false}
-                    onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
-                  />{' '}
-                  NEON
-                </label>
-              </div>
-            </div>
+            <div className="hw-row-spacer" />
+
+            {gpuDetected && <span className="hw-badge">detected</span>}
+            <button className="btn btn-ghost btn-sm" onClick={onRescan}>re-scan</button>
           </div>
-        )}
+
+          <div className="hw-advanced-wrap">
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm hw-advanced-toggle"
+              onClick={() => setAdvancedOpen((x) => !x)}
+              aria-expanded={advancedOpen}
+            >
+              {advancedOpen ? '− hide advanced' : '+ advanced'}
+            </button>
+
+            {advancedOpen && (
+              <div className="hw-advanced">
+                <div className="hw-field">
+                  <span className="hw-field-label">RAM bandwidth (GB/s)</span>
+                  <input
+                    className="hw-input hw-input-narrow"
+                    type="number"
+                    min={0}
+                    max={2000}
+                    value={ramBandwidthGbps ?? ''}
+                    placeholder="auto"
+                    onChange={(e) => {
+                      const v = e.target.value
+                      onRamBandwidthChange(v === '' ? null : clamp(Number(v), 0, 2000))
+                    }}
+                  />
+                </div>
+
+                <div className="hw-field">
+                  <span className="hw-field-label">Free disk (GB)</span>
+                  <input
+                    className="hw-input hw-input-narrow"
+                    type="number"
+                    min={0}
+                    max={100000}
+                    value={diskFreeGb ?? ''}
+                    placeholder="unset"
+                    onChange={(e) => {
+                      const v = e.target.value
+                      onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
+                    }}
+                  />
+                </div>
+
+                <div className="hw-field hw-field-grow">
+                  <span className="hw-field-label">CPU features</span>
+                  <div className="hw-cpu-flags">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={cpuFlags?.avx512 ?? false}
+                        onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
+                      />{' '}
+                      AVX-512
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={cpuFlags?.amx ?? false}
+                        onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
+                      />{' '}
+                      AMX
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={cpuFlags?.neon ?? false}
+                        onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
+                      />{' '}
+                      NEON
+                    </label>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
