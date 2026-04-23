@@ -58,6 +58,12 @@
   padding: 0;
 }
 
+html {
+  /* Reserve space for the vertical scrollbar at all times so the empty-state
+   * view and the post-detection results view don't shift horizontally. */
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: var(--font-mono);
   background: var(--bg);
@@ -488,6 +494,11 @@ select.hw-ram-select {
 .gpu-search-wrap {
   position: relative;
   min-width: 200px;
+}
+
+/* RAM uses the same combobox pattern but is narrower since values are short. */
+.hw-ram-combo-wrap {
+  min-width: 130px;
 }
 
 .gpu-dropdown {

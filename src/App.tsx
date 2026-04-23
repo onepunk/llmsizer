@@ -204,7 +204,6 @@ export default function App() {
         parallelism={hw.parallelism}
         ramGb={hw.ramGb}
         ramUserSet={hw.ramUserSet}
-        cpuCores={hw.cpuCores}
         unified={hw.unified}
         gpuDetected={hw.gpuDetected}
         onAddGpu={hw.addGpu}
@@ -214,14 +213,11 @@ export default function App() {
         onInterconnectChange={hw.setInterconnect}
         onParallelismChange={hw.setParallelism}
         onRamChange={hw.setRamGb}
-        onCpuCoresChange={hw.setCpuCores}
         onRescan={hw.scan}
         ramBandwidthGbps={hw.ramBandwidthGbps}
-        cpuFlags={hw.cpuFlags}
         diskFreeGb={hw.diskFreeGb}
         cpuName={hw.cpuName}
         onRamBandwidthChange={hw.setRamBandwidthGbps}
-        onCpuFlagsChange={hw.setCpuFlags}
         onDiskFreeChange={hw.setDiskFreeGb}
         onCpuChange={hw.selectCpu}
       />

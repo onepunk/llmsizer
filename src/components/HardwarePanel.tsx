@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
-import type { GpuSpec, GpuEntry, Interconnect, ParallelismMode, CpuFlags } from '../engine/types'
+import type { GpuSpec, GpuEntry, Interconnect, ParallelismMode } from '../engine/types'
 import { getAllGpuNames, lookupGpu } from '../detection/parse-renderer'
 import { getAllCpuNames } from '../detection/cpu-specs'
 
@@ -17,6 +17,22 @@ function formatRam(gb: number): string {
   const tb = gb / 1024
   return Number.isInteger(tb) ? `${tb}TB` : `${tb.toFixed(1)}TB`
 }
+
+// DDR presets → approximate dual-channel desktop system bandwidth (GB/s).
+// Picking a preset is a convenience that drives system.ram_bandwidth_gbps
+// in the speed engine.
+const RAM_SPEED_PRESETS: { label: string; gbps: number }[] = [
+  { label: 'DDR3-1600 · ~26 GB/s', gbps: 26 },
+  { label: 'DDR4-2400 · ~38 GB/s', gbps: 38 },
+  { label: 'DDR4-3200 · ~51 GB/s', gbps: 51 },
+  { label: 'DDR4-3600 · ~58 GB/s', gbps: 58 },
+  { label: 'DDR5-4800 · ~77 GB/s', gbps: 77 },
+  { label: 'DDR5-5600 · ~90 GB/s', gbps: 90 },
+  { label: 'DDR5-6000 · ~96 GB/s', gbps: 96 },
+  { label: 'DDR5-6400 · ~102 GB/s', gbps: 102 },
+  { label: 'DDR5-7200 · ~115 GB/s', gbps: 115 },
+  { label: 'DDR5-8000 · ~128 GB/s', gbps: 128 },
+]
 
 const INTERCONNECT_LABELS: Record<Interconnect, string> = {
   nvlink: 'NVLink',
@@ -38,7 +54,6 @@ interface HardwarePanelProps {
   parallelism: ParallelismMode
   ramGb: number
   ramUserSet: boolean
-  cpuCores: number
   unified: boolean
   gpuDetected: boolean
   onAddGpu: (name: string, spec: GpuSpec | null) => void
@@ -48,14 +63,11 @@ interface HardwarePanelProps {
   onInterconnectChange: (ic: Interconnect) => void
   onParallelismChange: (p: ParallelismMode) => void
   onRamChange: (gb: number) => void
-  onCpuCoresChange: (cores: number) => void
   onRescan: () => void
   ramBandwidthGbps: number | null
-  cpuFlags: CpuFlags | null
   diskFreeGb: number | null
   cpuName: string | null
   onRamBandwidthChange: (gbps: number | null) => void
-  onCpuFlagsChange: (flags: CpuFlags | null) => void
   onDiskFreeChange: (gb: number | null) => void
   onCpuChange: (name: string | null) => void
 }
@@ -165,6 +177,74 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
   )
 }
 
+interface RamPickerProps {
+  ramGb: number
+  ramUserSet: boolean
+  onChange: (gb: number) => void
+}
+
+function RamPicker({ ramGb, ramUserSet, onChange }: RamPickerProps) {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return RAM_OPTIONS as readonly number[]
+    return (RAM_OPTIONS as readonly number[]).filter((gb) =>
+      formatRam(gb).toLowerCase().includes(q) || String(gb).includes(q),
+    )
+  }, [query])
+
+  useEffect(() => {
+    if (!open) return
+    function onDocClick(e: MouseEvent) {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [open])
+
+  function pick(gb: number) {
+    onChange(gb)
+    setOpen(false)
+    setQuery('')
+  }
+
+  const display = ramUserSet && ramGb > 0 ? formatRam(ramGb) : ''
+
+  return (
+    <div className="hw-field">
+      <span className="hw-field-label">RAM</span>
+      <div className="gpu-search-wrap hw-ram-combo-wrap" ref={wrapRef}>
+        <input
+          className="hw-input hw-input-combo"
+          type="text"
+          placeholder="—"
+          value={open ? query : display}
+          onChange={(e) => {
+            setQuery(e.target.value)
+            setOpen(true)
+          }}
+          onFocus={() => {
+            setQuery('')
+            setOpen(true)
+          }}
+        />
+        <span className="hw-combo-caret" aria-hidden="true">▾</span>
+        {open && (
+          <ul className="gpu-dropdown">
+            {filtered.map((gb) => (
+              <li key={gb} onMouseDown={() => pick(gb)}>{formatRam(gb)}</li>
+            ))}
+            {filtered.length === 0 && <li className="gpu-dropdown-empty">no matches</li>}
+          </ul>
+        )}
+      </div>
+    </div>
+  )
+}
+
 interface CpuPickerProps {
   value: string | null
   allCpus: string[]
@@ -236,7 +316,6 @@ export default function HardwarePanel({
   parallelism,
   ramGb,
   ramUserSet,
-  cpuCores,
   unified,
   gpuDetected,
   onAddGpu,
@@ -246,30 +325,19 @@ export default function HardwarePanel({
   onInterconnectChange,
   onParallelismChange,
   onRamChange,
-  onCpuCoresChange,
   onRescan,
   ramBandwidthGbps,
-  cpuFlags,
   diskFreeGb,
   cpuName,
   onRamBandwidthChange,
-  onCpuFlagsChange,
   onDiskFreeChange,
   onCpuChange,
 }: HardwarePanelProps) {
   const allGpus = useMemo(() => getAllGpuNames(), [])
   const allCpus = useMemo(() => getAllCpuNames(), [])
   const [advancedOpen, setAdvancedOpen] = useState(
-    ramBandwidthGbps != null || cpuFlags != null || diskFreeGb != null
+    ramBandwidthGbps != null || diskFreeGb != null || cpuName != null
   )
-
-  const toggleCpuFlag = (key: keyof CpuFlags, checked: boolean) =>
-    onCpuFlagsChange({
-      avx512: cpuFlags?.avx512 ?? false,
-      amx: cpuFlags?.amx ?? false,
-      neon: cpuFlags?.neon ?? false,
-      [key]: checked,
-    })
 
   // Reset interconnect to a valid choice when the GPU lineup loses NVLink
   // capability (e.g. user swaps an A6000 for an RTX 4090).
@@ -374,104 +442,44 @@ export default function HardwarePanel({
         </button>
 
         {advancedOpen && (
-          <>
-            <div className="hw-field-row">
-              <div className="hw-field">
-                <span className="hw-field-label">RAM</span>
-                <select
-                  className={`hw-input${ramUserSet ? '' : ' hw-input-hint'}`}
-                  value={ramUserSet && RAM_OPTIONS.includes(ramGb as typeof RAM_OPTIONS[number]) ? ramGb : ''}
-                  onChange={(e) => onRamChange(Number(e.target.value))}
-                  title={ramUserSet ? 'System RAM' : 'Set your system RAM — we can’t detect this reliably'}
-                >
-                  {!ramUserSet && <option value="" disabled>set RAM…</option>}
-                  {RAM_OPTIONS.map((gb) => (
-                    <option key={gb} value={gb}>{formatRam(gb)}</option>
-                  ))}
-                </select>
-              </div>
+          <div className="hw-field-row">
+            <RamPicker ramGb={ramGb} ramUserSet={ramUserSet} onChange={onRamChange} />
 
-              <CpuPicker value={cpuName} allCpus={allCpus} onChange={onCpuChange} />
-
-              <div className="hw-field">
-                <span className="hw-field-label">RAM bandwidth (GB/s)</span>
-                <input
-                  className="hw-input hw-input-narrow"
-                  type="number"
-                  min={0}
-                  max={2000}
-                  value={ramBandwidthGbps ?? ''}
-                  placeholder="auto"
-                  onChange={(e) => {
-                    const v = e.target.value
-                    onRamBandwidthChange(v === '' ? null : clamp(Number(v), 0, 2000))
-                  }}
-                />
-              </div>
-
-              <div className="hw-field">
-                <span className="hw-field-label">Free disk (GB)</span>
-                <input
-                  className="hw-input hw-input-narrow"
-                  type="number"
-                  min={0}
-                  max={100000}
-                  value={diskFreeGb ?? ''}
-                  placeholder="unset"
-                  onChange={(e) => {
-                    const v = e.target.value
-                    onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
-                  }}
-                />
-              </div>
+            <div className="hw-field">
+              <span className="hw-field-label">RAM speed</span>
+              <select
+                className={`hw-input${ramBandwidthGbps == null ? ' hw-input-hint' : ''}`}
+                value={ramBandwidthGbps ?? ''}
+                onChange={(e) => {
+                  const v = e.target.value
+                  onRamBandwidthChange(v === '' ? null : Number(v))
+                }}
+              >
+                <option value="">—</option>
+                {RAM_SPEED_PRESETS.map((p) => (
+                  <option key={p.gbps} value={p.gbps}>{p.label}</option>
+                ))}
+              </select>
             </div>
 
-            {cpuName === null && (
-              <div className="hw-field-row">
-                <div className="hw-field">
-                  <span className="hw-field-label">CPU cores</span>
-                  <input
-                    className="hw-input hw-input-narrow"
-                    type="number"
-                    min={1}
-                    max={512}
-                    value={cpuCores}
-                    onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
-                  />
-                </div>
+            <CpuPicker value={cpuName} allCpus={allCpus} onChange={onCpuChange} />
 
-                <div className="hw-field hw-field-grow">
-                  <span className="hw-field-label">CPU features</span>
-                  <div className="hw-cpu-flags">
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={cpuFlags?.avx512 ?? false}
-                        onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
-                      />{' '}
-                      AVX-512
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={cpuFlags?.amx ?? false}
-                        onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
-                      />{' '}
-                      AMX
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={cpuFlags?.neon ?? false}
-                        onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
-                      />{' '}
-                      NEON
-                    </label>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
+            <div className="hw-field">
+              <span className="hw-field-label">Free disk (GB)</span>
+              <input
+                className="hw-input hw-input-narrow"
+                type="number"
+                min={0}
+                max={100000}
+                value={diskFreeGb ?? ''}
+                placeholder="—"
+                onChange={(e) => {
+                  const v = e.target.value
+                  onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
+                }}
+              />
+            </div>
+          </div>
         )}
       </section>
     </div>
