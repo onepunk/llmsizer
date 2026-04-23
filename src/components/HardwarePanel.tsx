@@ -86,6 +86,7 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const wrapRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -102,6 +103,17 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
     return () => document.removeEventListener('mousedown', onDocClick)
   }, [open])
 
+  // If the row is freshly added (empty name), open the picker and focus the
+  // input so the user can search immediately rather than being saddled with
+  // a preselected SKU they have to overwrite.
+  useEffect(() => {
+    if (gpu.name === '') {
+      setOpen(true)
+      inputRef.current?.focus()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   function handlePick(name: string) {
     const spec = lookupGpu(name)
     onSelect(index, name, spec)
@@ -115,6 +127,7 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
         <span className="hw-field-label">GPU #{index + 1}</span>
         <div className="gpu-search-wrap" ref={wrapRef}>
           <input
+            ref={inputRef}
             className="hw-input hw-input-combo"
             type="text"
             placeholder="search GPUs…"
@@ -347,13 +360,11 @@ export default function HardwarePanel({
     }
   }, [gpus, interconnect, onInterconnectChange])
 
+  // Intentionally adds an EMPTY row so the user's first action is searching
+  // for their GPU. Auto-picking the alphabetical first entry would start
+  // showing (misleading) model fits before the user has picked anything.
   function handleAddGpu() {
-    const firstName = allGpus[0]
-    if (firstName) {
-      onAddGpu(firstName, lookupGpu(firstName))
-    } else {
-      onAddGpu('', null)
-    }
+    onAddGpu('', null)
   }
 
   const totalGpuCount = gpus.reduce((s, g) => s + g.count, 0)

@@ -222,7 +222,7 @@ export default function App() {
         onCpuChange={hw.selectCpu}
       />
 
-      {hw.gpus.length === 0 && !hw.unified ? (
+      {hw.gpus.filter((g) => g.name).length === 0 && !hw.unified ? (
         <div className="hw-empty-state">
           <p className="hw-empty-state-text">
             Select a GPU or auto-detect your hardware to find models that fit.
