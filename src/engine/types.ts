@@ -83,7 +83,7 @@ export interface SystemSpecs {
    *  as "no bonus" so estimates stay conservative. */
   cpu_flags?: CpuFlags | null
   /** Free disk space in GB. When set, models whose on-disk weight exceeds this
-   *  value are rejected with fit_level='wont_run' and reason='disk_full'. */
+   *  value are rejected with fit_level='wont_run' and fit_reason='disk_full'. */
   disk_free_gb?: number | null
 }
 
