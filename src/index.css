@@ -289,9 +289,11 @@ body {
 }
 
 .hw-panel-title {
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.01em;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
 }
 
 .hw-rescan {
@@ -307,11 +309,12 @@ body {
 }
 
 .hw-section-title {
-  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted, rgba(0, 0, 0, 0.55));
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
   margin: 0 0 0.15rem 0;
   padding: 0;
   background: transparent;
@@ -322,8 +325,8 @@ body {
 
 .hw-section-hint {
   margin: 0;
-  font-size: 0.85rem;
-  color: var(--muted, rgba(0, 0, 0, 0.6));
+  font-size: 0.8125rem;
+  color: var(--text-muted);
 }
 
 .hw-section-advanced .hw-section-title {

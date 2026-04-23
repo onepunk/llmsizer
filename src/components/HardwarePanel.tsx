@@ -296,38 +296,6 @@ export default function HardwarePanel({
         )}
       </section>
 
-      <section className="hw-section">
-        <h4 className="hw-section-title">System</h4>
-        <div className="hw-field-row">
-          <div className="hw-field">
-            <span className="hw-field-label">RAM</span>
-            <select
-              className={`hw-input${ramUserSet ? '' : ' hw-input-hint'}`}
-              value={ramUserSet && RAM_OPTIONS.includes(ramGb as typeof RAM_OPTIONS[number]) ? ramGb : ''}
-              onChange={(e) => onRamChange(Number(e.target.value))}
-              title={ramUserSet ? 'System RAM' : 'Set your system RAM — we can’t detect this reliably'}
-            >
-              {!ramUserSet && <option value="" disabled>set RAM…</option>}
-              {RAM_OPTIONS.map((gb) => (
-                <option key={gb} value={gb}>{formatRam(gb)}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="hw-field">
-            <span className="hw-field-label">CPU cores</span>
-            <input
-              className="hw-input hw-input-narrow"
-              type="number"
-              min={1}
-              max={512}
-              value={cpuCores}
-              onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
-            />
-          </div>
-        </div>
-      </section>
-
       <section className="hw-section hw-section-advanced">
         <button
           type="button"
@@ -339,69 +307,100 @@ export default function HardwarePanel({
         </button>
 
         {advancedOpen && (
-          <div className="hw-field-row">
-            <div className="hw-field">
-              <span className="hw-field-label">RAM bandwidth (GB/s)</span>
-              <input
-                className="hw-input hw-input-narrow"
-                type="number"
-                min={0}
-                max={2000}
-                value={ramBandwidthGbps ?? ''}
-                placeholder="auto"
-                onChange={(e) => {
-                  const v = e.target.value
-                  onRamBandwidthChange(v === '' ? null : clamp(Number(v), 0, 2000))
-                }}
-              />
-            </div>
+          <>
+            <div className="hw-field-row">
+              <div className="hw-field">
+                <span className="hw-field-label">RAM</span>
+                <select
+                  className={`hw-input${ramUserSet ? '' : ' hw-input-hint'}`}
+                  value={ramUserSet && RAM_OPTIONS.includes(ramGb as typeof RAM_OPTIONS[number]) ? ramGb : ''}
+                  onChange={(e) => onRamChange(Number(e.target.value))}
+                  title={ramUserSet ? 'System RAM' : 'Set your system RAM — we can’t detect this reliably'}
+                >
+                  {!ramUserSet && <option value="" disabled>set RAM…</option>}
+                  {RAM_OPTIONS.map((gb) => (
+                    <option key={gb} value={gb}>{formatRam(gb)}</option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="hw-field">
-              <span className="hw-field-label">Free disk (GB)</span>
-              <input
-                className="hw-input hw-input-narrow"
-                type="number"
-                min={0}
-                max={100000}
-                value={diskFreeGb ?? ''}
-                placeholder="unset"
-                onChange={(e) => {
-                  const v = e.target.value
-                  onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
-                }}
-              />
-            </div>
+              <div className="hw-field">
+                <span className="hw-field-label">CPU cores</span>
+                <input
+                  className="hw-input hw-input-narrow"
+                  type="number"
+                  min={1}
+                  max={512}
+                  value={cpuCores}
+                  onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
+                />
+              </div>
 
-            <div className="hw-field hw-field-grow">
-              <span className="hw-field-label">CPU features</span>
-              <div className="hw-cpu-flags">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={cpuFlags?.avx512 ?? false}
-                    onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
-                  />{' '}
-                  AVX-512
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={cpuFlags?.amx ?? false}
-                    onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
-                  />{' '}
-                  AMX
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={cpuFlags?.neon ?? false}
-                    onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
-                  />{' '}
-                  NEON
-                </label>
+              <div className="hw-field">
+                <span className="hw-field-label">RAM bandwidth (GB/s)</span>
+                <input
+                  className="hw-input hw-input-narrow"
+                  type="number"
+                  min={0}
+                  max={2000}
+                  value={ramBandwidthGbps ?? ''}
+                  placeholder="auto"
+                  onChange={(e) => {
+                    const v = e.target.value
+                    onRamBandwidthChange(v === '' ? null : clamp(Number(v), 0, 2000))
+                  }}
+                />
+              </div>
+
+              <div className="hw-field">
+                <span className="hw-field-label">Free disk (GB)</span>
+                <input
+                  className="hw-input hw-input-narrow"
+                  type="number"
+                  min={0}
+                  max={100000}
+                  value={diskFreeGb ?? ''}
+                  placeholder="unset"
+                  onChange={(e) => {
+                    const v = e.target.value
+                    onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
+                  }}
+                />
               </div>
             </div>
-          </div>
+
+            <div className="hw-field-row">
+              <div className="hw-field hw-field-grow">
+                <span className="hw-field-label">CPU features</span>
+                <div className="hw-cpu-flags">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={cpuFlags?.avx512 ?? false}
+                      onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
+                    />{' '}
+                    AVX-512
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={cpuFlags?.amx ?? false}
+                      onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
+                    />{' '}
+                    AMX
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={cpuFlags?.neon ?? false}
+                      onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
+                    />{' '}
+                    NEON
+                  </label>
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </section>
     </div>
