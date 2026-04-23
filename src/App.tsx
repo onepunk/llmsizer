@@ -120,15 +120,15 @@ export default function App() {
         ramGb: hw.ramGb,
         cpuCores: hw.cpuCores,
         unified: hw.unified,
-        ramBandwidthGbps: null,
-        cpuFlags: null,
-        diskFreeGb: null,
+        ramBandwidthGbps: hw.ramBandwidthGbps,
+        cpuFlags: hw.cpuFlags,
+        diskFreeGb: hw.diskFreeGb,
       },
       filters,
       compare,
       defaults: DEFAULT_FILTERS,
     })
-  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, filters, compare])
 
   // On reset, drop the query string entirely.
   const previousReadyRef = useRef(hw.ready)
@@ -151,9 +151,9 @@ export default function App() {
         ramGb: hw.ramGb,
         cpuCores: hw.cpuCores,
         unified: hw.unified,
-        ramBandwidthGbps: null,
-        cpuFlags: null,
-        diskFreeGb: null,
+        ramBandwidthGbps: hw.ramBandwidthGbps,
+        cpuFlags: hw.cpuFlags,
+        diskFreeGb: hw.diskFreeGb,
       },
       filters,
       compare,
@@ -167,7 +167,7 @@ export default function App() {
     }
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
     shareTimer.current = window.setTimeout(() => setShareStatus('idle'), 2000)
-  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, filters, compare])
+  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, filters, compare])
 
   useEffect(() => () => {
     if (shareTimer.current) window.clearTimeout(shareTimer.current)

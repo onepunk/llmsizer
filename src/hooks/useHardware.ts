@@ -5,6 +5,7 @@ import type {
   GpuEntry,
   Interconnect,
   ParallelismMode,
+  CpuFlags,
 } from '../engine/types'
 import { detectHardware, buildSystemSpecs } from '../detection/detect'
 import { lookupGpu } from '../detection/parse-renderer'
@@ -31,7 +32,12 @@ function makeEntry(name: string, spec: GpuSpec | null, count = 1): GpuEntry {
 export function useHardware() {
   const urlInit = useMemo(() => readUrlState().hw, [])
   const hasUrlParams =
-    urlInit.gpus.length > 0 || urlInit.ram !== null || urlInit.unified === true
+    urlInit.gpus.length > 0
+    || urlInit.ram !== null
+    || urlInit.unified === true
+    || urlInit.ramBandwidthGbps !== null
+    || urlInit.cpuFlags !== null
+    || urlInit.diskFreeGb !== null
 
   const [phase, setPhase] = useState<Phase>('manual')
   const [ready, setReady] = useState(hasUrlParams)
@@ -45,6 +51,9 @@ export function useHardware() {
   const [ramUserSet, setRamUserSet] = useState(urlInit.ram !== null)
   const [cpuCores, setCpuCores] = useState(urlInit.cores ?? 4)
   const [unified, setUnified] = useState(urlInit.unified ?? false)
+  const [ramBandwidthGbps, setRamBandwidthGbps] = useState<number | null>(urlInit.ramBandwidthGbps ?? null)
+  const [cpuFlags, setCpuFlags] = useState<CpuFlags | null>(urlInit.cpuFlags ?? null)
+  const [diskFreeGb, setDiskFreeGb] = useState<number | null>(urlInit.diskFreeGb ?? null)
   const [gpuDetected, setGpuDetected] = useState(false)
 
   const setRamGb = useCallback((gb: number) => {
@@ -101,8 +110,11 @@ export function useHardware() {
       ram_gb: ramGb,
       cpu_cores: cpuCores,
       unified_memory: unified,
+      ram_bandwidth_gbps: ramBandwidthGbps,
+      cpu_flags: cpuFlags,
+      disk_free_gb: diskFreeGb,
     }),
-    [gpus, gpuDetected, ramGb, cpuCores, unified, interconnect, parallelism],
+    [gpus, gpuDetected, ramGb, cpuCores, unified, interconnect, parallelism, ramBandwidthGbps, cpuFlags, diskFreeGb],
   )
 
   const scan = useCallback(() => {
@@ -140,6 +152,9 @@ export function useHardware() {
     setRamUserSet(false)
     setCpuCores(4)
     setUnified(false)
+    setRamBandwidthGbps(null)
+    setCpuFlags(null)
+    setDiskFreeGb(null)
     setGpuDetected(false)
     setPhase('manual')
   }, [])
@@ -189,5 +204,11 @@ export function useHardware() {
     setRamGb,
     setCpuCores,
     setUnified,
+    ramBandwidthGbps,
+    cpuFlags,
+    diskFreeGb,
+    setRamBandwidthGbps,
+    setCpuFlags,
+    setDiskFreeGb,
   }
 }
