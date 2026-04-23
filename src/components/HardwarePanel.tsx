@@ -239,9 +239,7 @@ export default function HardwarePanel({
         <h4 className="hw-section-title">GPU</h4>
         {gpus.length === 0 && (
           <p className="hw-section-hint">
-            {unified
-              ? 'Integrated GPU · shared memory (Apple Silicon or iGPU)'
-              : 'No GPU configured — pick one below or run CPU-only.'}
+            {unified ? 'Integrated GPU · shared memory (Apple Silicon or iGPU)' : '—'}
           </p>
         )}
         {gpus.map((gpu, i) => (

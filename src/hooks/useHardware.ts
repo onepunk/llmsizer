@@ -40,7 +40,10 @@ export function useHardware() {
     || urlInit.diskFreeGb !== null
 
   const [phase, setPhase] = useState<Phase>('manual')
-  const [ready, setReady] = useState(hasUrlParams)
+  // Panel is always visible — no landing modal. hasUrlParams is kept only to
+  // decide whether the initial URL carried Advanced state we should remember.
+  void hasUrlParams
+  const [ready, setReady] = useState(true)
   const [gpus, setGpus] = useState<GpuEntry[]>(urlInit.gpus)
   const [interconnect, setInterconnect] = useState<Interconnect>(urlInit.interconnect ?? 'none')
   const [parallelism, setParallelism] = useState<ParallelismMode>(urlInit.parallelism ?? 'auto')
@@ -143,7 +146,6 @@ export function useHardware() {
   }, [])
 
   const reset = useCallback(() => {
-    setReady(false)
     setEditing(false)
     setGpus([])
     setInterconnect('none')
@@ -157,6 +159,10 @@ export function useHardware() {
     setDiskFreeGb(null)
     setGpuDetected(false)
     setPhase('manual')
+    // Clear the URL too so a reset returns to a truly fresh state.
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', window.location.pathname)
+    }
   }, [])
 
   // Restore GPU specs from URL on mount (lookup bandwidth by name)

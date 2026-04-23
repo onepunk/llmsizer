@@ -987,28 +987,25 @@ select.filter-input {
 }
 
 /* ============================================================
-   Scan prompt (initial state before hardware detected)
+   Hardware empty state (no GPU selected yet)
    ============================================================ */
-.scan-prompt {
+.hw-empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1rem;
-  gap: 1.25rem;
+  padding: 3rem 1rem;
+  gap: 1rem;
   border: 1px dashed var(--border);
   border-radius: var(--radius);
   margin-top: 0.5rem;
 }
 
-.scan-prompt-text {
+.hw-empty-state-text {
   color: var(--text-muted);
   font-size: 0.875rem;
-}
-
-.scan-prompt-actions {
-  display: flex;
-  gap: 0.75rem;
+  margin: 0;
+  text-align: center;
 }
 
 /* ============================================================
@@ -1436,19 +1433,8 @@ select.filter-input {
     to   { opacity: 1; }
   }
 
-  /* Scan prompt: stack actions vertically for easier tapping on first run. */
-  .scan-prompt {
-    padding: 2.5rem 1rem;
-  }
-  .scan-prompt-actions {
-    flex-direction: column;
-    width: 100%;
-    max-width: 280px;
-  }
-  .scan-prompt-actions .btn {
-    width: 100%;
-    padding: 0.6rem 0.75rem;
-    font-size: 0.8125rem;
+  .hw-empty-state {
+    padding: 2rem 1rem;
   }
 
   .col-hide-mobile {
