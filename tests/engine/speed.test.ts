@@ -171,4 +171,20 @@ describe('CPU feature flag bonuses', () => {
     })
     expect(allSet).toBeCloseTo(amxAlone, 4)
   })
+
+  it('cpu_offload mode also benefits from CPU flags', () => {
+    const offloadParams = {
+      paramsB: 8,
+      quant: 'Q4_K_M',
+      bandwidthGbps: 500,
+      runMode: 'cpu_offload' as const,
+      cpuCores: 8,
+    }
+    const scalar = estimateTps(offloadParams)
+    const amx = estimateTps({
+      ...offloadParams,
+      cpuFlags: { avx512: false, amx: true, neon: false },
+    })
+    expect(amx).toBeGreaterThan(scalar)
+  })
 })
