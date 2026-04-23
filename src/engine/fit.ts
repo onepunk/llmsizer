@@ -198,6 +198,7 @@ export function analyzeModelFit(
     runMode,
     cpuCores: system.cpu_cores,
     ramBandwidthGbps: system.ram_bandwidth_gbps,
+    cpuFlags: system.cpu_flags,
   })
 
   const fitLevel = classifyFitLevel(
@@ -235,6 +236,7 @@ export function analyzeModelFit(
           runMode,
           cpuCores: system.cpu_cores,
           ramBandwidthGbps: system.ram_bandwidth_gbps,
+          cpuFlags: system.cpu_flags,
         })
         return {
           quant,

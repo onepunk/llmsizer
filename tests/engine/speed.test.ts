@@ -115,3 +115,60 @@ describe('RAM bandwidth override', () => {
     expect(defaulted).toBeCloseTo(baseline, 4)
   })
 })
+
+describe('CPU feature flag bonuses', () => {
+  const baseParams = {
+    paramsB: 8,
+    quant: 'Q4_K_M',
+    bandwidthGbps: 0,
+    runMode: 'cpu_only' as const,
+    cpuCores: 8,
+  }
+
+  it('AVX-512 beats scalar (no flags)', () => {
+    const scalar = estimateTps(baseParams)
+    const avx512 = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: true, amx: false, neon: false },
+    })
+    expect(avx512).toBeGreaterThan(scalar)
+  })
+
+  it('AMX beats AVX-512', () => {
+    const avx512 = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: true, amx: false, neon: false },
+    })
+    const amx = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: false, amx: true, neon: false },
+    })
+    expect(amx).toBeGreaterThan(avx512)
+  })
+
+  it('NEON beats scalar but trails AVX-512', () => {
+    const scalar = estimateTps(baseParams)
+    const neon = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: false, amx: false, neon: true },
+    })
+    const avx512 = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: true, amx: false, neon: false },
+    })
+    expect(neon).toBeGreaterThan(scalar)
+    expect(neon).toBeLessThan(avx512)
+  })
+
+  it('AMX wins when multiple flags are set (not additive)', () => {
+    const amxAlone = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: false, amx: true, neon: false },
+    })
+    const allSet = estimateTps({
+      ...baseParams,
+      cpuFlags: { avx512: true, amx: true, neon: true },
+    })
+    expect(allSet).toBeCloseTo(amxAlone, 4)
+  })
+})
