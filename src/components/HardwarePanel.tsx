@@ -203,6 +203,14 @@ export default function HardwarePanel({
     ramBandwidthGbps != null || cpuFlags != null || diskFreeGb != null
   )
 
+  const toggleCpuFlag = (key: keyof CpuFlags, checked: boolean) =>
+    onCpuFlagsChange({
+      avx512: cpuFlags?.avx512 ?? false,
+      amx: cpuFlags?.amx ?? false,
+      neon: cpuFlags?.neon ?? false,
+      [key]: checked,
+    })
+
   // Reset interconnect to a valid choice when the GPU lineup loses NVLink
   // capability (e.g. user swaps an A6000 for an RTX 4090).
   useEffect(() => {
@@ -375,13 +383,7 @@ export default function HardwarePanel({
                   <input
                     type="checkbox"
                     checked={cpuFlags?.avx512 ?? false}
-                    onChange={(e) =>
-                      onCpuFlagsChange({
-                        avx512: e.target.checked,
-                        amx: cpuFlags?.amx ?? false,
-                        neon: cpuFlags?.neon ?? false,
-                      })
-                    }
+                    onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
                   />{' '}
                   AVX-512
                 </label>
@@ -389,13 +391,7 @@ export default function HardwarePanel({
                   <input
                     type="checkbox"
                     checked={cpuFlags?.amx ?? false}
-                    onChange={(e) =>
-                      onCpuFlagsChange({
-                        avx512: cpuFlags?.avx512 ?? false,
-                        amx: e.target.checked,
-                        neon: cpuFlags?.neon ?? false,
-                      })
-                    }
+                    onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
                   />{' '}
                   AMX
                 </label>
@@ -403,13 +399,7 @@ export default function HardwarePanel({
                   <input
                     type="checkbox"
                     checked={cpuFlags?.neon ?? false}
-                    onChange={(e) =>
-                      onCpuFlagsChange({
-                        avx512: cpuFlags?.avx512 ?? false,
-                        amx: cpuFlags?.amx ?? false,
-                        neon: e.target.checked,
-                      })
-                    }
+                    onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
                   />{' '}
                   NEON
                 </label>
