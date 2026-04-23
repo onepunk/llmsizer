@@ -14,6 +14,7 @@ export interface HardwareUrlState {
   ramBandwidthGbps: number | null
   cpuFlags: CpuFlags | null
   diskFreeGb: number | null
+  cpuName: string | null
 }
 
 export interface AppUrlState {
@@ -107,6 +108,7 @@ export function readUrlState(search: string = window.location.search): AppUrlSta
     ramBandwidthGbps: clampNum(params.get('rs'), 0, 2000),
     cpuFlags: parseCpuFlags(params.get('cf')),
     diskFreeGb: clampNum(params.get('dk'), 0, 100000),
+    cpuName: params.get('cpu') || null,
   }
 
   const filters: Partial<FilterState> = {}
@@ -140,6 +142,7 @@ export interface WriteUrlInput {
     ramBandwidthGbps: number | null
     cpuFlags: CpuFlags | null
     diskFreeGb: number | null
+    cpuName: string | null
   }
   filters: FilterState
   compare: string[]
@@ -167,6 +170,7 @@ export function buildUrlSearch(input: WriteUrlInput): string {
     if (bits > 0) params.set('cf', String(bits))
   }
   if (hw.diskFreeGb != null) params.set('dk', String(hw.diskFreeGb))
+  if (hw.cpuName) params.set('cpu', hw.cpuName)
 
   if (filters.context !== defaults.context) params.set('ctx', String(filters.context))
   if (filters.useCase !== defaults.useCase) params.set('uc', filters.useCase)

@@ -75,6 +75,9 @@ export interface SystemSpecs {
   parallelism: ParallelismMode
   ram_gb: number
   cpu_cores: number
+  /** Display-only name of the picked CPU (from the curated catalog). Not
+   *  consumed by the fit engine — cores + flags + unified do the work. */
+  cpu_name?: string | null
   unified_memory: boolean
   /** Effective system-memory bandwidth in GB/s. When set, overrides the default
    *  CPU-mode bandwidth used in speed estimation. Undefined = use default. */

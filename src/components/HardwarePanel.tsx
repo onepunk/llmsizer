@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import type { GpuSpec, GpuEntry, Interconnect, ParallelismMode, CpuFlags } from '../engine/types'
 import { getAllGpuNames, lookupGpu } from '../detection/parse-renderer'
+import { getAllCpuNames } from '../detection/cpu-specs'
 
 function clamp(value: number, min: number, max: number): number {
   return isFinite(value) ? Math.max(min, Math.min(max, value)) : min
@@ -52,9 +53,11 @@ interface HardwarePanelProps {
   ramBandwidthGbps: number | null
   cpuFlags: CpuFlags | null
   diskFreeGb: number | null
+  cpuName: string | null
   onRamBandwidthChange: (gbps: number | null) => void
   onCpuFlagsChange: (flags: CpuFlags | null) => void
   onDiskFreeChange: (gb: number | null) => void
+  onCpuChange: (name: string | null) => void
 }
 
 interface GpuRowProps {
@@ -162,6 +165,71 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
   )
 }
 
+interface CpuPickerProps {
+  value: string | null
+  allCpus: string[]
+  onChange: (name: string | null) => void
+}
+
+function CpuPicker({ value, allCpus, onChange }: CpuPickerProps) {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return allCpus
+    return allCpus.filter((n) => n.toLowerCase().includes(q))
+  }, [query, allCpus])
+
+  useEffect(() => {
+    if (!open) return
+    function onDocClick(e: MouseEvent) {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [open])
+
+  function pick(name: string | null) {
+    onChange(name)
+    setOpen(false)
+    setQuery('')
+  }
+
+  return (
+    <div className="hw-field hw-field-grow">
+      <span className="hw-field-label">CPU</span>
+      <div className="gpu-search-wrap" ref={wrapRef}>
+        <input
+          className="hw-input hw-input-combo"
+          type="text"
+          placeholder="search CPUs…"
+          value={open ? query : value ?? ''}
+          onChange={(e) => {
+            setQuery(e.target.value)
+            setOpen(true)
+          }}
+          onFocus={() => {
+            setQuery('')
+            setOpen(true)
+          }}
+        />
+        <span className="hw-combo-caret" aria-hidden="true">▾</span>
+        {open && (
+          <ul className="gpu-dropdown">
+            <li onMouseDown={() => pick(null)}>Custom / unknown CPU</li>
+            {filtered.slice(0, 50).map((name) => (
+              <li key={name} onMouseDown={() => pick(name)}>{name}</li>
+            ))}
+            {filtered.length === 0 && <li className="gpu-dropdown-empty">no matches</li>}
+          </ul>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function HardwarePanel({
   gpus,
   interconnect,
@@ -183,11 +251,14 @@ export default function HardwarePanel({
   ramBandwidthGbps,
   cpuFlags,
   diskFreeGb,
+  cpuName,
   onRamBandwidthChange,
   onCpuFlagsChange,
   onDiskFreeChange,
+  onCpuChange,
 }: HardwarePanelProps) {
   const allGpus = useMemo(() => getAllGpuNames(), [])
+  const allCpus = useMemo(() => getAllCpuNames(), [])
   const [advancedOpen, setAdvancedOpen] = useState(
     ramBandwidthGbps != null || cpuFlags != null || diskFreeGb != null
   )
@@ -320,17 +391,7 @@ export default function HardwarePanel({
                 </select>
               </div>
 
-              <div className="hw-field">
-                <span className="hw-field-label">CPU cores</span>
-                <input
-                  className="hw-input hw-input-narrow"
-                  type="number"
-                  min={1}
-                  max={512}
-                  value={cpuCores}
-                  onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
-                />
-              </div>
+              <CpuPicker value={cpuName} allCpus={allCpus} onChange={onCpuChange} />
 
               <div className="hw-field">
                 <span className="hw-field-label">RAM bandwidth (GB/s)</span>
@@ -365,37 +426,51 @@ export default function HardwarePanel({
               </div>
             </div>
 
-            <div className="hw-field-row">
-              <div className="hw-field hw-field-grow">
-                <span className="hw-field-label">CPU features</span>
-                <div className="hw-cpu-flags">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={cpuFlags?.avx512 ?? false}
-                      onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
-                    />{' '}
-                    AVX-512
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={cpuFlags?.amx ?? false}
-                      onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
-                    />{' '}
-                    AMX
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={cpuFlags?.neon ?? false}
-                      onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
-                    />{' '}
-                    NEON
-                  </label>
+            {cpuName === null && (
+              <div className="hw-field-row">
+                <div className="hw-field">
+                  <span className="hw-field-label">CPU cores</span>
+                  <input
+                    className="hw-input hw-input-narrow"
+                    type="number"
+                    min={1}
+                    max={512}
+                    value={cpuCores}
+                    onChange={(e) => onCpuCoresChange(clamp(Number(e.target.value), 1, 512))}
+                  />
+                </div>
+
+                <div className="hw-field hw-field-grow">
+                  <span className="hw-field-label">CPU features</span>
+                  <div className="hw-cpu-flags">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={cpuFlags?.avx512 ?? false}
+                        onChange={(e) => toggleCpuFlag('avx512', e.target.checked)}
+                      />{' '}
+                      AVX-512
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={cpuFlags?.amx ?? false}
+                        onChange={(e) => toggleCpuFlag('amx', e.target.checked)}
+                      />{' '}
+                      AMX
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={cpuFlags?.neon ?? false}
+                        onChange={(e) => toggleCpuFlag('neon', e.target.checked)}
+                      />{' '}
+                      NEON
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </>
         )}
       </section>

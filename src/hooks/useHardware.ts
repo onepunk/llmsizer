@@ -9,6 +9,7 @@ import type {
 } from '../engine/types'
 import { detectHardware, buildSystemSpecs } from '../detection/detect'
 import { lookupGpu } from '../detection/parse-renderer'
+import { lookupCpu } from '../detection/cpu-specs'
 import { readUrlState } from '../url'
 
 type Phase = 'detected' | 'manual'
@@ -38,6 +39,7 @@ export function useHardware() {
     || urlInit.ramBandwidthGbps !== null
     || urlInit.cpuFlags !== null
     || urlInit.diskFreeGb !== null
+    || urlInit.cpuName !== null
 
   const [phase, setPhase] = useState<Phase>('manual')
   // Panel is always visible — no landing modal. hasUrlParams is kept only to
@@ -57,6 +59,7 @@ export function useHardware() {
   const [ramBandwidthGbps, setRamBandwidthGbps] = useState<number | null>(urlInit.ramBandwidthGbps ?? null)
   const [cpuFlags, setCpuFlags] = useState<CpuFlags | null>(urlInit.cpuFlags ?? null)
   const [diskFreeGb, setDiskFreeGb] = useState<number | null>(urlInit.diskFreeGb ?? null)
+  const [cpuName, setCpuName] = useState<string | null>(urlInit.cpuName)
   const [gpuDetected, setGpuDetected] = useState(false)
 
   const setRamGb = useCallback((gb: number) => {
@@ -103,6 +106,19 @@ export function useHardware() {
     }
   }, [])
 
+  // Picking a curated CPU fills in cores + flags (and unified, for Apple M-
+  // series). null clears the selection but leaves derived values intact so
+  // the user can still tweak cores/flags manually if they want.
+  const selectCpu = useCallback((name: string | null) => {
+    setCpuName(name)
+    if (name === null) return
+    const spec = lookupCpu(name)
+    if (!spec) return
+    setCpuCores(spec.cores)
+    setCpuFlags(spec.flags)
+    if (spec.unified === true) setUnified(true)
+  }, [])
+
   const system = useMemo<SystemSpecs>(
     () => ({
       gpu_name: gpus[0]?.name ?? null,
@@ -112,12 +128,13 @@ export function useHardware() {
       parallelism,
       ram_gb: ramGb,
       cpu_cores: cpuCores,
+      cpu_name: cpuName,
       unified_memory: unified,
       ram_bandwidth_gbps: ramBandwidthGbps,
       cpu_flags: cpuFlags,
       disk_free_gb: diskFreeGb,
     }),
-    [gpus, gpuDetected, ramGb, cpuCores, unified, interconnect, parallelism, ramBandwidthGbps, cpuFlags, diskFreeGb],
+    [gpus, gpuDetected, ramGb, cpuCores, cpuName, unified, interconnect, parallelism, ramBandwidthGbps, cpuFlags, diskFreeGb],
   )
 
   const scan = useCallback(() => {
@@ -157,6 +174,7 @@ export function useHardware() {
     setRamBandwidthGbps(null)
     setCpuFlags(null)
     setDiskFreeGb(null)
+    setCpuName(null)
     setGpuDetected(false)
     setPhase('manual')
     // Clear the URL too so a reset returns to a truly fresh state.
@@ -213,8 +231,10 @@ export function useHardware() {
     ramBandwidthGbps,
     cpuFlags,
     diskFreeGb,
+    cpuName,
     setRamBandwidthGbps,
     setCpuFlags,
     setDiskFreeGb,
+    selectCpu,
   }
 }

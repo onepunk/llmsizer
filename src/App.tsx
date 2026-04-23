@@ -123,12 +123,13 @@ export default function App() {
         ramBandwidthGbps: hw.ramBandwidthGbps,
         cpuFlags: hw.cpuFlags,
         diskFreeGb: hw.diskFreeGb,
+        cpuName: hw.cpuName,
       },
       filters,
       compare,
       defaults: DEFAULT_FILTERS,
     })
-  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, filters, compare])
+  }, [hw.ready, hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, hw.cpuName, filters, compare])
 
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   const shareTimer = useRef<number | null>(null)
@@ -145,6 +146,7 @@ export default function App() {
         ramBandwidthGbps: hw.ramBandwidthGbps,
         cpuFlags: hw.cpuFlags,
         diskFreeGb: hw.diskFreeGb,
+        cpuName: hw.cpuName,
       },
       filters,
       compare,
@@ -158,7 +160,7 @@ export default function App() {
     }
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
     shareTimer.current = window.setTimeout(() => setShareStatus('idle'), 2000)
-  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, filters, compare])
+  }, [hw.gpus, hw.interconnect, hw.parallelism, hw.ramGb, hw.cpuCores, hw.unified, hw.ramBandwidthGbps, hw.cpuFlags, hw.diskFreeGb, hw.cpuName, filters, compare])
 
   useEffect(() => () => {
     if (shareTimer.current) window.clearTimeout(shareTimer.current)
@@ -217,9 +219,11 @@ export default function App() {
         ramBandwidthGbps={hw.ramBandwidthGbps}
         cpuFlags={hw.cpuFlags}
         diskFreeGb={hw.diskFreeGb}
+        cpuName={hw.cpuName}
         onRamBandwidthChange={hw.setRamBandwidthGbps}
         onCpuFlagsChange={hw.setCpuFlags}
         onDiskFreeChange={hw.setDiskFreeGb}
+        onCpuChange={hw.selectCpu}
       />
 
       {hw.gpus.length === 0 && !hw.unified ? (
