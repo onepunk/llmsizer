@@ -55,10 +55,12 @@ npm test
 
 ```bash
 # curated list only
-python3 scripts/scrape_hf_models.py > public/models.json
+python3 scripts/scrape_hf_models.py
+cp data/hf_models.json public/models.json
 
 # curated + top-N trending models (what's currently shipped)
-python3 scripts/scrape_hf_models.py --discover -n 800 > public/models.json
+python3 scripts/scrape_hf_models.py --discover -n 800
+cp data/hf_models.json public/models.json
 ```
 
 For AWQ/GPTQ/MLX/BNB repos, the scraper sums real `.safetensors` file sizes
@@ -66,6 +68,15 @@ from the HF tree API and writes `weight_gb`, since HuggingFace's
 `safetensors.total` reports packed-tensor element counts (~8× too small
 for 4-bit quantized weights). The UI engine uses `weight_gb` directly when
 present instead of applying a generic Q4_K_M formula.
+
+## Regenerating the GPU database
+
+`src/detection/gpu-specs.ts` is generated from the RightNow GPU database with
+small vendor-spec overrides for accelerator SKUs whose upstream entries lag.
+
+```bash
+npx tsx scripts/generate-gpu-specs.ts
+```
 
 To patch pre-quantized entries in an already-scraped `models.json`
 without re-scraping, run:

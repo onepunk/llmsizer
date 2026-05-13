@@ -9,10 +9,13 @@
  *   npx tsx scripts/generate-gpu-specs.ts
  */
 
-import { readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 
-const DB_PATH = '/tmp/RightNow-GPU-Database/data/all-gpus.json'
+const DB_PATH = process.env.GPU_DB_PATH ?? '/tmp/RightNow-GPU-Database/data/all-gpus.json'
+const DB_URL =
+  process.env.GPU_DB_URL ??
+  'https://raw.githubusercontent.com/onepunk/RightNow-GPU-Database/main/data/all-gpus.json'
 const OUT_PATH = resolve(import.meta.dirname, '../src/detection/gpu-specs.ts')
 
 const ALLOWED_VENDORS = new Set(['nvidia', 'amd', 'intel'])
@@ -32,6 +35,13 @@ interface GpuRecord {
   vram_gb: number
   bandwidth_gbps: number
   nvlink?: boolean
+}
+
+// Corrections for current vendor specs when the upstream GPU database lags or
+// records partial package memory rather than the public SXM accelerator spec.
+const SPEC_OVERRIDES: Record<string, Pick<GpuRecord, 'vram_gb' | 'bandwidth_gbps'>> = {
+  B200: { vram_gb: 180, bandwidth_gbps: 8000 },
+  B300: { vram_gb: 288, bandwidth_gbps: 8000 },
 }
 
 // NVLink capability is not in the upstream RightNow-GPU-Database, so we infer
@@ -66,8 +76,17 @@ function inferNvlink(name: string): boolean {
   return NVLINK_PREFIXES.some((r) => r.test(name))
 }
 
-function load(): DbEntry[] {
-  const raw = readFileSync(DB_PATH, 'utf-8')
+async function load(): Promise<DbEntry[]> {
+  let raw: string
+  if (existsSync(DB_PATH)) {
+    raw = readFileSync(DB_PATH, 'utf-8')
+  } else {
+    const response = await fetch(DB_URL)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch GPU database: ${response.status} ${response.statusText}`)
+    }
+    raw = await response.text()
+  }
   const data = JSON.parse(raw)
   if (!Array.isArray(data)) throw new Error('GPU database is not an array')
   return data as DbEntry[]
@@ -86,10 +105,11 @@ function filter(entries: DbEntry[]): DbEntry[] {
 
 function toRecord(e: DbEntry): GpuRecord {
   const nvlink = e.vendor === 'nvidia' && inferNvlink(e.name)
+  const override = SPEC_OVERRIDES[e.name]
   return {
     name: e.name,
-    vram_gb: e.memorySize as number,
-    bandwidth_gbps: Math.round(e.memoryBandwidth as number),
+    vram_gb: override?.vram_gb ?? (e.memorySize as number),
+    bandwidth_gbps: override?.bandwidth_gbps ?? Math.round(e.memoryBandwidth as number),
     ...(nvlink ? { nvlink: true } : {}),
   }
 }
@@ -181,7 +201,7 @@ export const ALL_GPU_SPECS: Record<string, GpuSpec> = { ...GPU_SPECS, ...APPLE_S
 
 // --- main ---
 
-const all = load()
+const all = await load()
 const valid = filter(all)
 const nvidia = valid.filter((e) => e.vendor === 'nvidia')
 const amd = valid.filter((e) => e.vendor === 'amd')

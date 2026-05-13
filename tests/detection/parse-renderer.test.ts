@@ -106,6 +106,18 @@ describe('lookupGpu', () => {
     expect(spec!.bandwidth_gbps).toBe(512)
   })
 
+  it('uses current NVIDIA Blackwell SXM memory specs', () => {
+    const b200 = lookupGpu('NVIDIA B200 SXM')
+    expect(b200).not.toBeNull()
+    expect(b200!.vram_gb).toBe(180)
+    expect(b200!.bandwidth_gbps).toBe(8000)
+
+    const b300 = lookupGpu('NVIDIA B300 SXM')
+    expect(b300).not.toBeNull()
+    expect(b300!.vram_gb).toBe(288)
+    expect(b300!.bandwidth_gbps).toBe(8000)
+  })
+
   it('returns null for unknown GPU', () => {
     expect(lookupGpu('Some Unknown GPU XYZ 9999')).toBeNull()
   })

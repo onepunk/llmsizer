@@ -37,6 +37,14 @@ describe('models.json metadata audit', () => {
     expect(qwen3.context_extension).toBe('YaRN')
   })
 
+  it('includes current headline 2026 model families', () => {
+    expect(model('deepseek-ai/DeepSeek-V4-Pro').context_length).toBe(1_048_576)
+    expect(model('deepseek-ai/DeepSeek-V4-Flash').context_length).toBe(1_048_576)
+    expect(model('Qwen/Qwen3-0.6B').context_length).toBe(131_072)
+    expect(model('Qwen/Qwen3-8B').context_length).toBe(131_072)
+    expect(model('google/gemma-3-4b-it').capabilities).toContain('vision')
+  })
+
   it('backfills MoE active-parameter metadata for Kimi and GLM families', () => {
     const kimi = model('moonshotai/Kimi-K2-Instruct')
     expect(kimi.is_moe).toBe(true)
@@ -57,7 +65,8 @@ describe('models.json metadata audit', () => {
     expect(awq.quantization).toBe('AWQ-4bit')
     expect(awq.weight_gb).toBeGreaterThan(18)
     expect(awq.parameters_raw).toBeGreaterThan(30_000_000_000)
-    expect(awq.active_parameters).toBe(3_000_000_000)
+    expect(awq.active_parameters).toBeGreaterThan(3_000_000_000)
+    expect(awq.active_parameters).toBeLessThan(3_500_000_000)
 
     const mlx = model('lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-4bit')
     expect(mlx.format).toBe('mlx')

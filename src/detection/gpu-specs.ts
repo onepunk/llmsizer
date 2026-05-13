@@ -5,10 +5,10 @@ import type { GpuSpec } from '../engine/types'
 
 export const GPU_SPECS: Record<string, GpuSpec> = {
   // NVIDIA
+  'B200': { vram_gb: 180, bandwidth_gbps: 8000, nvlink: true },
+  'B300': { vram_gb: 288, bandwidth_gbps: 8000, nvlink: true },
   'H200 NVL': { vram_gb: 141, bandwidth_gbps: 4890, nvlink: true },
   'H200 SXM 141 GB': { vram_gb: 141, bandwidth_gbps: 4890, nvlink: true },
-  'B200': { vram_gb: 90, bandwidth_gbps: 4100, nvlink: true },
-  'B300': { vram_gb: 144, bandwidth_gbps: 4100, nvlink: true },
   'H100 NVL 94 GB': { vram_gb: 94, bandwidth_gbps: 3940, nvlink: true },
   'H100 SXM5 80 GB': { vram_gb: 80, bandwidth_gbps: 3360, nvlink: true },
   'H100 PCIe 96 GB': { vram_gb: 96, bandwidth_gbps: 3360, nvlink: true },

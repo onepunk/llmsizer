@@ -129,6 +129,8 @@ TARGET_MODELS = [
     "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
     "deepseek-ai/DeepSeek-V3",
     "deepseek-ai/DeepSeek-R1",
+    "deepseek-ai/DeepSeek-V4-Pro",
+    "deepseek-ai/DeepSeek-V4-Flash",
     # Cohere
     "CohereForAI/c4ai-command-r-v01",
     # 01.ai Yi family
@@ -298,6 +300,8 @@ MOE_ACTIVE_PARAMS = {
     "deepseek-ai/DeepSeek-R1": 37_000_000_000,
     "deepseek-ai/DeepSeek-V3.2": 37_000_000_000,
     "deepseek-ai/DeepSeek-V3.2-Speciale": 37_000_000_000,
+    "deepseek-ai/DeepSeek-V4-Pro": 49_000_000_000,
+    "deepseek-ai/DeepSeek-V4-Flash": 13_000_000_000,
     "Qwen/Qwen3-30B-A3B": 3_300_000_000,
     "Qwen/Qwen3-235B-A22B": 22_000_000_000,
     "Qwen/Qwen3-Coder-480B-A35B-Instruct": 35_000_000_000,
@@ -819,8 +823,12 @@ def _detect_format_from_name(repo_id: str) -> tuple[str, str]:
         return ("gptq", "GPTQ-Int8")
     if "-GPTQ" in name_upper:
         return ("gptq", "GPTQ-Int4")
+    if "-MLX-8BIT" in name_upper:
+        return ("mlx", "MLX-8bit")
+    if "-MLX-4BIT" in name_upper:
+        return ("mlx", "MLX-4bit")
     if "-MLX-" in name_upper or name_upper.endswith("-MLX"):
-        return ("mlx", "Q4_K_M")  # MLX uses its own quant scheme handled elsewhere
+        return ("mlx", "MLX-4bit")
 
     return ("gguf", "Q4_K_M")
 
