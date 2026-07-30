@@ -57,7 +57,7 @@ export function buildShareSummary(url: URL): ShareSummary {
 
   let title = 'llmsizer \u2014 What LLMs can your PC run?'
   let description =
-    'Check which large language models fit on your hardware. Detects your GPU and estimates memory, quantization, and tokens/sec for 5000+ models.'
+    'Check which large language models fit on your hardware. Detects your GPU and estimates memory, quantization, and tokens/sec for 900+ models.'
 
   if (hwDesc) {
     title = `llmsizer \u2014 ${hwDesc}`
@@ -77,6 +77,7 @@ export function buildShareSummary(url: URL): ShareSummary {
         const slash = n.lastIndexOf('/')
         return slash >= 0 ? n.slice(slash + 1) : n
       })
+      .slice(0, 3)
     if (names.length > 0) {
       title = `${names.join(' vs ')} \u00B7 llmsizer`
       description = hwDesc

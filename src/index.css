@@ -103,8 +103,15 @@ body {
   font-size: 1rem;
   font-weight: 700;
   color: var(--text);
-  cursor: pointer;
   letter-spacing: -0.03em;
+}
+
+.app-logo-button {
+  all: unset;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 .app-tagline {
@@ -645,10 +652,27 @@ select.filter-input {
   white-space: nowrap;
 }
 .results-table th.sortable-th {
-  cursor: pointer;
   user-select: none;
 }
-.results-table th.sortable-th:hover {
+
+.sort-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.results-table th.sortable-th:hover,
+.sort-button:hover {
   color: var(--text);
 }
 .sort-arrow {
@@ -675,6 +699,10 @@ select.filter-input {
 }
 .results-table tbody tr.row-selected {
   background: var(--surface);
+}
+
+.results-table tbody tr:focus-visible {
+  outline-offset: -2px;
 }
 
 .cell-model {
@@ -916,7 +944,8 @@ select.filter-input {
   border-bottom-color: var(--border);
 }
 
-.score-bar-help-wrap:hover .score-bar-tooltip {
+.score-bar-help-wrap:hover .score-bar-tooltip,
+.score-bar-help-wrap:focus-within .score-bar-tooltip {
   display: block;
 }
 
@@ -1518,4 +1547,15 @@ select.filter-input {
   align-items: center;
   gap: 0.25rem;
   font-size: 0.85rem;
+}
+
+/* Keep keyboard focus visible even on controls whose base styles suppress the
+   browser's default outline. This rule intentionally comes last. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--good);
+  outline-offset: 2px;
 }

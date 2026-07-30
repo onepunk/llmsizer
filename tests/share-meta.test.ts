@@ -52,7 +52,7 @@ describe('buildShareSummary', () => {
   it('returns the default title and description for an empty query string', () => {
     const { title, description } = buildShareSummary(parse(''))
     expect(title).toBe('llmsizer \u2014 What LLMs can your PC run?')
-    expect(description).toContain('5000+ models')
+    expect(description).toContain('900+ models')
   })
 
   it('includes GPU, VRAM, and RAM when all are present', () => {
@@ -122,5 +122,10 @@ describe('buildShareSummary', () => {
   it('drops empty entries from a cmp list', () => {
     const { title } = buildShareSummary(parse('?cmp=meta/a,,meta/b,'))
     expect(title).toBe('a vs b \u00B7 llmsizer')
+  })
+
+  it('limits comparison previews to the app comparison limit', () => {
+    const { title } = buildShareSummary(parse('?cmp=org/a,org/b,org/c,org/d'))
+    expect(title).toBe('a vs b vs c \u00B7 llmsizer')
   })
 })

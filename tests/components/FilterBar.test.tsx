@@ -25,7 +25,7 @@ describe('FilterBar', () => {
     )
 
     // Context select shows the current value as "8K"
-    const ctxSelect = screen.getByRole('combobox', { name: /ctx/i }) as HTMLSelectElement
+    const ctxSelect = screen.getByRole('combobox', { name: /context window/i }) as HTMLSelectElement
     expect(ctxSelect.value).toBe('8192')
 
     fireEvent.change(ctxSelect, { target: { value: '32768' } })

@@ -6,6 +6,8 @@ dist/
 .playwright-mcp/
 docs/
 scripts/__pycache__/
+data/
+llmfit-core/
 
 # wrangler files
 .wrangler

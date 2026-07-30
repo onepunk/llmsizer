@@ -63,7 +63,7 @@ describe('ResultsTable', () => {
     render(
       <ResultsTable
         results={fits}
-        selectedIndex={null}
+        selectedModelName={null}
         onSelect={() => {}}
         sortKey="score"
         sortDir="desc"
@@ -86,7 +86,7 @@ describe('ResultsTable', () => {
     render(
       <ResultsTable
         results={fits}
-        selectedIndex={null}
+        selectedModelName={null}
         onSelect={() => {}}
         sortKey="score"
         sortDir="desc"
@@ -111,7 +111,7 @@ describe('ResultsTable', () => {
     render(
       <ResultsTable
         results={fits}
-        selectedIndex={null}
+        selectedModelName={null}
         onSelect={() => {}}
         sortKey="score"
         sortDir="desc"
@@ -132,7 +132,7 @@ describe('ResultsTable', () => {
     render(
       <ResultsTable
         results={fits}
-        selectedIndex={null}
+        selectedModelName={null}
         onSelect={() => {}}
         sortKey="score"
         sortDir="desc"
@@ -151,7 +151,7 @@ describe('ResultsTable', () => {
       render(
         <ResultsTable
           results={fits}
-          selectedIndex={null}
+          selectedModelName={null}
           onSelect={() => {}}
           sortKey="score"
           sortDir="desc"
@@ -164,5 +164,42 @@ describe('ResultsTable', () => {
     ).not.toThrow()
     // Row still renders the model name.
     expect(screen.getByText('Llama-3.1-8B')).toBeTruthy()
+  })
+
+  it('keeps selection attached to the model when rows are reordered', () => {
+    const alpha = makeFit({}, { name: 'org/Alpha' })
+    const zulu = makeFit({}, { name: 'org/Zulu' })
+    const onSelect = vi.fn()
+    const props = {
+      onSelect,
+      sortKey: 'score' as const,
+      sortDir: 'desc' as const,
+      onSort: () => {},
+      compareSet: new Set<string>(),
+      onToggleCompare: () => {},
+      compareLimit: 3,
+    }
+
+    const { rerender } = render(
+      <ResultsTable
+        {...props}
+        results={[alpha, zulu]}
+        selectedModelName={null}
+      />,
+    )
+
+    fireEvent.click(screen.getByText('Alpha').closest('tr')!)
+    expect(onSelect).toHaveBeenCalledWith('org/Alpha')
+
+    rerender(
+      <ResultsTable
+        {...props}
+        results={[zulu, alpha]}
+        selectedModelName="org/Alpha"
+      />,
+    )
+
+    expect(screen.getByText('Alpha').closest('tr')?.className).toContain('row-selected')
+    expect(screen.getByText('Zulu').closest('tr')?.className).not.toContain('row-selected')
   })
 })

@@ -2333,14 +2333,15 @@ def main():
         gguf_enriched = enrich_gguf_sources(results)
         print(f"  Found GGUF sources for {gguf_enriched} models")
 
-    # Write to both locations: repo root (for reference) and llmfit-core (compiled into binary)
-    output_paths = ["data/hf_models.json", "llmfit-core/data/hf_models.json"]
-    for output_path in output_paths:
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, "w") as f:
-            json.dump(results, f, indent=2)
+    # llmsizer ships the browser database from public/models.json. Keep one
+    # generated staging file for the workflow/README copy step; the inherited
+    # llmfit-core output is not part of this web repository.
+    output_path = "data/hf_models.json"
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w") as f:
+        json.dump(results, f, indent=2)
 
-    print(f"\n✅ Wrote {len(results)} models to {', '.join(output_paths)}")
+    print(f"\n✅ Wrote {len(results)} models to {output_path}")
     print(f"   Curated: {len(TARGET_MODELS)}, Fallbacks: {fallback_count}, "
           f"Discovered: {discovered_count}, GGUF-sourced: {gguf_enriched}")
 

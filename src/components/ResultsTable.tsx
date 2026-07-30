@@ -2,8 +2,8 @@ import type { ModelFit, SortKey, SortDir } from '../engine/types'
 
 interface ResultsTableProps {
   results: ModelFit[]
-  selectedIndex: number | null
-  onSelect: (i: number) => void
+  selectedModelName: string | null
+  onSelect: (modelName: string) => void
   sortKey: SortKey
   sortDir: SortDir
   onSort: (key: SortKey) => void
@@ -79,9 +79,42 @@ function SortArrow({ columnKey, sortKey, sortDir }: { columnKey: SortKey; sortKe
   )
 }
 
+function SortHeader({
+  label,
+  columnKey,
+  sortKey,
+  sortDir,
+  onSort,
+  className = '',
+}: {
+  label: string
+  columnKey: SortKey
+  sortKey: SortKey
+  sortDir: SortDir
+  onSort: (key: SortKey) => void
+  className?: string
+}) {
+  const active = columnKey === sortKey
+  return (
+    <th
+      className={`${className} sortable-th`.trim()}
+      aria-sort={active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+    >
+      <button
+        type="button"
+        className="sort-button"
+        onClick={() => onSort(columnKey)}
+        aria-label={`Sort by ${label}`}
+      >
+        {label} <SortArrow columnKey={columnKey} sortKey={sortKey} sortDir={sortDir} />
+      </button>
+    </th>
+  )
+}
+
 export default function ResultsTable({
   results,
-  selectedIndex,
+  selectedModelName,
   onSelect,
   sortKey,
   sortDir,
@@ -104,20 +137,39 @@ export default function ResultsTable({
         <thead>
           <tr>
             <th className="col-compare" title="Add to compare">vs</th>
-            <th className="sortable-th" onClick={() => onSort('name')}>
-              Model <SortArrow columnKey="name" sortKey={sortKey} sortDir={sortDir} />
-            </th>
+            <SortHeader
+              label="Model"
+              columnKey="name"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={onSort}
+            />
             <th>Fit</th>
             <th>Quant</th>
-            <th className="col-hide-mobile sortable-th" onClick={() => onSort('tps')}>
-              T/S <SortArrow columnKey="tps" sortKey={sortKey} sortDir={sortDir} />
-            </th>
-            <th className="col-hide-mobile sortable-th" onClick={() => onSort('release_date')}>
-              Released <SortArrow columnKey="release_date" sortKey={sortKey} sortDir={sortDir} />
-            </th>
-            <th className="col-hide-mobile sortable-th" onClick={() => onSort('score')}>
-              Score <SortArrow columnKey="score" sortKey={sortKey} sortDir={sortDir} />
-            </th>
+            <SortHeader
+              label="T/S"
+              columnKey="tps"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={onSort}
+              className="col-hide-mobile"
+            />
+            <SortHeader
+              label="Released"
+              columnKey="release_date"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={onSort}
+              className="col-hide-mobile"
+            />
+            <SortHeader
+              label="Score"
+              columnKey="score"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={onSort}
+              className="col-hide-mobile"
+            />
           </tr>
         </thead>
         <tbody>
@@ -127,8 +179,25 @@ export default function ResultsTable({
             return (
               <tr
                 key={`${fit.model.name}-${i}`}
-                className={i === selectedIndex ? 'row-selected' : ''}
-                onClick={() => onSelect(i)}
+                className={fit.model.name === selectedModelName ? 'row-selected' : ''}
+                onClick={() => onSelect(fit.model.name)}
+                onKeyDown={(e) => {
+                  if (e.target !== e.currentTarget) return
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    onSelect(fit.model.name)
+                  } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    e.preventDefault()
+                    const direction = e.key === 'ArrowDown' ? 1 : -1
+                    const sibling = e.currentTarget.parentElement?.children[i + direction]
+                    if (sibling instanceof HTMLElement) sibling.focus()
+                  }
+                }}
+                tabIndex={
+                  fit.model.name === selectedModelName || (selectedModelName === null && i === 0)
+                    ? 0
+                    : -1
+                }
               >
                 <td className="col-compare" onClick={(e) => e.stopPropagation()}>
                   <input

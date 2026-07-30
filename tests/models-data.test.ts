@@ -75,10 +75,14 @@ describe('models.json metadata audit', () => {
     expect(mlx.weight_gb).toBeGreaterThan(4)
     expect(mlx.parameters_raw).toBeGreaterThan(8_000_000_000)
 
-    const gptq = model('Qwen/Qwen2.5-72B-Instruct-GPTQ-Int4')
-    expect(gptq.format).toBe('gptq')
-    expect(gptq.quantization).toBe('GPTQ-Int4')
-    expect(gptq.weight_gb).toBeGreaterThan(41)
+    // Trending repositories can enter and leave the weekly database, so assert
+    // the sizing invariant against any current GPTQ Int4 row instead of pinning
+    // the test to one repository forever.
+    const gptq = models.find((m) => m.format === 'gptq' && m.quantization === 'GPTQ-Int4')
+    expect(gptq).toBeDefined()
+    const gptqParamsB = gptq!.parameters_raw! / 1e9
+    expect(gptq!.weight_gb).toBeGreaterThan(gptqParamsB * 0.4)
+    expect(gptq!.weight_gb).toBeLessThan(gptqParamsB * 0.8)
   })
 
   it('does not leave native pre-quantized formats without weight_gb', () => {

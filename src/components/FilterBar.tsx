@@ -35,11 +35,13 @@ export default function FilterBar({
         placeholder="Search models..."
         value={filters.search}
         onChange={(e) => onChange({ ...filters, search: e.target.value })}
+        aria-label="Search models"
       />
 
       <select
         className="filter-input"
         value={filters.useCase}
+        aria-label="Filter by use case"
         onChange={(e) =>
           onChange({ ...filters, useCase: e.target.value as FilterState['useCase'] })
         }
@@ -56,6 +58,7 @@ export default function FilterBar({
       <select
         className="filter-input"
         value={filters.minFit}
+        aria-label="Filter by minimum fit"
         onChange={(e) =>
           onChange({ ...filters, minFit: e.target.value as FilterState['minFit'] })
         }
@@ -71,6 +74,7 @@ export default function FilterBar({
         <select
           className="filter-input filter-context-select"
           value={filters.context}
+          aria-label="Context window"
           onChange={(e) =>
             onChange({ ...filters, context: Number(e.target.value) })
           }
@@ -82,7 +86,7 @@ export default function FilterBar({
       </label>
 
       <div className="filter-right">
-        <span className="filter-count">
+        <span className="filter-count" aria-live="polite">
           {resultCount}/{totalCount}
         </span>
         {onShare && (
@@ -90,6 +94,7 @@ export default function FilterBar({
             className="btn btn-ghost btn-sm filter-share"
             onClick={onShare}
             title="Copy a shareable link with your hardware + filters"
+            aria-live="polite"
           >
             {shareLabel ?? 'share'}
           </button>

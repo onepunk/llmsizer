@@ -54,16 +54,21 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
     [models, system],
   )
 
-  const results = useMemo<ModelFit[]>(() => {
+  // Hardware analysis is the expensive part. Keep it independent from search,
+  // fit filtering, and sorting so those lightweight UI changes do not recompute
+  // every model. The unfiltered fits also let comparisons remain visible when
+  // a compared model is temporarily hidden from the results table.
+  const allFits = useMemo<ModelFit[]>(() => {
     if (compatibleModels.length === 0) return []
 
     const useCase = filters.useCase === 'all' ? 'general' : filters.useCase
+    return compatibleModels.map((m) => analyzeModelFit(m, system, useCase, filters.context))
+  }, [compatibleModels, system, filters.useCase, filters.context])
 
-    const fits = compatibleModels.map((m) => analyzeModelFit(m, system, useCase, filters.context))
-
+  const results = useMemo<ModelFit[]>(() => {
     // Filter by minFit
     const minFitLevel = filters.minFit === 'all' ? 0 : FIT_ORDER[filters.minFit]
-    const filtered = fits.filter((f) => FIT_ORDER[f.fit_level] >= minFitLevel)
+    const filtered = allFits.filter((f) => FIT_ORDER[f.fit_level] >= minFitLevel)
 
     // Filter by use case — map filter keywords to patterns that match verbose use_case strings
     const useCaseKeywords: Record<string, string[]> = {
@@ -127,10 +132,11 @@ export function useModels(system: SystemSpecs, filters: FilterState) {
     })
 
     return sorted
-  }, [compatibleModels, system, filters])
+  }, [allFits, filters])
 
   return {
     results,
+    allFits,
     loading,
     error,
     totalModels: compatibleModels.length,

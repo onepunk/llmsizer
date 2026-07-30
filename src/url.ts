@@ -3,6 +3,25 @@ import { lookupGpu } from './detection/parse-renderer'
 
 const INTERCONNECTS: Interconnect[] = ['nvlink', 'pcie5', 'pcie4', 'pcie3', 'none']
 const PARALLELISMS: ParallelismMode[] = ['auto', 'layer_split', 'tensor_parallel']
+const USE_CASES: FilterState['useCase'][] = [
+  'all',
+  'general',
+  'coding',
+  'reasoning',
+  'chat',
+  'multimodal',
+  'embedding',
+]
+const MIN_FITS: FilterState['minFit'][] = ['all', 'perfect', 'good', 'marginal']
+const SORT_KEYS: FilterState['sort'][] = [
+  'score',
+  'tps',
+  'params',
+  'memory',
+  'context',
+  'name',
+  'release_date',
+]
 
 export interface HardwareUrlState {
   gpus: GpuEntry[]
@@ -94,6 +113,11 @@ function parseParallelism(raw: string | null): ParallelismMode | null {
   return (PARALLELISMS as string[]).includes(raw) ? (raw as ParallelismMode) : null
 }
 
+function parseEnum<T extends string>(raw: string | null, values: readonly T[]): T | null {
+  if (raw === null) return null
+  return (values as readonly string[]).includes(raw) ? raw as T : null
+}
+
 export function readUrlState(search: string = window.location.search): AppUrlState {
   const params = new URLSearchParams(search)
 
@@ -114,14 +138,14 @@ export function readUrlState(search: string = window.location.search): AppUrlSta
   const filters: Partial<FilterState> = {}
   const ctx = clampNum(params.get('ctx'), 512, 1048576)
   if (ctx !== null) filters.context = ctx
-  const uc = params.get('uc')
-  if (uc) filters.useCase = uc as FilterState['useCase']
-  const fit = params.get('fit')
-  if (fit) filters.minFit = fit as FilterState['minFit']
+  const uc = parseEnum(params.get('uc'), USE_CASES)
+  if (uc !== null) filters.useCase = uc
+  const fit = parseEnum(params.get('fit'), MIN_FITS)
+  if (fit !== null) filters.minFit = fit
   const q = params.get('q')
   if (q) filters.search = q
-  const sort = params.get('sort')
-  if (sort) filters.sort = sort as FilterState['sort']
+  const sort = parseEnum(params.get('sort'), SORT_KEYS)
+  if (sort !== null) filters.sort = sort
   const sdir = params.get('sdir')
   if (sdir === 'asc' || sdir === 'desc') filters.sortDir = sdir
 

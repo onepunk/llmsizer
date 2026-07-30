@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ModelFit } from '../engine/types'
 
 interface DetailPanelProps {
@@ -24,6 +24,7 @@ function hfRepoUrl(repo: string): string {
 }
 
 export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
+  const panelRef = useRef<HTMLDivElement | null>(null)
   const m = fit.model
   const memPct = fit.memory_available_gb > 0
     ? (fit.memory_required_gb / fit.memory_available_gb) * 100
@@ -38,6 +39,10 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
   useEffect(() => {
     if (typeof window === 'undefined') return
     const mq = window.matchMedia('(max-width: 640px)')
+    const previouslyFocused = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null
+    panelRef.current?.focus()
     const apply = () => {
       document.body.classList.toggle('detail-open', mq.matches)
     }
@@ -69,14 +74,21 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
       document.removeEventListener('keydown', onKey)
       window.clearTimeout(attachTimer)
       document.removeEventListener('click', onBackdropClick)
+      if (previouslyFocused?.isConnected) previouslyFocused.focus()
     }
   }, [onClose])
 
   return (
-    <div className="detail-panel" role="dialog" aria-modal="true">
+    <div
+      ref={panelRef}
+      className="detail-panel"
+      role="dialog"
+      aria-labelledby="detail-title"
+      tabIndex={-1}
+    >
       <div className="detail-header">
         <div>
-          <h3 className="detail-title">{modelDisplayName(m.name)}</h3>
+          <h3 className="detail-title" id="detail-title">{modelDisplayName(m.name)}</h3>
           <a
             className="detail-hf-link"
             href={hfUrl(m.name)}
@@ -86,7 +98,11 @@ export default function DetailPanel({ fit, onClose }: DetailPanelProps) {
             {m.name} &rarr;
           </a>
         </div>
-        <button className="btn btn-icon btn-ghost" onClick={onClose}>
+        <button
+          className="btn btn-icon btn-ghost"
+          onClick={onClose}
+          aria-label="Close model details"
+        >
           &times;
         </button>
       </div>
@@ -306,7 +322,13 @@ function MemoryBreakdown({ fit }: { fit: ModelFit }) {
               <span className={`mem-swatch ${p.className}`} />
               {p.label}
               <span className="score-bar-help-wrap">
-                <span className="score-bar-help">?</span>
+                <span
+                  className="score-bar-help"
+                  tabIndex={0}
+                  aria-label={`About ${p.label}`}
+                >
+                  ?
+                </span>
                 <span className="score-bar-tooltip">{p.tooltip}</span>
               </span>
             </dt>
@@ -329,7 +351,13 @@ function ScoreBar({ label, value, tooltip }: { label: string; value: number; too
         <span className="score-bar-label">
           {label}
           <span className="score-bar-help-wrap">
-            <span className="score-bar-help">?</span>
+            <span
+              className="score-bar-help"
+              tabIndex={0}
+              aria-label={`About ${label}`}
+            >
+              ?
+            </span>
             <span className="score-bar-tooltip">{tooltip}</span>
           </span>
         </span>

@@ -53,6 +53,11 @@ describe('readUrlState', () => {
     expect(state.hw.ram).toBeNull()
     expect(state.filters.context).toBeUndefined()
   })
+
+  it('ignores invalid filter enum values', () => {
+    const state = readUrlState('?uc=invalid&fit=banana&sort=sideways&sdir=up')
+    expect(state.filters).toEqual({})
+  })
 })
 
 describe('buildUrlSearch', () => {

@@ -132,6 +132,11 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
             type="text"
             placeholder="search GPUs…"
             value={open ? query : gpu.name}
+            role="combobox"
+            aria-label={`GPU #${index + 1}`}
+            aria-expanded={open}
+            aria-autocomplete="list"
+            aria-controls={`gpu-options-${index}`}
             onChange={(e) => {
               setQuery(e.target.value)
               setOpen(true)
@@ -140,14 +145,33 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
               setQuery('')
               setOpen(true)
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setOpen(false)
+              } else if (e.key === 'Enter' && open && filtered[0]) {
+                e.preventDefault()
+                handlePick(filtered[0])
+              }
+            }}
           />
           <span className="hw-combo-caret" aria-hidden="true">▾</span>
           {open && (
-            <ul className="gpu-dropdown">
+            <ul className="gpu-dropdown" id={`gpu-options-${index}`} role="listbox">
               {filtered.slice(0, 50).map((name) => (
-                <li key={name} onMouseDown={() => handlePick(name)}>{name}</li>
+                <li
+                  key={name}
+                  role="option"
+                  aria-selected={name === gpu.name}
+                  onMouseDown={() => handlePick(name)}
+                >
+                  {name}
+                </li>
               ))}
-              {filtered.length === 0 && <li className="gpu-dropdown-empty">no matches</li>}
+              {filtered.length === 0 && (
+                <li className="gpu-dropdown-empty" role="option" aria-disabled="true">
+                  no matches
+                </li>
+              )}
             </ul>
           )}
         </div>
@@ -161,6 +185,7 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
           min={0}
           max={1024}
           value={gpu.vram_gb}
+          aria-label={`GPU #${index + 1} VRAM in GB`}
           onChange={(e) => onUpdate(index, { vram_gb: clamp(Number(e.target.value), 0, 1024) })}
         />
       </div>
@@ -173,6 +198,7 @@ function GpuRow({ gpu, index, allGpus, canRemove, onSelect, onUpdate, onRemove }
           min={1}
           max={8}
           value={gpu.count}
+          aria-label={`GPU #${index + 1} count`}
           onChange={(e) => onUpdate(index, { count: clamp(Number(e.target.value), 1, 8) })}
         />
       </div>
@@ -235,6 +261,11 @@ function RamPicker({ ramGb, ramUserSet, onChange }: RamPickerProps) {
           type="text"
           placeholder="—"
           value={open ? query : display}
+          role="combobox"
+          aria-label="System RAM"
+          aria-expanded={open}
+          aria-autocomplete="list"
+          aria-controls="ram-options"
           onChange={(e) => {
             setQuery(e.target.value)
             setOpen(true)
@@ -243,14 +274,33 @@ function RamPicker({ ramGb, ramUserSet, onChange }: RamPickerProps) {
             setQuery('')
             setOpen(true)
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setOpen(false)
+            } else if (e.key === 'Enter' && open && filtered[0] != null) {
+              e.preventDefault()
+              pick(filtered[0])
+            }
+          }}
         />
         <span className="hw-combo-caret" aria-hidden="true">▾</span>
         {open && (
-          <ul className="gpu-dropdown">
+          <ul className="gpu-dropdown" id="ram-options" role="listbox">
             {filtered.map((gb) => (
-              <li key={gb} onMouseDown={() => pick(gb)}>{formatRam(gb)}</li>
+              <li
+                key={gb}
+                role="option"
+                aria-selected={ramUserSet && gb === ramGb}
+                onMouseDown={() => pick(gb)}
+              >
+                {formatRam(gb)}
+              </li>
             ))}
-            {filtered.length === 0 && <li className="gpu-dropdown-empty">no matches</li>}
+            {filtered.length === 0 && (
+              <li className="gpu-dropdown-empty" role="option" aria-disabled="true">
+                no matches
+              </li>
+            )}
           </ul>
         )}
       </div>
@@ -299,6 +349,11 @@ function CpuPicker({ value, allCpus, onChange }: CpuPickerProps) {
           type="text"
           placeholder="search CPUs…"
           value={open ? query : value ?? ''}
+          role="combobox"
+          aria-label="CPU"
+          aria-expanded={open}
+          aria-autocomplete="list"
+          aria-controls="cpu-options"
           onChange={(e) => {
             setQuery(e.target.value)
             setOpen(true)
@@ -307,15 +362,36 @@ function CpuPicker({ value, allCpus, onChange }: CpuPickerProps) {
             setQuery('')
             setOpen(true)
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setOpen(false)
+            } else if (e.key === 'Enter' && open && filtered[0]) {
+              e.preventDefault()
+              pick(filtered[0])
+            }
+          }}
         />
         <span className="hw-combo-caret" aria-hidden="true">▾</span>
         {open && (
-          <ul className="gpu-dropdown">
-            <li onMouseDown={() => pick(null)}>Custom / unknown CPU</li>
+          <ul className="gpu-dropdown" id="cpu-options" role="listbox">
+            <li role="option" aria-selected={value === null} onMouseDown={() => pick(null)}>
+              Custom / unknown CPU
+            </li>
             {filtered.slice(0, 50).map((name) => (
-              <li key={name} onMouseDown={() => pick(name)}>{name}</li>
+              <li
+                key={name}
+                role="option"
+                aria-selected={name === value}
+                onMouseDown={() => pick(name)}
+              >
+                {name}
+              </li>
             ))}
-            {filtered.length === 0 && <li className="gpu-dropdown-empty">no matches</li>}
+            {filtered.length === 0 && (
+              <li className="gpu-dropdown-empty" role="option" aria-disabled="true">
+                no matches
+              </li>
+            )}
           </ul>
         )}
       </div>
@@ -415,6 +491,7 @@ export default function HardwarePanel({
               <select
                 className="hw-input"
                 value={interconnect}
+                aria-label="GPU interconnect"
                 onChange={(e) => onInterconnectChange(e.target.value as Interconnect)}
               >
                 {(['nvlink', 'pcie5', 'pcie4', 'pcie3', 'none'] as Interconnect[])
@@ -431,6 +508,7 @@ export default function HardwarePanel({
               <select
                 className="hw-input"
                 value={parallelism}
+                aria-label="GPU parallelism"
                 onChange={(e) => onParallelismChange(e.target.value as ParallelismMode)}
               >
                 {(['auto', 'layer_split', 'tensor_parallel'] as ParallelismMode[]).map((p) => (
@@ -448,12 +526,13 @@ export default function HardwarePanel({
           className="hw-section-title hw-advanced-toggle"
           onClick={() => setAdvancedOpen((x) => !x)}
           aria-expanded={advancedOpen}
+          aria-controls="advanced-hardware-fields"
         >
           Advanced <span className="hw-advanced-caret">{advancedOpen ? '▾' : '▸'}</span>
         </button>
 
         {advancedOpen && (
-          <div className="hw-field-row">
+          <div className="hw-field-row" id="advanced-hardware-fields">
             <RamPicker ramGb={ramGb} ramUserSet={ramUserSet} onChange={onRamChange} />
 
             <div className="hw-field">
@@ -461,6 +540,7 @@ export default function HardwarePanel({
               <select
                 className={`hw-input${ramBandwidthGbps == null ? ' hw-input-hint' : ''}`}
                 value={ramBandwidthGbps ?? ''}
+                aria-label="RAM speed"
                 onChange={(e) => {
                   const v = e.target.value
                   onRamBandwidthChange(v === '' ? null : Number(v))
@@ -484,6 +564,7 @@ export default function HardwarePanel({
                 max={100000}
                 value={diskFreeGb ?? ''}
                 placeholder="—"
+                aria-label="Free disk space in GB"
                 onChange={(e) => {
                   const v = e.target.value
                   onDiskFreeChange(v === '' ? null : clamp(Number(v), 0, 100000))
