@@ -94,6 +94,23 @@ describe('detectHardware — switchable graphics', () => {
     expect(result.gpu_spec!.unified).toBe(true)
   })
 
+  it('recognizes Apple Silicon through the modern ANGLE Metal wrapper', () => {
+    installWebGlMock({
+      highPerformance:
+        'ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)',
+      default:
+        'ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)',
+    })
+
+    const result = detectHardware()
+    expect(result.gpu_parsed).toBe('Apple M4')
+    expect(result.gpu_spec).toMatchObject({
+      vram_gb: null,
+      bandwidth_gbps: 120,
+      unified: true,
+    })
+  })
+
   it('returns null GPU fields when WebGL is unavailable', () => {
     installWebGlMock({ highPerformance: null, default: null })
     const result = detectHardware()

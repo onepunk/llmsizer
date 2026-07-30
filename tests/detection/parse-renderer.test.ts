@@ -36,6 +36,20 @@ describe('parseRendererString', () => {
     ).toBe('Apple M1 Max')
   })
 
+  it('extracts Apple Silicon from the ANGLE Metal renderer wrapper', () => {
+    expect(
+      parseRendererString('ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)')
+    ).toBe('Apple M4')
+  })
+
+  it('extracts Apple Silicon when the ANGLE wrapper includes a macOS build', () => {
+    expect(
+      parseRendererString(
+        'ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Version 15.5 (Build 24F74))',
+      )
+    ).toBe('Apple M4')
+  })
+
   it('returns original string for unknown GPU', () => {
     expect(parseRendererString('Some Unknown GPU')).toBe('Some Unknown GPU')
   })

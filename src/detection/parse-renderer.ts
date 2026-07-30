@@ -14,12 +14,23 @@ import { ALL_GPU_SPECS, IGPU_PATTERNS } from './gpu-specs'
 export function parseRendererString(renderer: string): string {
   let name = renderer.trim()
 
-  // Extract inner GPU name from ANGLE wrapper
-  // Format: "ANGLE (Vendor, GPU Name Renderer..., Extra)"
-  const angleMatch = name.match(/^ANGLE\s*\(([^,]+),\s*(.+?)(?:\s+(?:Direct3D|OpenGL|Metal|Vulkan|D3D)\S*.*?)?,\s*[^,)]+\)$/)
-  if (angleMatch) {
-    name = (angleMatch[2] ?? '').trim()
-    name = name.replace(/\s+(Direct3D\d*|OpenGL|Metal|Vulkan|D3D\d*)\s*.*$/i, '').trim()
+  // ANGLE's macOS backend prefixes the actual device name with
+  // "ANGLE Metal Renderer:", which must be removed before the generic
+  // backend-suffix cleanup below sees the word "Metal".
+  const angleMetalMatch = name.match(
+    /^ANGLE\s*\([^,]+,\s*ANGLE\s+Metal\s+Renderer:\s*(.+?),\s*(?:Unspecified Version|Version\b.*)\)$/i,
+  )
+
+  if (angleMetalMatch) {
+    name = (angleMetalMatch[1] ?? '').trim()
+  } else {
+    // Extract inner GPU name from ANGLE wrapper
+    // Format: "ANGLE (Vendor, GPU Name Renderer..., Extra)"
+    const angleMatch = name.match(/^ANGLE\s*\(([^,]+),\s*(.+?)(?:\s+(?:Direct3D|OpenGL|Metal|Vulkan|D3D)\S*.*?)?,\s*[^,)]+\)$/)
+    if (angleMatch) {
+      name = (angleMatch[2] ?? '').trim()
+      name = name.replace(/\s+(Direct3D\d*|OpenGL|Metal|Vulkan|D3D\d*)\s*.*$/i, '').trim()
+    }
   }
 
   // Strip /PCIe/SSE2 and similar suffixes
