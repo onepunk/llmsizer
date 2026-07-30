@@ -4,10 +4,12 @@ import { dirname, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import type { LlmModel } from '../src/engine/types'
 
+type CatalogModel = LlmModel & { _discovered?: boolean }
+
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const models = JSON.parse(
   readFileSync(resolve(__dirname, '../public/models.json'), 'utf8'),
-) as LlmModel[]
+) as CatalogModel[]
 
 function model(name: string): LlmModel {
   const found = models.find((m) => m.name === name)
@@ -101,5 +103,13 @@ describe('models.json metadata audit', () => {
 
     expect(fixtureNames).toEqual([])
     expect(model('TinyLlama/TinyLlama-1.1B-Chat-v1.0').parameters_raw).toBeGreaterThan(1_000_000_000)
+  })
+
+  it('keeps discovered model metadata needed for filtering and ranking', () => {
+    const incomplete = models
+      .filter((m) => m._discovered)
+      .filter((m) => !m.pipeline_tag || m.pipeline_tag === 'unknown')
+
+    expect(incomplete.map((m) => m.name)).toEqual([])
   })
 })

@@ -1109,7 +1109,11 @@ def discover_trending_models(limit: int = 30, min_downloads: int = 10000) -> lis
             f"limit={fetch_limit}&"
             f"expand[]=safetensors&"
             f"expand[]=config&"
-            f"expand[]=createdAt"
+            f"expand[]=createdAt&"
+            f"expand[]=pipeline_tag&"
+            f"expand[]=downloads&"
+            f"expand[]=likes&"
+            f"expand[]=tags"
         )
         req = urllib.request.Request(url, headers=_auth_headers())
         try:
