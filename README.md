@@ -73,8 +73,8 @@ present instead of applying a generic Q4_K_M formula.
 
 `src/detection/gpu-specs.ts` is generated from the public
 [open-gpu-db](https://github.com/onepunk/open-gpu-db). That database
-owns the attributed RightNow import, official-vendor corrections, Apple Silicon
-records, detection aliases, and interconnect metadata.
+owns the attributed TechPowerUp-derived import, official-vendor corrections,
+Apple Silicon records, detection aliases, and interconnect metadata.
 
 ```bash
 npx tsx scripts/generate-gpu-specs.ts
