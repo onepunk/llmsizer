@@ -71,11 +71,20 @@ present instead of applying a generic Q4_K_M formula.
 
 ## Regenerating the GPU database
 
-`src/detection/gpu-specs.ts` is generated from the RightNow GPU database with
-small vendor-spec overrides for accelerator SKUs whose upstream entries lag.
+`src/detection/gpu-specs.ts` is generated from the public
+[open-gpu-catalog](https://github.com/onepunk/open-gpu-catalog). That catalog
+owns the attributed RightNow import, official-vendor corrections, Apple Silicon
+records, detection aliases, and interconnect metadata.
 
 ```bash
 npx tsx scripts/generate-gpu-specs.ts
+```
+
+For a local catalog checkout:
+
+```bash
+GPU_CATALOG_PATH=../open-gpu-catalog/dist/llmsizer.json \
+  npx tsx scripts/generate-gpu-specs.ts
 ```
 
 To patch pre-quantized entries in an already-scraped `models.json`

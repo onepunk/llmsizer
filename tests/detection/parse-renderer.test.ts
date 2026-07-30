@@ -84,7 +84,7 @@ describe('lookupGpu', () => {
     const spec = lookupGpu('NVIDIA GeForce RTX 3090')
     expect(spec).not.toBeNull()
     expect(spec!.vram_gb).toBe(24)
-    expect(spec!.bandwidth_gbps).toBe(936)
+    expect(spec!.bandwidth_gbps).toBe(936.2)
   })
 
   it('looks up Apple M2 Pro correctly', () => {
@@ -132,6 +132,13 @@ describe('lookupGpu', () => {
     expect(b300!.bandwidth_gbps).toBe(8000)
   })
 
+  it('resolves a catalog alias for NVIDIA Vera Rubin', () => {
+    const spec = lookupGpu('NVIDIA Rubin GPU')
+    expect(spec).not.toBeNull()
+    expect(spec!.vram_gb).toBe(288)
+    expect(spec!.bandwidth_gbps).toBe(22000)
+  })
+
   it('returns null for unknown GPU', () => {
     expect(lookupGpu('Some Unknown GPU XYZ 9999')).toBeNull()
   })
@@ -150,7 +157,7 @@ describe('lookupGpu bidirectional matching', () => {
     const spec = lookupGpu('NVIDIA GeForce RTX 3090 Directory 24GB')
     expect(spec).not.toBeNull()
     expect(spec!.vram_gb).toBe(24)
-    expect(spec!.bandwidth_gbps).toBe(936)
+    expect(spec!.bandwidth_gbps).toBe(936.2)
   })
 
   // Reverse match: short user input appears inside a catalog key.
@@ -159,7 +166,7 @@ describe('lookupGpu bidirectional matching', () => {
     const spec = lookupGpu('RTX 3090')
     expect(spec).not.toBeNull()
     expect(spec!.vram_gb).toBe(24)
-    expect(spec!.bandwidth_gbps).toBe(936)
+    expect(spec!.bandwidth_gbps).toBe(936.2)
   })
 
   // Forward match should win over reverse match when both apply —
@@ -168,7 +175,7 @@ describe('lookupGpu bidirectional matching', () => {
   it('forward match wins over reverse when both apply', () => {
     const spec = lookupGpu('NVIDIA GeForce RTX 3090 Ti 24GB')
     expect(spec).not.toBeNull()
-    // 3090 Ti is 1010 GB/s, plain 3090 is 936 GB/s
+    // 3090 Ti is 1010 GB/s, plain 3090 is 936.2 GB/s
     expect(spec!.bandwidth_gbps).toBe(1010)
   })
 
@@ -178,7 +185,7 @@ describe('lookupGpu bidirectional matching', () => {
     // "GeForce RTX 3090 Ti" (19). Shortest wins -> plain 3090.
     const spec = lookupGpu('RTX 3090')
     expect(spec).not.toBeNull()
-    expect(spec!.bandwidth_gbps).toBe(936) // plain 3090, not 3090 Ti
+    expect(spec!.bandwidth_gbps).toBe(936.2) // plain 3090, not 3090 Ti
   })
 
   // Reverse match is case-insensitive.

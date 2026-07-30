@@ -152,14 +152,14 @@ describe('buildUrlSearch', () => {
     expect(state.hw.gpus[0]).toEqual({
       name: 'RTX 3090',
       vram_gb: 24,
-      bandwidth_gbps: 936,
+      bandwidth_gbps: 936.2,
       count: 2,
       nvlink: true,
     })
     expect(state.hw.gpus[1]).toEqual({
       name: 'RTX 4080',
       vram_gb: 16,
-      bandwidth_gbps: 717,
+      bandwidth_gbps: 716.8,
       count: 1,
       nvlink: false,
     })
@@ -184,7 +184,7 @@ describe('multi-GPU URL state', () => {
     // vram_gb/bandwidth_gbps are reconstituted from the catalog via lookupGpu's
     // reverse-substring match ("RTX 3090" -> "GeForce RTX 3090").
     expect(state.hw.gpus[0].vram_gb).toBe(24)
-    expect(state.hw.gpus[0].bandwidth_gbps).toBe(936)
+    expect(state.hw.gpus[0].bandwidth_gbps).toBe(936.2)
     expect(state.hw.interconnect).toBe('nvlink')
     expect(state.hw.parallelism).toBe('auto')
   })
@@ -195,14 +195,14 @@ describe('multi-GPU URL state', () => {
     expect(state.hw.gpus[0]).toEqual({
       name: 'RTX 3090',
       vram_gb: 24,
-      bandwidth_gbps: 936,
+      bandwidth_gbps: 936.2,
       count: 2,
       nvlink: true,
     })
     expect(state.hw.gpus[1]).toEqual({
       name: 'RTX 4080',
       vram_gb: 16,
-      bandwidth_gbps: 717,
+      bandwidth_gbps: 716.8,
       count: 1,
       nvlink: false,
     })

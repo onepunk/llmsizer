@@ -1,5 +1,5 @@
 import type { GpuSpec } from '../engine/types'
-import { ALL_GPU_SPECS, IGPU_PATTERNS } from './gpu-specs'
+import { ALL_GPU_SPECS, GPU_ALIASES, IGPU_PATTERNS } from './gpu-specs'
 
 /**
  * Normalizes a WebGL renderer string to a clean GPU name.
@@ -90,6 +90,13 @@ export function lookupGpu(parsedName: string): GpuSpec | null {
   for (const key of Object.keys(ALL_GPU_SPECS)) {
     if (key.toLowerCase() === lower) {
       return ALL_GPU_SPECS[key] ?? null
+    }
+  }
+
+  // Try catalog-maintained browser, driver, and marketing aliases.
+  for (const [alias, canonical] of Object.entries(GPU_ALIASES)) {
+    if (alias.toLowerCase() === lower) {
+      return ALL_GPU_SPECS[canonical] ?? null
     }
   }
 
