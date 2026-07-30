@@ -11,7 +11,7 @@ async function loadGenerator() {
   }
 }
 
-describe('open-gpu-catalog generation', () => {
+describe('open-gpu-db generation', () => {
   it('defaults to the versioned, consumer-neutral runtime artifact', () => {
     const generator = readFileSync(
       resolve(import.meta.dirname, '../../scripts/generate-gpu-specs.ts'),
@@ -19,7 +19,7 @@ describe('open-gpu-catalog generation', () => {
     )
 
     expect(generator).toContain(
-      'open-gpu-catalog/v1.1.0/dist/runtime.json',
+      'open-gpu-db/v1.2.0/dist/runtime.json',
     )
   })
 
@@ -29,8 +29,8 @@ describe('open-gpu-catalog generation', () => {
 
     const source = generateGpuSpecsSource!({
       schema_version: '1.0.0',
-      catalog_version: '1.1.0',
-      source_repository: 'https://github.com/onepunk/open-gpu-catalog',
+      catalog_version: '1.2.0',
+      source_repository: 'https://github.com/onepunk/open-gpu-db',
       gpus: [
         {
           name: 'B200',
@@ -52,9 +52,9 @@ describe('open-gpu-catalog generation', () => {
       integrated_gpu_patterns: ['Intel Iris'],
     })
 
-    expect(source).toContain('// Auto-generated from onepunk/open-gpu-catalog v1.1.0')
+    expect(source).toContain('// Auto-generated from onepunk/open-gpu-db v1.2.0')
     expect(source).toContain(
-      '// Source: https://github.com/onepunk/open-gpu-catalog/blob/v1.1.0/dist/runtime.json',
+      '// Source: https://github.com/onepunk/open-gpu-db/blob/v1.2.0/dist/runtime.json',
     )
     expect(source).toContain(
       "'B200': { vram_gb: 180, bandwidth_gbps: 8000, nvlink: true }",

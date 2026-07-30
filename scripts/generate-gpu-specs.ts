@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * Generates src/detection/gpu-specs.ts from open-gpu-catalog's versioned
+ * Generates src/detection/gpu-specs.ts from open-gpu-db's versioned
  * runtime artifact.
  *
  * Usage:
@@ -20,7 +20,7 @@ import {
 const CATALOG_PATH = process.env.GPU_CATALOG_PATH
 const CATALOG_URL =
   process.env.GPU_CATALOG_URL ??
-  'https://raw.githubusercontent.com/onepunk/open-gpu-catalog/v1.1.0/dist/runtime.json'
+  'https://raw.githubusercontent.com/onepunk/open-gpu-db/v1.2.0/dist/runtime.json'
 const OUT_PATH = resolve(import.meta.dirname, '../src/detection/gpu-specs.ts')
 
 function parseCatalog(raw: string): LlmsizerGpuCatalog {
@@ -31,7 +31,7 @@ function parseCatalog(raw: string): LlmsizerGpuCatalog {
     !Array.isArray(value.gpus) ||
     !Array.isArray(value.integrated_gpu_patterns)
   ) {
-    throw new Error('Invalid open-gpu-catalog runtime artifact')
+    throw new Error('Invalid open-gpu-db runtime artifact')
   }
   return value as LlmsizerGpuCatalog
 }
@@ -55,7 +55,7 @@ const catalog = await loadCatalog()
 writeFileSync(OUT_PATH, generateGpuSpecsSource(catalog), 'utf8')
 
 console.log(
-  `Generated ${catalog.gpus.length} GPU entries from open-gpu-catalog ` +
+  `Generated ${catalog.gpus.length} GPU entries from open-gpu-db ` +
   `v${catalog.catalog_version}`,
 )
 console.log(`  Output: ${OUT_PATH}`)

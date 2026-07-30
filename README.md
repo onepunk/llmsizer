@@ -72,7 +72,7 @@ present instead of applying a generic Q4_K_M formula.
 ## Regenerating the GPU database
 
 `src/detection/gpu-specs.ts` is generated from the public
-[open-gpu-catalog](https://github.com/onepunk/open-gpu-catalog). That catalog
+[open-gpu-db](https://github.com/onepunk/open-gpu-db). That database
 owns the attributed RightNow import, official-vendor corrections, Apple Silicon
 records, detection aliases, and interconnect metadata.
 
@@ -83,7 +83,7 @@ npx tsx scripts/generate-gpu-specs.ts
 For a local catalog checkout:
 
 ```bash
-GPU_CATALOG_PATH=../open-gpu-catalog/dist/runtime.json \
+GPU_CATALOG_PATH=../open-gpu-db/dist/runtime.json \
   npx tsx scripts/generate-gpu-specs.ts
 ```
 

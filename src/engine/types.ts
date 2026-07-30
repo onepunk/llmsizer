@@ -43,7 +43,7 @@ export interface GpuSpec {
   bandwidth_gbps: number
   unified?: boolean
   // Whether this card supports NVLink peer-to-peer interconnect, sourced from
-  // the provenance-aware rules in onepunk/open-gpu-catalog.
+  // the provenance-aware rules in onepunk/open-gpu-db.
   nvlink?: boolean
 }
 

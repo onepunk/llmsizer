@@ -27,6 +27,10 @@ function formatSpec(gpu: CatalogGpu): string {
 }
 
 export function generateGpuSpecsSource(catalog: LlmsizerGpuCatalog): string {
+  const repository = new URL(catalog.source_repository).pathname
+    .split('/')
+    .filter(Boolean)
+    .join('/')
   const specs = catalog.gpus.map(formatSpec).join('\n')
   const aliases = catalog.gpus
     .flatMap(gpu => gpu.aliases.map(alias => [alias, gpu.name] as const))
@@ -39,7 +43,7 @@ export function generateGpuSpecsSource(catalog: LlmsizerGpuCatalog): string {
 
   return `import type { GpuSpec } from '../engine/types'
 
-// Auto-generated from onepunk/open-gpu-catalog v${catalog.catalog_version}
+// Auto-generated from ${repository} v${catalog.catalog_version}
 // Source: ${catalog.source_repository}/blob/v${catalog.catalog_version}/dist/runtime.json
 // Run: npx tsx scripts/generate-gpu-specs.ts
 
