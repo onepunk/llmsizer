@@ -40,7 +40,7 @@ export function generateGpuSpecsSource(catalog: LlmsizerGpuCatalog): string {
   return `import type { GpuSpec } from '../engine/types'
 
 // Auto-generated from onepunk/open-gpu-catalog v${catalog.catalog_version}
-// Source: ${catalog.source_repository}/blob/v${catalog.catalog_version}/dist/llmsizer.json
+// Source: ${catalog.source_repository}/blob/v${catalog.catalog_version}/dist/runtime.json
 // Run: npx tsx scripts/generate-gpu-specs.ts
 
 export const GPU_SPECS: Record<string, GpuSpec> = {

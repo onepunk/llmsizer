@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 /**
  * Generates src/detection/gpu-specs.ts from open-gpu-catalog's versioned
- * llmsizer artifact.
+ * runtime artifact.
  *
  * Usage:
  *   npx tsx scripts/generate-gpu-specs.ts
@@ -20,7 +20,7 @@ import {
 const CATALOG_PATH = process.env.GPU_CATALOG_PATH
 const CATALOG_URL =
   process.env.GPU_CATALOG_URL ??
-  'https://raw.githubusercontent.com/onepunk/open-gpu-catalog/v1.0.0/dist/llmsizer.json'
+  'https://raw.githubusercontent.com/onepunk/open-gpu-catalog/v1.1.0/dist/runtime.json'
 const OUT_PATH = resolve(import.meta.dirname, '../src/detection/gpu-specs.ts')
 
 function parseCatalog(raw: string): LlmsizerGpuCatalog {
@@ -31,7 +31,7 @@ function parseCatalog(raw: string): LlmsizerGpuCatalog {
     !Array.isArray(value.gpus) ||
     !Array.isArray(value.integrated_gpu_patterns)
   ) {
-    throw new Error('Invalid open-gpu-catalog llmsizer artifact')
+    throw new Error('Invalid open-gpu-catalog runtime artifact')
   }
   return value as LlmsizerGpuCatalog
 }

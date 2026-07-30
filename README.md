@@ -83,7 +83,7 @@ npx tsx scripts/generate-gpu-specs.ts
 For a local catalog checkout:
 
 ```bash
-GPU_CATALOG_PATH=../open-gpu-catalog/dist/llmsizer.json \
+GPU_CATALOG_PATH=../open-gpu-catalog/dist/runtime.json \
   npx tsx scripts/generate-gpu-specs.ts
 ```
 

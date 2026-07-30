@@ -1,7 +1,7 @@
 import type { GpuSpec } from '../engine/types'
 
-// Auto-generated from onepunk/open-gpu-catalog v1.0.0
-// Source: https://github.com/onepunk/open-gpu-catalog/blob/v1.0.0/dist/llmsizer.json
+// Auto-generated from onepunk/open-gpu-catalog v1.1.0
+// Source: https://github.com/onepunk/open-gpu-catalog/blob/v1.1.0/dist/runtime.json
 // Run: npx tsx scripts/generate-gpu-specs.ts
 
 export const GPU_SPECS: Record<string, GpuSpec> = {
