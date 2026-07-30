@@ -1069,7 +1069,7 @@ DISCOVER_PIPELINES = ["text-generation", "text2text-generation", "image-text-to-
 
 # Orgs to skip — these publish many fine-tunes that clutter the list
 SKIP_ORGS = {
-    "TheBloke",               # GGUF repacks, not original models
+    "thebloke",               # GGUF repacks, not original models
     "unsloth",                # Training framework repacks
     "mlx-community",          # MLX conversions
     "bartowski",              # GGUF repacks
@@ -1078,6 +1078,11 @@ SKIP_ORGS = {
     "openai-community",       # Legacy model mirrors (gpt2 etc.)
     "distilbert",             # Distilled legacy models
 }
+
+FIXTURE_REPO_PATTERN = re.compile(
+    r"(?:^|[/_-])(?:tiny[-_]?random|unit[-_]?test|dummy)(?:[/_-]|$)",
+    re.IGNORECASE,
+)
 
 
 def discover_trending_models(limit: int = 30, min_downloads: int = 10000) -> list[dict]:
@@ -1126,8 +1131,13 @@ def discover_trending_models(limit: int = 30, min_downloads: int = 10000) -> lis
             seen_ids.add(repo_id)
 
             # Skip known repack / converter orgs
-            org = repo_id.split("/")[0]
-            if org in SKIP_ORGS:
+            org = repo_id.split("/")[0].lower()
+            if org in SKIP_ORGS or org.endswith("-internal-testing"):
+                continue
+
+            # Download counts for tiny CI fixtures can be surprisingly high,
+            # but they are not useful models for sizing.
+            if FIXTURE_REPO_PATTERN.search(repo_id):
                 continue
 
             # Skip models with too few downloads

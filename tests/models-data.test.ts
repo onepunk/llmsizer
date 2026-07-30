@@ -90,4 +90,16 @@ describe('models.json metadata audit', () => {
     const missing = models.filter((m) => nativeFormats.has(m.format?.toLowerCase()) && m.weight_gb == null)
     expect(missing.map((m) => m.name)).toEqual([])
   })
+
+  it('excludes test fixtures without dropping legitimate small models', () => {
+    const fixtureNames = models
+      .map((m) => m.name)
+      .filter((name) =>
+        /(?:^|[/_-])(?:tiny[-_]?random|unit[-_]?test|dummy)(?:[/_-]|$)|[/_-]internal-testing(?:[/_-]|$)/i
+          .test(name),
+      )
+
+    expect(fixtureNames).toEqual([])
+    expect(model('TinyLlama/TinyLlama-1.1B-Chat-v1.0').parameters_raw).toBeGreaterThan(1_000_000_000)
+  })
 })
